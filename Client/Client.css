@@ -1,0 +1,14 @@
+
+.Window {
+  width: 8%;
+  margin: 5px;
+
+  border-style: solid;
+  border-color: red;
+  border-width: 1px;
+}
+
+.Button {
+  width: 8%;
+  margin: 5px;
+}
