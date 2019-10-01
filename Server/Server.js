@@ -1,23 +1,94 @@
 
 // Use ws module
-const WebSocket = require('ws');
+const Webserver = require('ws');
 
-// Initialise socket on local port 8001
-const socket = new WebSocket.Server({ port: 8001 });
+// Connection states
+const OFFLINE = 0;
+const ONLINE = 1;
+const VERIFIED = 2;
 
-// On successful connection
-socket.on('connection', function connection(connection) {
-  console.log('Client connection established.');
+// Users
+const users = new Set(["Admin","Chris","Cameron","Joe","Olubi"]);
+
+// Initialise server on local port 8001
+const PORT = 8001;
+const server = new Webserver.Server({ port: PORT });
+console.log('SERVER INITIALISED ON PORT ', PORT, '\n');
+
+// SOCKET CODE
+
+server.on('connection', function connection(socket, req) {
+
+  // Create connection state
+  socket.responding = true;
+  var state = ONLINE;
+  var username = 'DefaultUsername';
+
+  // Log connection
+  console.log(req.connection.remoteAddress, ' ~ CONNECTED.\n');
 
   // On message recieved
-  connection.on('message', function incoming(message) {
-    console.log('Recieved message from ', connection._socket.remoteAddress,': ', message);
-    send(message);
+  socket.on('message', function incoming(message) {
+    // Log message
+    console.log(req.connection.remoteAddress,' > ', message);
+    // Process
+    switch (state) {
+      case ONLINE:
+        // Try to verify
+        if (verify(message)) {
+          console.log('VERIFY SUCCESS.');
+          state = VERIFIED;
+          username = message;
+          send('Hello ' + username + '. You are now logged in.');
+        } else {
+          console.log('VERIFY FAILURE.');
+          send('Verification failed.');
+        }
+        console.log();
+        break;
+      case VERIFIED:
+        // Echo
+        console.log('ECHO.');
+        send(message.toUpperCase());
+        console.log();
+        break;
+    }
   });
 
-  function send(message) {
-    console.log('Sending to ', connection._socket.remoteAddress,': ', message.toUpperCase());
-    connection.send(message.toUpperCase());
-  }
+  // On ping response
+  socket.on('pong', function response() {
+    socket.responding = true;
+  });
 
+  // On close
+  socket.on('close', function close() {
+    console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
+  });
+
+  // Send message
+  function send(message) {
+    console.log(req.connection.remoteAddress, ' < ', message);
+    socket.send(message);
+  }
 });
+
+// SERVER CODE
+
+const SHOW_HEARTBEAT = true;
+
+const interval = setInterval(function monitor() {
+  server.clients.forEach(function each(socket) {
+    if (!socket.responding) {
+      console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
+      return socket.terminate();
+    } else {
+      if (SHOW_HEARTBEAT) console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.\n');
+    }
+    socket.responding = false;
+    socket.ping();
+  });
+}, 5000);
+
+function verify(message) {
+  return (users.has(message));
+}
