@@ -10,8 +10,9 @@
     
     
 <body>
-  <canvas id="GameCanvas"></canvas>
-   <div id="PlayMenu" class="hidden">
+    <div class="a" id="Leaderboard"></div>
+    <canvas id="GameCanvas"></canvas>
+    <div id="PlayMenu" class="hidden">
     <h1 class ="a">Snake Multiplayer</h1>
     <p class = "a"> 
         Eat the coloured pellets to grow longer
@@ -33,23 +34,12 @@
     <hr />
        
     <input type="text" id="UsernameInput" placeholder="Username" />
-    <button id="PlayButton">PLAY</button>
+    <button id="PlayButton" onclick="btnPress()">PLAY</button>
        
        
    </div>
-    <div id="Leaderboard" class="hidden">
-        <table>
-            <tr>
-                <th>Username</th>
-                <th>Score</th>
-            </tr>
-            <tr><td></td><td></td></tr>
-            <tr><td></td><td></td></tr>
-            <tr><td></td><td></td></tr>
-            <tr><td></td><td></td></tr>
-            <tr><td></td><td></td></tr>
-        </table>
-    </div>
+    
+    <script src="Client.js"></script>
     
     </body>
 </html>

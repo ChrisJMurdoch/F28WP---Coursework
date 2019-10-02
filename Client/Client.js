@@ -49,3 +49,27 @@ function sendField() {
   var message = document.getElementById("sendmessage").value;
   sendmessage(message);
 }
+
+function test() {
+    document.getElementById("PlayMenu").style.visibility = 'hidden';
+    
+    var element = document.getElementById("score");
+    element.innerHTML = "Score: ";
+    
+    
+    
+    var para = document.createElement("p");
+    var node = document.createTextNode("Score: ");
+    para.appendChild(node);
+    var element = document.getElementById("score");
+    element.appendChild(para);
+}
+
+function btnPress(){
+    document.getElementById("PlayMenu").style.visibility = 'hidden';
+    
+    var table = "<table><tr><th>Username</th><th>Score</th></tr></table>";
+    
+    var element = document.getElementById("Leaderboard").innerHTML = table ;
+    
+}
