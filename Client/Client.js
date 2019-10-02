@@ -66,7 +66,11 @@ function test() {
 }
 
 function btnPress(){
-    document.getElementById("PlayMenu").style.visibility = 'hidden';
+    var s = document.getElementById("PlayMenu").style;
+    s.opacity = 1;
+    (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade,40)})();
+    
+//    document.getElementById("PlayMenu").style.visibility = 'hidden';
     
     var table = "<table><tr><th>Username</th><th>Score</th></tr></table>";
     
