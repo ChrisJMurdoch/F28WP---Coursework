@@ -64,6 +64,7 @@ function test() {
 
 function btnPress() {
     var s = document.getElementById("PlayMenu").style;
+    changeBg('grey');
     s.opacity = 1;
     (function fade() {
         (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
@@ -77,5 +78,8 @@ function btnPress() {
     
     var message = document.getElementById("UsernameInput").value;
     sendmessage(message);
+}
 
+function changeBg(color){
+    document.body.style.background = color;
 }
