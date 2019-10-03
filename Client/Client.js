@@ -64,11 +64,13 @@ function test() {
 
 function btnPress() {
     var s = document.getElementById("PlayMenu").style;
-    changeBg('grey');
+    var r = document.getElementById("UserLogin").style.visibility = "visible";
     s.opacity = 1;
     (function fade() {
         (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
     })();
+    
+    
 
     //    document.getElementById("PlayMenu").style.visibility = 'hidden';
 
