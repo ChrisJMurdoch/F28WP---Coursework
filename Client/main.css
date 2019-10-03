@@ -21,12 +21,12 @@ hr {
 
 /* CSS for the play button   */
 button {
-    font-size: 20px;
+    font-size: 19px;
     outline: none;
     border: none;
     color: black;
     background-color: transparent;
-    padding: 6px 21px;
+    padding: 4px 19px;
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
@@ -44,7 +44,7 @@ button:focus {
 /* CSS for the Menu before you play the game */
 #PlayMenu {
     position: fixed;
-    top: 47%;
+    top: 49%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
     padding: 21px 31px;
@@ -66,6 +66,8 @@ button:focus {
     padding: 8px;
     text-align: center;
 }
+
+
 
 .a {
     font-family: "Comic Sans MS", cursive, sans-serif;
