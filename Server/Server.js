@@ -48,8 +48,8 @@ server.on('connection', function connection(socket, req) {
         break;
       case VERIFIED:
         // Echo
-        console.log('ECHO.');
-        send(message.toUpperCase());
+        console.log('BROADCAST.');
+        broadcast(message);
         console.log();
         break;
     }
@@ -70,11 +70,20 @@ server.on('connection', function connection(socket, req) {
     console.log(req.connection.remoteAddress, ' < ', message);
     socket.send(message);
   }
+
+  // Send to all but self
+  function broadcast(message) {
+    console.log('ALL < ', message);
+    server.clients.forEach(function(client) {
+      client.send(username + ': ' + message);
+    });
+  }
+
 });
 
 // SERVER CODE
 
-const SHOW_HEARTBEAT = true;
+const SHOW_HEARTBEAT = false;
 
 const interval = setInterval(function monitor() {
   server.clients.forEach(function each(socket) {

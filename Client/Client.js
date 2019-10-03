@@ -1,8 +1,8 @@
 // SOCKET INTERFACE
 
 // Create WebSocket
-//const socket = new WebSocket('ws://137.195.210.2:8001'); // --MSI Heriot-Watt
-const socket = new WebSocket('ws://192.168.0.38:8001'); // --MSI Home
+const socket = new WebSocket('ws://137.195.219.115:8001'); // --MSI Heriot-Watt
+//const socket = new WebSocket('ws://192.168.0.38:8001'); // --MSI Home
 
 // EVENTS
 // Connection event
@@ -63,7 +63,7 @@ function test() {
 function btnPress() {
     var s = document.getElementById("PlayMenu").style;
     var r = document.getElementById("UserLogin").style.visibility = "visible";
-    
+
     s.opacity = 1;
     (function fade() {
         (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
@@ -71,19 +71,19 @@ function btnPress() {
 }
 
 function submitBtnPress(){
-    
+
     var r = document.getElementById("UserLogin").style
-    
+
     r.opacity = 1;
     changeBg("grey");
-    
+
     (function fade() {
         (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
     })();
 
     var table = "<table><tr><th>Username</th><th>Score</th></tr></table>";
 
-    var element = document.getElementById("Leaderboard").innerHTML = table;    
+    var element = document.getElementById("Leaderboard").innerHTML = table;
     var message = document.getElementById("UsernameInput").value;
     var message = document.getElementById("UsernamePassport").value;
     var message = document.getElementById("UsernameNationality").value;
