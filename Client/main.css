@@ -1,71 +1,72 @@
 /* CSS for the body of the HTML */
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  overscroll-behavior: none;
-  background-image: linear-gradient(to bottom right, green, lightgreen);
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background-image: linear-gradient(to bottom right, green, lightgreen);
 }
 
 /* To allow the the line that breaks the description of the game and the creators to go across the whole screen*/
 hr {
-  width: 100%;
+    width: 100%;
 }
 
 /* To allow the game to be on full screen*/
 #GameCanvas {
-  width: 100%;
-  height: 100%;
-} 
+    width: 100%;
+    height: 100%;
+}
 
 /* CSS for the play button   */
 button {
-  font-size: 20px;
-  outline: none;
-  border: none;
-  color: black;
-  background-color: transparent;
-  padding: 6px 21px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    color: black;
+    background-color: transparent;
+    padding: 6px 21px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 /* Background colour changes to light grey when hover over play button */
 button:hover {
-  background-color: lightgrey;
+    background-color: lightgrey;
 }
 
 button:focus {
-  outline: none;
+    outline: none;
 }
 
 
 /* CSS for the Menu before you play the game */
 #PlayMenu {
-  position: fixed;
-  top: 47%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  padding: 21px 31px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 10px;
-  text-align: center;
+    position: fixed;
+    top: 47%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    padding: 21px 31px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    text-align: center;
 }
 
 /* CSS for the input username area */
 #PlayMenu input {
-  font-size: 17px;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid green;
-  margin-bottom: 5px;
-  padding: 8px;
-  text-align: center;
+    font-size: 17px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid green;
+    margin-bottom: 5px;
+    padding: 8px;
+    text-align: center;
 }
 
 .a {
-    font-family: "Comic Sans MS", cursive, sans-serif;;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
