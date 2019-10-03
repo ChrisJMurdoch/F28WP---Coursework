@@ -28,8 +28,6 @@ function sendmessage(message) {
     socket.send(message);
 }
 
-
-
 // PAGE CODE
 
 // Set the enter key to activate send button
@@ -65,20 +63,30 @@ function test() {
 function btnPress() {
     var s = document.getElementById("PlayMenu").style;
     var r = document.getElementById("UserLogin").style.visibility = "visible";
+    
     s.opacity = 1;
     (function fade() {
         (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
     })();
-    
-    
+}
 
-    //    document.getElementById("PlayMenu").style.visibility = 'hidden';
+function submitBtnPress(){
+    
+    var r = document.getElementById("UserLogin").style
+    
+    r.opacity = 1;
+    changeBg("grey");
+    
+    (function fade() {
+        (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
+    })();
 
     var table = "<table><tr><th>Username</th><th>Score</th></tr></table>";
 
-    var element = document.getElementById("Leaderboard").innerHTML = table;
-    
+    var element = document.getElementById("Leaderboard").innerHTML = table;    
     var message = document.getElementById("UsernameInput").value;
+    var message = document.getElementById("UsernamePassport").value;
+    var message = document.getElementById("UsernameNationality").value;
     sendmessage(message);
 }
 
