@@ -1,7 +1,15 @@
+
 // SOCKET INTERFACE
 
+// Action codes // Keep synced with server codes
+const PLAINTEXT = '0';
+const REGISTER = '1';
+const LOGIN = '2';
+const CLIENT_TO_SERVER_COORDS = '3';
+const SERVER_TO_CLIENT_COORDS = '4';
+
 // Create WebSocket
-const socket = new WebSocket('ws://137.195.119.79:8001'); // --MSI Heriot-Watt
+const socket = new WebSocket('ws://137.195.213.16:8001'); // --MSI Heriot-Watt
 //const socket = new WebSocket('ws://192.168.0.38:8001'); // --MSI Home
 
 // EVENTS
@@ -13,20 +21,25 @@ socket.onopen = function () {
 socket.onerror = function (error) {
     console.log('Error: ', error);
 };
-// Ping event
-socket.onping = function (error) {
-    console.log('Error: ', error);
-};
 // Message event
 socket.onmessage = function (e) {
     console.log('Received: ', e.data);
 };
 
-// METHODS
-function sendmessage(message) {
+// PRIVATE METHODS
+// Send to server // Only for interface use
+function internalsend(message) {
     console.log('Sending: ', message);
     socket.send(message);
 }
+
+// PUBLIC METHODS
+// Send login request
+function  login(username, password) {
+  internalsend(LOGIN + ';' + username + ';' + password);
+}
+
+
 
 // PAGE CODE
 
@@ -39,10 +52,10 @@ input.addEventListener("keyup", function (event) {
     }
 });
 
-// On button press
+// Only for debugging. Do not use internalsend
 function sendField() {
     var message = document.getElementById("sendmessage").value;
-    sendmessage(message);
+    internalsend(message);
 }
 
 function test() {

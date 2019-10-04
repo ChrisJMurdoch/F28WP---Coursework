@@ -8,10 +8,11 @@ const ONLINE = 1;
 const VERIFIED = 2;
 
 // Action codes
-const REGISTER = '0';
-const LOGIN = '1';
-const SEND_COORDS = '2';
-
+const PLAINTEXT = '0';
+const REGISTER = '1';
+const LOGIN = '2';
+const CLIENT_TO_SERVER_COORDS = '3';
+const SERVER_TO_CLIENT_COORDS = '4';
 
 // Users
 const users = new Set(["Admin","Chris","Cameron","Joe","Olubi"]);
@@ -67,6 +68,9 @@ server.on('connection', function connection(socket, req) {
     var primarydata = splitmessage[1];
     var secondarydata = splitmessage[2];
     switch (actioncode) {
+      case PLAINTEXT:
+        console.log('PLAINTEXT.');
+        break;
       case REGISTER:
         console.log('CANT REGISTER WHILE LOGGED IN.');
         send('Log out before registering.');
@@ -75,7 +79,7 @@ server.on('connection', function connection(socket, req) {
         console.log('ALREADY LOGGED IN.');
         send('You are already logged in.');
         break;
-      case SEND_COORDS:
+      case CLIENT_TO_SERVER_COORDS:
         console.log('COORDS.');
         // DO SOMETHING
         send('Co-ords received.');
@@ -94,13 +98,16 @@ server.on('connection', function connection(socket, req) {
     var primarydata = splitmessage[1];
     var secondarydata = splitmessage[2];
     switch (actioncode) {
+      case PLAINTEXT:
+        console.log('PLAINTEXT.');
+        break;
       case REGISTER:
         console.log('REGISTERING NOT AVAILABLE YET.');
         send('Not available yet.');
         break;
       case LOGIN:
         // Try to verify
-        if (verify(primarydata)) {
+        if (verify(primarydata, secondarydata)) {
           console.log('VERIFY SUCCESS.');
           state = VERIFIED;
           username = primarydata;
@@ -110,7 +117,7 @@ server.on('connection', function connection(socket, req) {
           send('Verification failed.');
         }
       break;
-      case SEND_COORDS:
+      case CLIENT_TO_SERVER_COORDS:
         console.log('UNVERIFIED COORDS.');
         send('Please log in first.');
         break;
@@ -154,6 +161,6 @@ const interval = setInterval(function monitor() {
   });
 }, 5000);
 
-function verify(message) {
-  return (users.has(message));
+function verify(username, password) {
+  return (users.has(username) && password === 'admin');
 }
