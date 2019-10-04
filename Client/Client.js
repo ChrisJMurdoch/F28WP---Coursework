@@ -1,7 +1,7 @@
 // SOCKET INTERFACE
 
 // Create WebSocket
-const socket = new WebSocket('ws://137.195.219.115:8001'); // --MSI Heriot-Watt
+const socket = new WebSocket('ws://137.195.119.79:8001'); // --MSI Heriot-Watt
 //const socket = new WebSocket('ws://192.168.0.38:8001'); // --MSI Home
 
 // EVENTS
@@ -34,7 +34,7 @@ function sendmessage(message) {
 var input = document.getElementById("sendmessage");
 input.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
-        document.getElementById("sendButton").click();
+        document.getElementById("sendbutton").click();
         input.value = '';
     }
 });
