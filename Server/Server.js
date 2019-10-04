@@ -69,24 +69,25 @@ server.on('connection', function connection(socket, req) {
     var secondarydata = splitmessage[2];
     switch (actioncode) {
       case PLAINTEXT:
-        console.log('PLAINTEXT.');
+        console.log('PLAINTEXT BROADCAST.');
+        broadcast(PLAINTEXT, primarydata);
         break;
       case REGISTER:
         console.log('CANT REGISTER WHILE LOGGED IN.');
-        send('Log out before registering.');
+        send(PLAINTEXT, 'Log out before registering.');
         break;
       case LOGIN:
         console.log('ALREADY LOGGED IN.');
-        send('You are already logged in.');
+        send(PLAINTEXT, 'You are already logged in.');
         break;
       case CLIENT_TO_SERVER_COORDS:
         console.log('COORDS.');
-        // DO SOMETHING
-        send('Co-ords received.');
+        excludingbroadcast(SERVER_TO_CLIENT_COORDS + ';' + username + ';' + 12 + ';' + 34);
+        send(PLAINTEXT, 'Co-ords received.');
         break;
       default:
         console.log('INVALID ACTION CODE.');
-        send('Invalid response received.');
+        send(PLAINTEXT, 'Invalid response received.');
         break;
     }
   }
@@ -99,11 +100,12 @@ server.on('connection', function connection(socket, req) {
     var secondarydata = splitmessage[2];
     switch (actioncode) {
       case PLAINTEXT:
-        console.log('PLAINTEXT.');
+        console.log('PLAINTEXT BLOCKED.');
+        send(PLAINTEXT, 'Log in to send messages.');
         break;
       case REGISTER:
         console.log('REGISTERING NOT AVAILABLE YET.');
-        send('Not available yet.');
+        send(PLAINTEXT, 'Not available yet.');
         break;
       case LOGIN:
         // Try to verify
@@ -111,34 +113,42 @@ server.on('connection', function connection(socket, req) {
           console.log('VERIFY SUCCESS.');
           state = VERIFIED;
           username = primarydata;
-          send('Hello ' + username + '. You are now logged in.');
+          send(PLAINTEXT, 'Hello ' + username + '. You are now logged in.');
         } else {
           console.log('VERIFY FAILURE.');
-          send('Verification failed.');
+          send(PLAINTEXT, 'Verification failed.');
         }
       break;
       case CLIENT_TO_SERVER_COORDS:
         console.log('UNVERIFIED COORDS.');
-        send('Please log in first.');
+        send(PLAINTEXT, 'Please log in first.');
         break;
       default:
         console.log('INVALID ACTION CODE.');
-        send('Invalid response received.');
+        send(PLAINTEXT, 'Invalid response received.');
         break;
     }
   }
 
   // Send message
-  function send(message) {
+  function send(type, message) {
     console.log(req.connection.remoteAddress, ' < ', message);
-    socket.send(message);
+    socket.send(type + ';' + message);
   }
 
   // Send to all
-  function broadcast(message) {
+  function broadcast(type, message) {
     console.log('ALL < ', message);
     server.clients.forEach(function(client) {
-      client.send(username + ': ' + message);
+      client.send(type + ';' + username + ': ' + message);
+    });
+  }
+
+  // Send to all but self
+  function excludingbroadcast(type, message) {
+    console.log('ALL < ', message);
+    server.clients.forEach(function(client) {
+      if (client !== socket) client.send(type + ';' + username + ': ' + message);
     });
   }
 

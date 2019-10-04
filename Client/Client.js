@@ -9,21 +9,32 @@ const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 
 // Create WebSocket
-const socket = new WebSocket('ws://137.195.213.16:8001'); // --MSI Heriot-Watt
+const socket = new WebSocket('ws://137.195.212.98:8001'); // --MSI Heriot-Watt
 //const socket = new WebSocket('ws://192.168.0.38:8001'); // --MSI Home
 
-// EVENTS
+// PRIVATE EVENTS
 // Connection event
 socket.onopen = function () {
-    console.log('Server connection established.');
+  console.log('Server connection established.');
 };
 // Error event
 socket.onerror = function (error) {
-    console.log('Error: ', error);
+  console.log('Error: ', error);
 };
 // Message event
 socket.onmessage = function (e) {
-    console.log('Received: ', e.data);
+  var splitmessage = e.data.split(';');
+  var actioncode = splitmessage[0];
+  var primarydata = splitmessage[1];
+  var secondarydata = splitmessage[2];
+  var tertiarydata  = splitmessage[3];
+  switch (actioncode) {
+    case PLAINTEXT:
+      console.log('Server: ', primarydata);
+      break;
+    case SERVER_TO_CLIENT_COORDS:
+      oncoords(primarydata, secondarydata, tertiarydata);
+  }
 };
 
 // PRIVATE METHODS
@@ -34,9 +45,31 @@ function internalsend(message) {
 }
 
 // PUBLIC METHODS
+// Send message to all
+function sendmessage(message) {
+  internalsend(PLAINTEXT + ';' + message);
+}
+
+// Send register request
+function  register(username, password) {
+  internalsend(REGISTER + ';' + username + ';' + password);
+}
+
 // Send login request
 function  login(username, password) {
   internalsend(LOGIN + ';' + username + ';' + password);
+}
+
+// Send co-ordinates
+function  sendcoords(x, y) {
+  internalsend(CLIENT_TO_SERVER_COORDS + ';' + x + ';' + y);
+}
+
+// PUBLIC EVENTS
+// Receive Co-ordinates
+function oncoords(user, x, y) {
+  console.log(user, ' Co-ordinates: X=', x, ' Y=', y);
+  // ADD EVENT HERE
 }
 
 
