@@ -1,4 +1,3 @@
-
 // SOCKET INTERFACE
 
 // Action codes // Keep synced with server codes
@@ -15,26 +14,26 @@ const socket = new WebSocket('ws://137.195.212.98:8001'); // --MSI Heriot-Watt
 // PRIVATE EVENTS
 // Connection event
 socket.onopen = function () {
-  console.log('Server connection established.');
+    console.log('Server connection established.');
 };
 // Error event
 socket.onerror = function (error) {
-  console.log('Error: ', error);
+    console.log('Error: ', error);
 };
 // Message event
 socket.onmessage = function (e) {
-  var splitmessage = e.data.split(';');
-  var actioncode = splitmessage[0];
-  var primarydata = splitmessage[1];
-  var secondarydata = splitmessage[2];
-  var tertiarydata  = splitmessage[3];
-  switch (actioncode) {
-    case PLAINTEXT:
-      console.log('Server: ', primarydata);
-      break;
-    case SERVER_TO_CLIENT_COORDS:
-      oncoords(primarydata, secondarydata, tertiarydata);
-  }
+    var splitmessage = e.data.split(';');
+    var actioncode = splitmessage[0];
+    var primarydata = splitmessage[1];
+    var secondarydata = splitmessage[2];
+    var tertiarydata = splitmessage[3];
+    switch (actioncode) {
+        case PLAINTEXT:
+            console.log('Server: ', primarydata);
+            break;
+        case SERVER_TO_CLIENT_COORDS:
+            oncoords(primarydata, secondarydata, tertiarydata);
+    }
 };
 
 // PRIVATE METHODS
@@ -47,29 +46,29 @@ function internalsend(message) {
 // PUBLIC METHODS
 // Send message to all
 function sendmessage(message) {
-  internalsend(PLAINTEXT + ';' + message);
+    internalsend(PLAINTEXT + ';' + message);
 }
 
 // Send register request
-function  register(username, password) {
-  internalsend(REGISTER + ';' + username + ';' + password);
+function register(username, password) {
+    internalsend(REGISTER + ';' + username + ';' + password);
 }
 
 // Send login request
-function  login(username, password) {
-  internalsend(LOGIN + ';' + username + ';' + password);
+function login(username, password) {
+    internalsend(LOGIN + ';' + username + ';' + password);
 }
 
 // Send co-ordinates
-function  sendcoords(x, y) {
-  internalsend(CLIENT_TO_SERVER_COORDS + ';' + x + ';' + y);
+function sendcoords(x, y) {
+    internalsend(CLIENT_TO_SERVER_COORDS + ';' + x + ';' + y);
 }
 
 // PUBLIC EVENTS
 // Receive Co-ordinates
 function oncoords(user, x, y) {
-  console.log(user, ' Co-ordinates: X=', x, ' Y=', y);
-  // ADD EVENT HERE
+    console.log(user, ' Co-ordinates: X=', x, ' Y=', y);
+    // ADD EVENT HERE
 }
 
 
@@ -116,26 +115,32 @@ function btnPress() {
     })();
 }
 
-function submitBtnPress(){
+function submitBtnPress() {
 
-    var r = document.getElementById("UserLogin").style
+    var usrName = document.getElementById("UsernameInput").value;
+    var usrPsswd = document.getElementById("UsernamePassword").value;
 
-    r.opacity = 1;
-    changeBg("grey");
 
-    (function fade() {
-        (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
-    })();
+    if (usrName != "" && usrPsswd != "") {
+        login(usrName, usrPsswd);
+        
+        var r = document.getElementById("UserLogin").style;
 
-    var table = "<table><tr><th>Username</th><th>Score</th></tr></table>";
+        r.opacity = 1;
+        changeBg("grey");
 
-    var element = document.getElementById("Leaderboard").innerHTML = table;
-    var message = document.getElementById("UsernameInput").value;
-    var message = document.getElementById("UsernamePassport").value;
-    var message = document.getElementById("UsernameNationality").value;
-    sendmessage(message);
+        (function fade() {
+            (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
+        })();
+
+        var table = "<table><tr><th>Username</th><th>Score</th></tr></table>";
+
+        var element = document.getElementById("Leaderboard").innerHTML = table;
+    } else{
+        alert("You must enter username and password");
+    }
 }
 
-function changeBg(color){
+function changeBg(color) {
     document.body.style.background = color;
 }

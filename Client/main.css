@@ -6,6 +6,8 @@ body {
     overflow: hidden;
     overscroll-behavior: none;
     background-image: linear-gradient(to bottom right, green, lightgreen);
+    height: 100%;
+    width: 100%;
 }
 
 /* To allow the the line that breaks the description of the game and the creators to go across the whole screen*/
