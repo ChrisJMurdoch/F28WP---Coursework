@@ -12,6 +12,7 @@
   "dependencies": {
     "async": "^3.1.0",
     "limiter": "^1.1.4",
+    "mssql": "^5.1.0",
     "ws": "^7.1.2"
   }
 }
