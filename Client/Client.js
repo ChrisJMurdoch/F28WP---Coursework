@@ -119,23 +119,24 @@ function submitBtnPress() {
 
     var usrName = document.getElementById("UsernameInput").value;
     var usrPsswd = document.getElementById("UsernamePassword").value;
-
-
+    
     if (usrName != "" && usrPsswd != "") {
         login(usrName, usrPsswd);
         
         var r = document.getElementById("UserLogin").style;
-
         r.opacity = 1;
+        
         changeBg("grey");
 
         (function fade() {
             (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
         })();
-
-        var table = "<table><tr><th>Username</th><th>Score</th></tr></table>";
-
-        var element = document.getElementById("Leaderboard").innerHTML = table;
+        
+        var table = document.getElementById("Leaderboard").style.visibility = "visible";
+        (function fade() {
+            (table.opacity += .1) < 0 ? table.display = "none" : setTimeout(fade, 70)
+        })();
+        
     } else{
         alert("You must enter username and password");
     }
