@@ -133,9 +133,10 @@ function submitBtnPress() {
         })();
         
         var table = document.getElementById("Leaderboard").style.visibility = "visible";
-        (function fade() {
-            (table.opacity += .1) < 0 ? table.display = "none" : setTimeout(fade, 70)
-        })();
+        fade(table);
+        
+        var length = document.getElementById("YourLength").style.visibility = "visible";
+        fade(length);
         
     } else{
         alert("You must enter username and password");
@@ -145,3 +146,7 @@ function submitBtnPress() {
 function changeBg(color) {
     document.body.style.background = color;
 }
+
+function fade(element) {
+    (element.opacity += .1) < 0 ? element.display = "none" : setTimeout(fade, 70)
+        };
