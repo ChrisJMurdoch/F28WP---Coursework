@@ -1,8 +1,13 @@
 
-// Use ws module
-const Webserver = require('ws');
 
-// Connection states
+
+// SETUP /////////////////
+
+// Node modules
+const Webserver = require('ws');
+const mysql = require('mysql');
+
+// Client connection states
 const OFFLINE = 0;
 const ONLINE = 1;
 const VERIFIED = 2;
@@ -14,16 +19,65 @@ const LOGIN = '2';
 const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 
-// Users
+// Users // Temporary
 const users = new Set(["Admin","Chris","Cameron","Joe","Olubi"]);
 
-// Initialise server on local port 8001
+
+
+
+// SERVER CODE /////////////////
+
+// Console settings
+const SHOW_HEARTBEAT = false;
+
+// Initialise server on port 8001
+console.log('SERVER STARTING...');
 const PORT = 8001;
 const server = new Webserver.Server({ port: PORT });
 console.log('SERVER INITIALISED ON PORT ', PORT, '\n');
 
-// SOCKET CODE
+// Drop unresponsive connections
+const interval = setInterval(function monitor() {
+  server.clients.forEach(function each(socket) {
+    if (!socket.responding) {
+      console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
+      return socket.terminate();
+    } else {
+      if (SHOW_HEARTBEAT) console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.\n');
+    }
+    socket.responding = false;
+    socket.ping();
+  });
+}, 5000);
 
+// Validate login request
+function verify(username, password) {
+  return (users.has(username) && password === 'admin');
+}
+
+
+
+// DATABASE CODE /////////////////
+
+// Create connection
+var con = mysql.createConnection({
+  host: "remotemysql.com",
+  user: "wabpUyunez",
+  password: "t6xUZXRcBF"
+});
+
+// Start connection
+console.log("CONNECTING TO DATABASE...");
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("CONNECTION TO DATABASE ESTABLISHED.\n");
+});
+
+
+
+// SOCKET CODE /////////////////
+
+// On Connection
 server.on('connection', function connection(socket, req) {
 
   // Create connection state
@@ -153,24 +207,3 @@ server.on('connection', function connection(socket, req) {
   }
 
 });
-
-// SERVER CODE
-
-const SHOW_HEARTBEAT = false;
-
-const interval = setInterval(function monitor() {
-  server.clients.forEach(function each(socket) {
-    if (!socket.responding) {
-      console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
-      return socket.terminate();
-    } else {
-      if (SHOW_HEARTBEAT) console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.\n');
-    }
-    socket.responding = false;
-    socket.ping();
-  });
-}, 5000);
-
-function verify(username, password) {
-  return (users.has(username) && password === 'admin');
-}
