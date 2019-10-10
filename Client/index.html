@@ -10,7 +10,6 @@
 
 
 <body>
-    <div class="a" id="Leaderboard"></div>
     <div id="PlayMenu">
         <h1 class="a">Snake Multiplayer</h1>
         <p class="a">
@@ -39,11 +38,31 @@
     
     <div id="UserLogin" >
         <input type="text" id="UsernameInput" placeholder="Username" />
-        <input type="text" id="UsernamePassword" placeholder="Password" />
+        <input type="password" id="UsernamePassword" placeholder="Password" />
         <input type="text" id="UsernameNationality" placeholder="Nationality" />
         <button id="PlayButton" onclick="submitBtnPress()">Submit</button>
     </div>
-
+    
+    <div class = "a" id ="Leaderboard">
+        <table>
+            <tr>
+                <caption>LEADERBOARD</caption>
+                <th>Pos</th>
+                <th>Username</th>
+                <th>Score</th>
+            </tr>
+            <tr><td>#1</td><td></td><td></td></tr>
+            <tr><td>#2</td><td></td><td></td></tr>
+            <tr><td>#3</td><td></td><td></td></tr>
+            <tr><td>#4</td><td></td><td></td></tr>
+            <tr><td>#5</td><td></td><td></td></tr>
+        </table>
+    </div>
+    
+    <div class = "a" id = "YourLength">
+        <p>your length</p>
+    </div>
+    
     <script src="Client.js"></script>
 
 </body>
