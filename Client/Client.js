@@ -33,6 +33,7 @@ socket.onmessage = function (e) {
             break;
         case SERVER_TO_CLIENT_COORDS:
             oncoords(primarydata, secondarydata, tertiarydata);
+            break;
     }
 };
 

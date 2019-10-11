@@ -124,7 +124,7 @@ server.on('connection', function connection(socket, req) {
     switch (actioncode) {
       case PLAINTEXT:
         console.log('PLAINTEXT BROADCAST.');
-        broadcast(PLAINTEXT, primarydata);
+        broadcast(PLAINTEXT, username + ': ' + primarydata);
         break;
       case REGISTER:
         console.log('CANT REGISTER WHILE LOGGED IN.');
@@ -136,7 +136,7 @@ server.on('connection', function connection(socket, req) {
         break;
       case CLIENT_TO_SERVER_COORDS:
         console.log('COORDS.');
-        excludingbroadcast(SERVER_TO_CLIENT_COORDS + ';' + username + ';' + 12 + ';' + 34);
+        excludingbroadcast(SERVER_TO_CLIENT_COORDS, username + ';' + primarydata + ';' + secondarydata);
         send(PLAINTEXT, 'Co-ords received.');
         break;
       default:
@@ -194,7 +194,7 @@ server.on('connection', function connection(socket, req) {
   function broadcast(type, message) {
     console.log('ALL < ', message);
     server.clients.forEach(function(client) {
-      client.send(type + ';' + username + ': ' + message);
+      client.send(type + ';' + message);
     });
   }
 
@@ -202,7 +202,7 @@ server.on('connection', function connection(socket, req) {
   function excludingbroadcast(type, message) {
     console.log('ALL < ', message);
     server.clients.forEach(function(client) {
-      if (client !== socket) client.send(type + ';' + username + ': ' + message);
+      if (client !== socket) client.send(type + ';' + message);
     });
   }
 
