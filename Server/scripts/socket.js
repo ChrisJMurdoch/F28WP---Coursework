@@ -1,8 +1,4 @@
 
-
-
-// SETUP /////////////////
-
 // Client connection states
 const OFFLINE = 0;
 const ONLINE = 1;
@@ -17,9 +13,6 @@ const SERVER_TO_CLIENT_COORDS = '4';
 
 // Changeable validation method
 var validation;
-
-
-// SOCKET CODE /////////////////
 
 // Set validation method
 exports.setValidation = function(method) {
