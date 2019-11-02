@@ -8,8 +8,8 @@ const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 
 // Create WebSocket
-const socket = new WebSocket('ws://137.195.109.210:8001'); // --MSI Heriot-Watt
-//const socket = new WebSocket('ws://192.168.0.38:8001'); // --MSI Home
+//const socket = new WebSocket('ws://137.195.109.210:8001'); // --MSI Heriot-Watt
+const socket = new WebSocket('ws://192.168.0.11:8001'); // --MSI Home
 
 // PRIVATE EVENTS
 // Connection event
