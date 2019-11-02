@@ -11,8 +11,9 @@ const SERV_DATA = {
 };
 const DB_DATA = {
   host: "remotemysql.com",
-  user: "Vy4bu9NFZV",
-  password: "uvriKeVAEb"
+  user: "c1uDVliS0M",
+  password: "APlVfT4Lwj",
+  database: "c1uDVliS0M"
 };
 
 // Start server
@@ -20,3 +21,8 @@ server.initialise(SERV_DATA, database);
 
 // Start database connection
 database.connect(DB_DATA);
+
+// Verify
+database.verify('Chris Murdoch', 'cm', function (result) {
+  console.log(result);
+});
