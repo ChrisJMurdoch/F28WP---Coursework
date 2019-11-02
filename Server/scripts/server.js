@@ -4,7 +4,7 @@ const ws = require('ws');
 const socket_handler = require('./socket');
 
 // Start server
-exports.initialise = function (settings, verification_agent) {
+exports.initialise = function (settings, database) {
 
   // Initialise server on port
   console.log('SERVER STARTING...');
@@ -28,6 +28,7 @@ exports.initialise = function (settings, verification_agent) {
   console.log('HEARTBEAT STARTED.\n');
 
   // Setup socket handler
-  socket_handler.setValidation(verification_agent.verify);
+  socket_handler.setDatabase(database);
+  socket_handler.setServer(server);
   server.on('connection', socket_handler.connect);
 };

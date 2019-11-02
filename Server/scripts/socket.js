@@ -11,12 +11,16 @@ const LOGIN = '2';
 const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 
-// Changeable validation method
-var validation;
+// Variables
+var database;
+var server;
 
-// Set validation method
-exports.setValidation = function(method) {
-  validation = method;
+// Setters
+exports.setDatabase = function(db) {
+  database = db;
+};
+exports.setServer = function(serv) {
+  server = serv;
 };
 
 // On Connection
@@ -73,22 +77,14 @@ exports.connect = function (socket, req) {
         send(PLAINTEXT, 'Not available yet.');
         break;
       case LOGIN:
-        // Try to verify
-        if (validation(primarydata, secondarydata)) {
-          console.log('VERIFY SUCCESS.');
-          state = VERIFIED;
-          username = primarydata;
-          send(PLAINTEXT, 'Hello ' + username + '. You are now logged in.');
-        } else {
-          console.log('VERIFY FAILURE.');
-          send(PLAINTEXT, 'Verification failed.');
-        }
+        console.log('VERIFY PENDING...');
+        validate(primarydata, secondarydata);
         break;
       case CLIENT_TO_SERVER_COORDS:
         console.log('UNVERIFIED COORDS.');
         send(PLAINTEXT, 'Please log in first.');
         break;
-        default:
+      default:
         console.log('INVALID ACTION CODE.');
         send(PLAINTEXT, 'Invalid response received.');
         break;
@@ -146,6 +142,23 @@ exports.connect = function (socket, req) {
     server.clients.forEach(function(client) {
       if (client !== socket) {
         client.send(type + ';' + message);
+      }
+    });
+  };
+
+  // Validate using database
+  validate = function(uname, password) {
+    database.verify(uname, password, function(result) {
+      if (result) {
+        state = VERIFIED;
+        username = uname;
+        console.log('VERIFY SUCCESS.');
+        send(PLAINTEXT, 'Hello ' + username + ', you are now logged in.');
+        console.log();
+      } else {
+        console.log('VERIFY FAILURE.');
+        send(PLAINTEXT, 'Log in failed.');
+        console.log();
       }
     });
   };

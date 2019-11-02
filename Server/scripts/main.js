@@ -6,7 +6,7 @@ const database = require('./database');
 // Settings
 const SERV_DATA = {
   port: 8001,
-  show_heartbeat: true,
+  show_heartbeat: false,
   heartbeat_frequency: 3000
 };
 const DB_DATA = {
@@ -16,13 +16,18 @@ const DB_DATA = {
   database: "c1uDVliS0M"
 };
 
-// Start server
-server.initialise(SERV_DATA, database);
-
 // Start database connection
-database.connect(DB_DATA);
+database.connect(DB_DATA, function() {
 
-// Verify
-database.verify('Chris Murdoch', 'cm', function (result) {
-  console.log(result);
+  // Start server
+  server.initialise(SERV_DATA, database);
+
+  // Verify
+  database.verify('Chris Murdoch', 'cm', function(success) {
+    console.log('Verified: ' + success + '\n');
+  });
+
+  // Print users
+  database.print_users();
+
 });
