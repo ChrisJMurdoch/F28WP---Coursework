@@ -14,6 +14,7 @@ const SERVER_TO_CLIENT_COORDS = '4';
 // Variables
 var database;
 var server;
+var game;
 
 // Setters
 exports.setDatabase = function(db) {
@@ -21,6 +22,9 @@ exports.setDatabase = function(db) {
 };
 exports.setServer = function(serv) {
   server = serv;
+};
+exports.setGame = function(gm) {
+  game = gm;
 };
 
 // On Connection
@@ -59,6 +63,9 @@ exports.connect = function (socket, req) {
   // On close
   socket.on('close', function close() {
     console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
+    if (state === VERIFIED) {
+      game.remove_player(username);
+    }
   });
 
   // Generate action for unverified state
@@ -112,7 +119,7 @@ exports.connect = function (socket, req) {
         break;
       case CLIENT_TO_SERVER_COORDS:
         console.log('COORDS.');
-        excludingbroadcast(SERVER_TO_CLIENT_COORDS, username + ';' + primarydata + ';' + secondarydata);
+        game.update(username, primarydata, secondarydata);
         send(PLAINTEXT, 'Co-ords received.');
         break;
       default:
@@ -154,6 +161,7 @@ exports.connect = function (socket, req) {
         username = uname;
         console.log('VERIFY SUCCESS.');
         send(PLAINTEXT, 'Hello ' + username + ', you are now logged in.');
+        game.add_player(username);
         console.log();
       } else {
         console.log('VERIFY FAILURE.');

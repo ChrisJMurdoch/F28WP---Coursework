@@ -1,7 +1,8 @@
 
 // Modules
-const server = require('./server');
 const database = require('./database');
+const server = require('./server');
+const game = require('./game');
 
 // Settings
 const SERV_DATA = {
@@ -20,14 +21,12 @@ const DB_DATA = {
 database.connect(DB_DATA, function() {
 
   // Start server
-  server.initialise(SERV_DATA, database);
+  server.initialise(SERV_DATA, database, game);
 
-  // Verify
-  database.verify('Chris Murdoch', 'cm', function(success) {
-    console.log('Verified: ' + success + '\n');
-  });
+  // Display
+  game.print();
 
-  // Print users
-  database.print_users();
+  // Run
+  game.start();
 
 });

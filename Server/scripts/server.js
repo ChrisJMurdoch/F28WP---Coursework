@@ -4,7 +4,7 @@ const ws = require('ws');
 const socket_handler = require('./socket');
 
 // Start server
-exports.initialise = function (settings, database) {
+exports.initialise = function (settings, database, game) {
 
   // Initialise server on port
   console.log('SERVER STARTING...');
@@ -30,5 +30,6 @@ exports.initialise = function (settings, database) {
   // Setup socket handler
   socket_handler.setDatabase(database);
   socket_handler.setServer(server);
+  socket_handler.setGame(game);
   server.on('connection', socket_handler.connect);
 };
