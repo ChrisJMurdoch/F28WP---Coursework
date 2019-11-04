@@ -1,7 +1,8 @@
 
 // Modules
+const ws = require('ws');
+const socket_handler = require('./socket');
 const database = require('./database');
-const server = require('./server');
 const game = require('./game');
 
 // Settings
@@ -21,7 +22,15 @@ const DB_DATA = {
 database.connect(DB_DATA, function() {
 
   // Start server
-  server.initialise(SERV_DATA, database, game);
+  console.log('SERVER STARTING...');
+  const server = new ws.Server({ port: SERV_DATA.port });
+  console.log('SERVER INITIALISED ON PORT ' + SERV_DATA.port + '.\n');
+
+  // Setup socket handler
+  socket_handler.setDatabase(database);
+  socket_handler.setServer(server, SERV_DATA);
+  socket_handler.setGame(game);
+  server.on('connection', socket_handler.connect);
 
   // Display
   game.print();

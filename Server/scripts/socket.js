@@ -14,14 +14,16 @@ const SERVER_TO_CLIENT_COORDS = '4';
 // Variables
 var database;
 var server;
+var settings;
 var game;
 
 // Setters
 exports.setDatabase = function(db) {
   database = db;
 };
-exports.setServer = function(serv) {
+exports.setServer = function(serv, sett) {
   server = serv;
+  settings = sett;
 };
 exports.setGame = function(gm) {
   game = gm;
@@ -37,6 +39,20 @@ exports.connect = function (socket, req) {
 
   // Log connection
   console.log(req.connection.remoteAddress, ' ~ CONNECTED.\n');
+
+  // Keep connection
+  console.log('STARTING HEARTBEAT...');
+  setInterval(function monitor() {
+    if (!socket.responding) {
+      console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
+      return socket.terminate();
+    } else {
+      if (settings.show_heartbeat) console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.\n');
+    }
+    socket.responding = false;
+    socket.ping();
+  }, settings.heartbeat_frequency);
+  console.log('HEARTBEAT STARTED.\n');
 
   // On message recieved
   socket.on('message', function incoming(message) {
