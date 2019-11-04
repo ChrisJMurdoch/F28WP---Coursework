@@ -32,7 +32,8 @@ socket.onmessage = function (e) {
             console.log('Server: ', primarydata);
             break;
         case SERVER_TO_CLIENT_COORDS:
-            oncoords(primarydata, secondarydata, tertiarydata);
+            splitmessage.shift();
+            oncoords(splitmessage);
             break;
     }
 };
@@ -42,35 +43,37 @@ socket.onmessage = function (e) {
 function internalsend(message) {
     console.log('Sending: ', message);
     socket.send(message);
-}
+};
 
 // PUBLIC METHODS
 // Send message to all
 function sendmessage(message) {
     internalsend(PLAINTEXT + ';' + message);
-}
+};
 
 // Send register request
 function register(username, password) {
     internalsend(REGISTER + ';' + username + ';' + password);
-}
+};
 
 // Send login request
 function login(username, password) {
     internalsend(LOGIN + ';' + username + ';' + password);
-}
+};
 
 // Send co-ordinates
 function sendcoords(x, y) {
     internalsend(CLIENT_TO_SERVER_COORDS + ';' + x + ';' + y);
-}
+};
 
 // PUBLIC EVENTS
 // Receive Co-ordinates
-function oncoords(user, x, y) {
-    console.log(user, ' Co-ordinates: X=', x, ' Y=', y);
+function oncoords(data) {
+    for (var i in data) {
+      console.log(data[i].split('@'));
+    }
     // ADD EVENT HERE
-}
+};
 
 
 

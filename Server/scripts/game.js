@@ -1,16 +1,26 @@
 
 // INTERFACES
 
-// Add player to game
+// Add player to game and return reference
 exports.add_player = function(in_name) {
   var player = new Player(in_name);
   players.push(player);
   return player;
 };
 
-// Update position
-exports.update = function (player, in_x, in_y) {
+// Create and push a request to the processing queue
+exports.update = function(player, in_x, in_y) {
   queue.push(new UpdateReq(player, in_x, in_y));
+};
+
+// Get player data
+exports.pull_update = function(in_socket, in_player) {
+  var response = '4';
+  for (var i in players) {
+    var s = ';' + players[i].name + '@' + players[i].x + '@' + players[i].y;
+    response = response + s;
+  }
+  in_socket.send(response);
 };
 
 // Remove player from game

@@ -32,20 +32,23 @@ exports.setGame = function(gm) {
 // On Connection
 exports.connect = function (socket, req) {
 
+  // Log connection
+  console.log(req.connection.remoteAddress, ' ~ CONNECTED.\n');
+
   // Create connection state
   socket.responding = true;
   var state = ONLINE;
   var username = 'DefaultUsername';
   var player;
 
-  // Log connection
-  console.log(req.connection.remoteAddress, ' ~ CONNECTED.\n');
-
   // Keep connection
   console.log('STARTING HEARTBEAT...');
   setInterval(function monitor() {
     if (!socket.responding) {
       console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
+      if (state === VERIFIED) {
+        game.remove_player(username);
+      }
       return socket.terminate();
     } else {
       if (settings.show_heartbeat) console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.\n');
@@ -137,7 +140,7 @@ exports.connect = function (socket, req) {
       case CLIENT_TO_SERVER_COORDS:
         console.log('COORDS.');
         game.update(player, primarydata, secondarydata);
-        send(PLAINTEXT, 'Co-ords received.');
+        game.pull_update(socket, player);
         break;
       default:
         console.log('INVALID ACTION CODE.');
