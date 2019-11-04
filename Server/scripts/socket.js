@@ -36,6 +36,7 @@ exports.connect = function (socket, req) {
   socket.responding = true;
   var state = ONLINE;
   var username = 'DefaultUsername';
+  var player;
 
   // Log connection
   console.log(req.connection.remoteAddress, ' ~ CONNECTED.\n');
@@ -135,7 +136,7 @@ exports.connect = function (socket, req) {
         break;
       case CLIENT_TO_SERVER_COORDS:
         console.log('COORDS.');
-        game.update(username, primarydata, secondarydata);
+        game.update(player, primarydata, secondarydata);
         send(PLAINTEXT, 'Co-ords received.');
         break;
       default:
@@ -177,7 +178,7 @@ exports.connect = function (socket, req) {
         username = uname;
         console.log('VERIFY SUCCESS.');
         send(PLAINTEXT, 'Hello ' + username + ', you are now logged in.');
-        game.add_player(username);
+        player = game.add_player(username);
         console.log();
       } else {
         console.log('VERIFY FAILURE.');

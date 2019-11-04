@@ -32,9 +32,6 @@ database.connect(DB_DATA, function() {
   socket_handler.setGame(game);
   server.on('connection', socket_handler.connect);
 
-  // Display
-  game.print();
-
   // Run
   game.start();
 
