@@ -17,7 +17,7 @@ exports.move = function(player, in_x, in_y) {
 exports.pull_update = function(in_socket, in_player) {
   var response = '4';
   for (var i in players) {
-    var s = ';' + players[i].name + '@' + players[i].x + '@' + players[i].y;
+    var s = ';' + players[i].name + '@' + Math.floor(players[i].x) + '@' + Math.floor(players[i].y);
     response = response + s;
   }
   in_socket.send(response);

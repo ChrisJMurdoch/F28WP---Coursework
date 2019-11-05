@@ -16,7 +16,7 @@ const socket = new WebSocket('ws://192.168.0.11:8001'); // --MSI Home
 // Connection event
 socket.onopen = function () {
     console.log('Server connection established.');
-    login('a', 'a');
+    // login('a', 'a');
 };
 // Error event
 socket.onerror = function (error) {
@@ -73,6 +73,7 @@ function sendcoords(x, y) {
 // PUBLIC EVENTS
 // Receive Co-ordinates
 function oncoords(data) {
+  /*
   var array = [];
   for (var i in data) {
     var split_data = data[i].split('@');
@@ -81,6 +82,29 @@ function oncoords(data) {
   }
   draw();
   tick();
+  */
+
+  outer: for (var i in data) {
+    var split_data = data[i].split('@');
+    console.log(split_data);
+    for (var s in snakes) {
+      if (snakes[s].name === split_data[0]) {
+        snakes[s].x.push(split_data[1]);
+        snakes[s].y.push(split_data[2]);
+        // console.log(snakes[i].x);
+        if (snakes[i].x.length > 200) {
+          snakes[i].x.shift();
+          snakes[i].y.shift();
+        }
+        continue outer;
+      }
+    }
+    console.log('new');
+    snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
+  }
+  draw();
+  tick();
+
 };
 
 // Login response
@@ -95,11 +119,18 @@ class Player {
     this.name = in_name;
     this.x = in_x;
     this.y = in_y;
-    this.xm = 0;
-    this.ym = 0;
   };
 };
 
+class Snake {
+  constructor(in_name, in_x, in_y) {
+    this.name = in_name;
+    this.x = [in_x];
+    this.y = [in_y];
+  };
+};
+
+var snakes = [];
 var players = [];
 var player;
 // PAGE CODE
@@ -150,8 +181,10 @@ function draw() {
     ctx.fillStyle = 'black';
     ctx.strokeRect(0, 0, 500, 500);
     ctx.fillStyle = 'white';
-    for (var i in players) {
-      ctx.fillRect(players[i].x, players[i].y, 3, 3);
+    for (var i in snakes) {
+      for (var j in snakes[i].x) {
+        ctx.fillRect(snakes[i].x[j], snakes[i].y[j], 3, 3);
+      }
     }
   }
 };
