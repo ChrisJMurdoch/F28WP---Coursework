@@ -138,7 +138,7 @@ exports.connect = function (socket, req) {
         break;
       case CLIENT_TO_SERVER_COORDS:
         console.log('COORDS.');
-        game.update(player, primarydata, secondarydata);
+        game.move(player, primarydata, secondarydata);
         game.pull_update(socket, player);
         break;
       default:

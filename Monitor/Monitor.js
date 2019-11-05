@@ -105,24 +105,22 @@ var player;
 // PAGE CODE
 
 function tick() {
+  var x_out = 0;
+  var y_out = 0;
   if (W) {
-    player.y--;
+    y_out--;
   }
   if (A) {
-    player.x--;
+    x_out--;
   }
   if (S) {
-    player.y++;
+    y_out++;
   }
   if (D) {
-    player.x++;
+    x_out++;
   }
   // Constrain
-  if (player.x < 0 || player.x > 500 || player.y < 0 || player.y > 500) {
-    player.x = 250;
-    player.y = 250;
-  }
-  sendcoords(player.x , player.y);
+  sendcoords(x_out , y_out);
 };
 
 // Set the enter key to activate send button

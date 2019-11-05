@@ -9,8 +9,8 @@ exports.add_player = function(in_name) {
 };
 
 // Create and push a request to the processing queue
-exports.update = function(player, in_x, in_y) {
-  queue.push(new UpdateReq(player, in_x, in_y));
+exports.move = function(player, in_x, in_y) {
+  queue.push(new UpdateReq(player, parseInt(in_x), parseInt(in_y)));
 };
 
 // Get player data
@@ -38,8 +38,11 @@ exports.start = function() {
     for (var i in queue) {
       if (queue.length > 0) {
         req = queue.shift();
-        req.player.x = req.x;
-        req.player.y = req.y;
+        var last = req.player.time;
+        req.player.time = Date.now();
+        var elapsed = req.player.time - last;
+        req.player.x += req.x * elapsed / 10;
+        req.player.y += req.y * elapsed / 10;
         console.log(req.player);
         console.log();
       }
@@ -65,5 +68,6 @@ class Player {
     this.name = in_name;
     this.x = Math.floor(Math.random() * 100);
     this.y = Math.floor(Math.random() * 100);
+    this.time = Date.now();
   };
 };
