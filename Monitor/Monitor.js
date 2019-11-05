@@ -16,6 +16,7 @@ const socket = new WebSocket('ws://192.168.0.11:8001'); // --MSI Home
 // Connection event
 socket.onopen = function () {
     console.log('Server connection established.');
+    login('a', 'a');
 };
 // Error event
 socket.onerror = function (error) {
@@ -75,26 +76,18 @@ function oncoords(data) {
   var array = [];
   for (var i in data) {
     var split_data = data[i].split('@');
-    // console.log(split_data);
     array.push(new Player(split_data[0], split_data[1], split_data[2]));
     players = array;
   }
+  draw();
+  tick();
 };
 
 // Login response
 function login_response(message) {
     console.log(message);
     player = new Player('ME', 250, 250);
-    var send_data = setInterval(function sd() {
-      player.x += Math.floor(Math.random() * 7) - 3;
-      player.y += Math.floor(Math.random() * 7) - 3;
-      if (player.x < 0 || player.x > 500 || player.y < 0 || player.y > 500) {
-        player.x = 250;
-        player.y = 250;
-      }
-      sendcoords(player.x , player.y);
-      draw();
-    }, 333);
+    tick();
 };
 
 class Player {
@@ -108,6 +101,16 @@ class Player {
 var players = [];
 var player;
 // PAGE CODE
+
+function tick() {
+  player.x += Math.floor(Math.random() * 7) - 3;
+  player.y += Math.floor(Math.random() * 7) - 3;
+  if (player.x < 0 || player.x > 500 || player.y < 0 || player.y > 500) {
+    player.x = 250;
+    player.y = 250;
+  }
+  sendcoords(player.x , player.y);
+};
 
 // Set the enter key to activate send button
 var input = document.getElementById("sendbox");

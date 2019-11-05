@@ -35,14 +35,16 @@ exports.remove_player = function(in_name) {
 // Main loop
 exports.start = function() {
   setInterval(function run() {
-    if (queue.length > 0) {
-      req = queue.shift();
-      req.player.x = req.x;
-      req.player.y = req.y;
-      console.log(req.player);
-      console.log();
+    for (var i in queue) {
+      if (queue.length > 0) {
+        req = queue.shift();
+        req.player.x = req.x;
+        req.player.y = req.y;
+        console.log(req.player);
+        console.log();
+      }
     }
-  }, 33);
+  }, 10);
 };
 
 // PRIVATE METHODS
