@@ -104,21 +104,20 @@ var players = [];
 var player;
 // PAGE CODE
 
-var t = 0;
 function tick() {
-  if (player.xm > 3) player.xm = 3;
-  if (player.xm < -3) player.xm = -3;
-  if (player.ym > 3) player.ym = 3;
-  if (player.ym < -3) player.ym = -3;
-  if (t > 10) {
-    t = 0;
-    player.xm += Math.floor(Math.random() * 3) - 1;
-    player.ym += Math.floor(Math.random() * 3) - 1;
-    player.x += player.xm;
-    player.y += player.ym;
-  } else {
-    t++;
+  if (W) {
+    player.y--;
   }
+  if (A) {
+    player.x--;
+  }
+  if (S) {
+    player.y++;
+  }
+  if (D) {
+    player.x++;
+  }
+  // Constrain
   if (player.x < 0 || player.x > 500 || player.y < 0 || player.y > 500) {
     player.x = 250;
     player.y = 250;
@@ -165,3 +164,41 @@ setInterval(function fps() {
 }, 1000);
 
 draw();
+
+var W = false;
+var A = false;
+var S = false;
+var D = false;
+document.onkeydown = function (e) {
+  switch(e.code) {
+    case 'KeyW' :
+      W = true;
+      break;
+    case 'KeyA' :
+      A = true;
+      break;
+    case 'KeyS' :
+      S = true;
+      break;
+    case 'KeyD' :
+      D = true;
+      break;
+  }
+};
+
+document.onkeyup = function (e) {
+  switch(e.code) {
+    case 'KeyW' :
+      W = false;
+      break;
+    case 'KeyA' :
+      A = false;
+      break;
+    case 'KeyS' :
+      S = false;
+      break;
+    case 'KeyD' :
+      D = false;
+      break;
+  }
+};
