@@ -103,8 +103,8 @@ var player;
 // PAGE CODE
 
 function tick() {
-  player.x += Math.floor(Math.random() * 7) - 3;
-  player.y += Math.floor(Math.random() * 7) - 3;
+  player.x += Math.floor(Math.random() * 3) - 1;
+  player.y += Math.floor(Math.random() * 3) - 1;
   if (player.x < 0 || player.x > 500 || player.y < 0 || player.y > 500) {
     player.x = 250;
     player.y = 250;
@@ -127,8 +127,10 @@ function sendField() {
     internalsend(message);
 }
 
+var frames = 0;
 // Draw
 function draw() {
+  frames++;
   var canvas = document.getElementById('gamecanvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
@@ -142,5 +144,10 @@ function draw() {
     }
   }
 };
+
+setInterval(function fps() {
+  document.getElementById("fps").innerHTML = 'Hz: ' + (frames);
+  frames = 0;
+}, 1000);
 
 draw();
