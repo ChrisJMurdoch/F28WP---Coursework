@@ -24,9 +24,9 @@ exports.pull_update = function(in_socket, in_player) {
 };
 
 // Remove player from game
-exports.remove_player = function(in_name) {
+exports.remove_player = function(in_player) {
   for(var i in players){
-    if ( players[i].name === in_name ) {
+    if ( players[i] === in_player ) {
      players.splice(i, 1);
     }
   }

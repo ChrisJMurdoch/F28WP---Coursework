@@ -44,7 +44,7 @@ exports.connect = function (socket, req) {
     if (!socket.responding) {
       console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
       if (state === VERIFIED) {
-        game.remove_player(username);
+        game.remove_player(player);
       }
       clearInterval(hb_monitor);
       return socket.terminate();
@@ -82,7 +82,7 @@ exports.connect = function (socket, req) {
   socket.on('close', function close() {
     console.log(socket._socket.remoteAddress, ' >< TERMINATED C.\n');
     if (state === VERIFIED) {
-      game.remove_player(username);
+      game.remove_player(player);
     }
     clearInterval(hb_monitor);
   });
