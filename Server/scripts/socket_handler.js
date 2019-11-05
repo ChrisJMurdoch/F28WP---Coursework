@@ -10,6 +10,7 @@ const REGISTER = '1';
 const LOGIN = '2';
 const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
+const LOGIN_SUCCESS = '5';
 
 // Variables
 var settings;
@@ -39,12 +40,13 @@ exports.connect = function (socket, req) {
 
   // Keep connection
   console.log('STARTING HEARTBEAT...');
-  setInterval(function monitor() {
+  var hb_monitor = setInterval(function monitor() {
     if (!socket.responding) {
       console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
       if (state === VERIFIED) {
         game.remove_player(username);
       }
+      clearInterval(hb_monitor);
       return socket.terminate();
     } else {
       if (settings.show_heartbeat) console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.\n');
@@ -78,10 +80,11 @@ exports.connect = function (socket, req) {
 
   // On close
   socket.on('close', function close() {
-    console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
+    console.log(socket._socket.remoteAddress, ' >< TERMINATED C.\n');
     if (state === VERIFIED) {
       game.remove_player(username);
     }
+    clearInterval(hb_monitor);
   });
 
   // Generate action for unverified state
@@ -176,7 +179,7 @@ exports.connect = function (socket, req) {
         state = VERIFIED;
         username = uname;
         console.log('VERIFY SUCCESS.');
-        send(PLAINTEXT, 'Hello ' + username + ', you are now logged in.');
+        send(LOGIN_SUCCESS, 'Hello ' + username + ', you are now logged in.');
         player = game.add_player(username);
         console.log();
       } else {
