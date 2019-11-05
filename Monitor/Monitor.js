@@ -95,6 +95,8 @@ class Player {
     this.name = in_name;
     this.x = in_x;
     this.y = in_y;
+    this.xm = 0;
+    this.ym = 0;
   };
 };
 
@@ -102,9 +104,21 @@ var players = [];
 var player;
 // PAGE CODE
 
+var t = 0;
 function tick() {
-  player.x += Math.floor(Math.random() * 3) - 1;
-  player.y += Math.floor(Math.random() * 3) - 1;
+  if (player.xm > 3) player.xm = 3;
+  if (player.xm < -3) player.xm = -3;
+  if (player.ym > 3) player.ym = 3;
+  if (player.ym < -3) player.ym = -3;
+  if (t > 10) {
+    t = 0;
+    player.xm += Math.floor(Math.random() * 3) - 1;
+    player.ym += Math.floor(Math.random() * 3) - 1;
+    player.x += player.xm;
+    player.y += player.ym;
+  } else {
+    t++;
+  }
   if (player.x < 0 || player.x > 500 || player.y < 0 || player.y > 500) {
     player.x = 250;
     player.y = 250;
