@@ -12,20 +12,16 @@ const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 
 // Variables
+var settings;
 var database;
 var server;
-var settings;
 var game;
 
-// Setters
-exports.setDatabase = function(db) {
-  database = db;
-};
-exports.setServer = function(serv, sett) {
-  server = serv;
+// Startup
+exports.initialise = function(sett, db, serv, gm) {
   settings = sett;
-};
-exports.setGame = function(gm) {
+  database = db;
+  server = serv;
   game = gm;
 };
 
