@@ -43,8 +43,8 @@ exports.start = function() {
         var elapsed = req.player.time - last;
         req.player.x += req.x * elapsed / 10;
         req.player.y += req.y * elapsed / 10;
-        console.log(req.player);
-        console.log();
+        //console.log(req.player);
+        //console.log();
       }
     }
   }, 10);

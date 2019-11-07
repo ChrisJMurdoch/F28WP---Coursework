@@ -47,7 +47,8 @@ exports.connect = function (socket, req) {
         game.remove_player(player);
       }
       clearInterval(hb_monitor);
-      return socket.terminate();
+      socket.terminate();
+      return;
     } else {
       if (settings.show_heartbeat) console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.\n');
     }
@@ -59,16 +60,16 @@ exports.connect = function (socket, req) {
   // On message recieved
   socket.on('message', function incoming(message) {
     // Log message
-    console.log(req.connection.remoteAddress,' > ', message);
+    //console.log(req.connection.remoteAddress,' > ', message);
     // Process
     switch (state) {
       case ONLINE:
         unverifiedDetermine(message, socket);
-        console.log();
+        //console.log();
         break;
       case VERIFIED:
         verifiedDetermine(message, socket);
-        console.log();
+        //console.log();
         break;
     }
   });
@@ -137,7 +138,7 @@ exports.connect = function (socket, req) {
         send(PLAINTEXT, 'You are already logged in.');
         break;
       case CLIENT_TO_SERVER_COORDS:
-        console.log('COORDS.');
+        //console.log('COORDS.');
         game.move(player, primarydata, secondarydata);
         game.pull_update(socket, player);
         break;
