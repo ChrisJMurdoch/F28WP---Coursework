@@ -1,6 +1,7 @@
 
 // Modules
-const database = require('./database');
+//const database = require('./database');
+const database = require('./offlinedb');
 const ws = require('ws');
 const socket_handler = require('./socket_handler');
 const game = require('./game');
