@@ -10,7 +10,7 @@ const LOGIN_SUCCESS = '5';
 
 // Create WebSocket
 //const socket = new WebSocket('ws://137.195.109.210:8001'); // --MSI Heriot-Watt
-const socket = new WebSocket('ws://137.195.108.203:8001'); // --MSI Home
+const socket = new WebSocket('ws://137.195.110.134:8001'); // --MSI Home
 
 // PRIVATE EVENTS
 // Connection event
@@ -182,9 +182,14 @@ function draw() {
     ctx.strokeRect(0, 0, 500, 500);
     ctx.fillStyle = 'white';
     for (var i in snakes) {
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.moveTo(snakes[i].x[0], snakes[i].y[0]);
       for (var j in snakes[i].x) {
-        ctx.fillRect(snakes[i].x[j], snakes[i].y[j], 3, 3);
+        ctx.lineTo(snakes[i].x[j], snakes[i].y[j]);
       }
+      ctx.strokeStyle = "white";
+      ctx.stroke();
     }
   }
 };
