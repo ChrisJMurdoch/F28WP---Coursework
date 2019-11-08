@@ -208,36 +208,14 @@ var W = false;
 var A = false;
 var S = false;
 var D = false;
-document.onkeydown = function (e) {
-  switch(e.code) {
-    case 'KeyW' :
-      W = true;
-      break;
-    case 'KeyA' :
-      A = true;
-      break;
-    case 'KeyS' :
-      S = true;
-      break;
-    case 'KeyD' :
-      D = true;
-      break;
+setInterval(function fps() {
+  if (Math.random() > 0.75) {
+    W = !W;
+  } else if (Math.random() > 0.5) {
+    A = !A;
+  } else if (Math.random() > 0.25) {
+    S = !S;
+  } else {
+    D = !D;
   }
-};
-
-document.onkeyup = function (e) {
-  switch(e.code) {
-    case 'KeyW' :
-      W = false;
-      break;
-    case 'KeyA' :
-      A = false;
-      break;
-    case 'KeyS' :
-      S = false;
-      break;
-    case 'KeyD' :
-      D = false;
-      break;
-  }
-};
+}, 500);

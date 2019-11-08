@@ -13,7 +13,7 @@ exports.connect = function(DB_DATA, callback) {
 };
 
 // Database validation
-var user_array = ['Chris', 'Cameron', 'Olubi', 'Joe', 'Admin'];
+var user_array = ['Chris', 'Cameron', 'Olubi', 'Joe', 'Admin', 'a', 'b', 'c', 'd', 'e'];
 exports.verify = function(username, password, callback) {
   for (var i in user_array) {
     if (user_array[i] === username && password === 'abc') {

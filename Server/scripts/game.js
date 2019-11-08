@@ -43,6 +43,16 @@ exports.start = function() {
         var elapsed = req.player.time - last;
         req.player.x += req.x * elapsed / 10;
         req.player.y += req.y * elapsed / 10;
+        if (req.player.x < 0) {
+          req.player.x = 500;
+        } else if (req.player.x > 500) {
+          req.player.x = 0;
+        }
+        if (req.player.y < 0) {
+          req.player.y = 500;
+        } else if (req.player.y > 500) {
+          req.player.y = 0;
+        }
         //console.log(req.player);
         //console.log();
       }
