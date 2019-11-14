@@ -8,8 +8,8 @@ const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 
 // Create WebSocket
-//const socket = new WebSocket('ws://137.195.109.210:8001'); // --MSI Heriot-Watt
-const socket = new WebSocket('ws://192.168.0.11:8001'); // --MSI Home
+const socket = new WebSocket('ws://137.195.110.187:8001'); // --MSI Heriot-Watt
+//const socket = new WebSocket('ws://192.168.0.11:8001'); // --MSI Home
 
 // PRIVATE EVENTS
 // Connection event
@@ -146,6 +146,34 @@ function submitBtnPress() {
         alert("You must enter username and password");
     }
 }
+
+function registerBtnPress() {
+
+    var usrName = document.getElementById("UsernameInput").value;
+    var usrPsswd = document.getElementById("UsernamePassword").value;
+
+    if (usrName != "" && usrPsswd != ""){
+      register(usrName, usrPsswd);
+
+        var r = document.getElementById("UserLogin").style;
+        r.opacity = 1;
+
+        changeBg("grey");
+
+        (function fade() {
+            (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
+        })();
+
+        var table = document.getElementById("Leaderboard").style.visibility = "visible";
+        fade(table);
+
+        var length = document.getElementById("YourLength").style.visibility = "visible";
+        fade(length);
+
+    } else{
+        alert("You must enter username and password");
+    }
+  }
 
 function changeBg(color) {
     document.body.style.background = color;
