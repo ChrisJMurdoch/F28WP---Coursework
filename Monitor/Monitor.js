@@ -10,7 +10,7 @@ const LOGIN_SUCCESS = '5';
 
 // Create WebSocket
 //const socket = new WebSocket('ws://137.195.109.210:8001'); // --MSI Heriot-Watt
-const socket = new WebSocket('ws://137.195.110.134:8001'); // --MSI Home
+const socket = new WebSocket('ws://137.195.110.187:8001'); // --MSI Home
 
 // PRIVATE EVENTS
 // Connection event
@@ -45,7 +45,7 @@ socket.onmessage = function (e) {
 // PRIVATE METHODS
 // Send to server // Only for interface use
 function internalsend(message) {
-    // console.log('Sending: ', message);
+    console.log('Sending: ', message);
     socket.send(message);
 };
 

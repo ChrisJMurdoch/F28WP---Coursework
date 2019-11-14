@@ -34,17 +34,17 @@ exports.connect = function (socket, req) {
 
   // Create connection state
   socket.responding = true;
-  var state = ONLINE;
-  var username = 'DefaultUsername';
-  var player;
+  socket.state = ONLINE;
+  socket.username = 'DefaultUsername';
+  socket.player;
 
   // Keep connection
   console.log('STARTING HEARTBEAT...');
   var hb_monitor = setInterval(function monitor() {
     if (!socket.responding) {
       console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
-      if (state === VERIFIED) {
-        game.remove_player(player);
+      if (socket.state === VERIFIED) {
+        game.remove_player(socket.player);
       }
       clearInterval(hb_monitor);
       socket.terminate();
@@ -62,7 +62,7 @@ exports.connect = function (socket, req) {
     // Log message
     //console.log(req.connection.remoteAddress,' > ', message);
     // Process
-    switch (state) {
+    switch (socket.state) {
       case ONLINE:
         unverifiedDetermine(message, socket);
         //console.log();
@@ -82,8 +82,8 @@ exports.connect = function (socket, req) {
   // On close
   socket.on('close', function close() {
     console.log(socket._socket.remoteAddress, ' >< TERMINATED C.\n');
-    if (state === VERIFIED) {
-      game.remove_player(player);
+    if (socket.state === VERIFIED) {
+      game.remove_player(socket.player);
     }
     clearInterval(hb_monitor);
   });
@@ -96,7 +96,8 @@ exports.connect = function (socket, req) {
     var secondarydata = splitmessage[2];
     switch (actioncode) {
       case PLAINTEXT:
-        console.log('PLAINTEXT BLOCKED.');
+        //console.log('PLAINTEXT BLOCKED.');
+        console.log(socket.username + ' - ' + req.connection.remoteAddress);
         send(PLAINTEXT, 'Log in to send messages.');
         break;
       case REGISTER:
@@ -105,6 +106,7 @@ exports.connect = function (socket, req) {
         break;
       case LOGIN:
         console.log('VERIFY PENDING...');
+        console.log(socket.player + ' - login un - ' + req.connection.remoteAddress)
         validate(primarydata, secondarydata);
         break;
       case CLIENT_TO_SERVER_COORDS:
@@ -126,8 +128,9 @@ exports.connect = function (socket, req) {
     var secondarydata = splitmessage[2];
     switch (actioncode) {
       case PLAINTEXT:
-        console.log('PLAINTEXT BROADCAST.');
-        broadcast(PLAINTEXT, username + ': ' + primarydata);
+        //console.log('PLAINTEXT BROADCAST.');
+        console.log(socket.username + ' - ' + req.connection.remoteAddress);
+        //broadcast(PLAINTEXT, socket.username + ': ' + primarydata);
         break;
       case REGISTER:
         console.log('CANT REGISTER WHILE LOGGED IN.');
@@ -139,8 +142,9 @@ exports.connect = function (socket, req) {
         break;
       case CLIENT_TO_SERVER_COORDS:
         //console.log('COORDS.');
-        game.move(player, primarydata, secondarydata);
-        game.pull_update(socket, player);
+        //console.log(socket.player.name + ' - ' + req.connection.remoteAddress);
+        game.move(socket.player, primarydata, secondarydata);
+        game.pull_update(socket, socket.player);
         break;
       default:
         console.log('INVALID ACTION CODE.');
@@ -174,14 +178,16 @@ exports.connect = function (socket, req) {
   };
 
   // Validate using database
-  validate = function(uname, password) {
+  var validate = function(uname, password) {
+    console.log(socket.player + ' - login t - ' + req.connection.remoteAddress)
     database.verify(uname, password, function(result) {
       if (result) {
-        state = VERIFIED;
-        username = uname;
+        socket.state = VERIFIED;
+        socket.username = uname;
         console.log('VERIFY SUCCESS.');
-        send(LOGIN_SUCCESS, 'Hello ' + username + ', you are now logged in.');
-        player = game.add_player(username);
+        send(LOGIN_SUCCESS, 'Hello ' + socket.username + ', you are now logged in.');
+        socket.player = game.add_player(socket.username);
+        console.log(socket.player + ' - login s - ' + req.connection.remoteAddress)
         console.log();
       } else {
         console.log('VERIFY FAILURE.');
@@ -190,4 +196,5 @@ exports.connect = function (socket, req) {
       }
     });
   };
+  console.log('listener setup');
 };
