@@ -10,10 +10,10 @@ exports.connect = function(DB_DATA, callback) {
   // Create connection
   db_connection = mysql.createConnection(DB_DATA);
   // Start connection
-  console.log("CONNECTING TO DATABASE...");
+  console.log("CONNECTING TO GAME DATABASE...");
   db_connection.connect(function(err) {
     if (err) throw err;
-    console.log("CONNECTION TO DATABASE ESTABLISHED.\n");
+    console.log("CONNECTION TO GAME DATABASE ESTABLISHED.\n");
     callback();
   });
 };
