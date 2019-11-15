@@ -1,5 +1,14 @@
 
 // INTERFACES
+// Check if player exists
+exports.has_player = function(in_name) {
+  for(var i in players){
+    if ( players[i].name === in_name ) {
+     return true;
+    }
+  }
+  return false;
+};
 
 // Add player to game and return reference
 exports.add_player = function(in_name) {

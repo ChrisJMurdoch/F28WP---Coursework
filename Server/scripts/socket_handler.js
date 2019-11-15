@@ -97,7 +97,7 @@ exports.connect = function (socket, req) {
     switch (actioncode) {
       case PLAINTEXT:
         //console.log('PLAINTEXT BLOCKED.');
-        console.log(socket.username + ' - ' + req.connection.remoteAddress);
+        //console.log(socket.username + ' - ' + req.connection.remoteAddress);
         send(PLAINTEXT, 'Log in to send messages.');
         break;
       case REGISTER:
@@ -106,7 +106,7 @@ exports.connect = function (socket, req) {
         break;
       case LOGIN:
         console.log('VERIFY PENDING...');
-        console.log(socket.player + ' - login un - ' + req.connection.remoteAddress)
+        //console.log(socket.player + ' - login un - ' + req.connection.remoteAddress)
         validate(primarydata, secondarydata);
         break;
       case CLIENT_TO_SERVER_COORDS:
@@ -129,7 +129,7 @@ exports.connect = function (socket, req) {
     switch (actioncode) {
       case PLAINTEXT:
         //console.log('PLAINTEXT BROADCAST.');
-        console.log(socket.username + ' - ' + req.connection.remoteAddress);
+        //console.log(socket.username + ' - ' + req.connection.remoteAddress);
         //broadcast(PLAINTEXT, socket.username + ': ' + primarydata);
         break;
       case REGISTER:
@@ -155,7 +155,7 @@ exports.connect = function (socket, req) {
 
   // Send message
   function send(type, message) {
-    console.log(req.connection.remoteAddress, ' < ', message);
+    //console.log(req.connection.remoteAddress, ' < ', message);
     socket.send(type + ';' + message);
   };
 
@@ -179,15 +179,20 @@ exports.connect = function (socket, req) {
 
   // Validate using database
   var validate = function(uname, password) {
-    console.log(socket.player + ' - login t - ' + req.connection.remoteAddress)
+    //console.log(socket.player + ' - login t - ' + req.connection.remoteAddress)
     database.verify(uname, password, function(result) {
       if (result) {
+        if (game.has_player(uname)) {
+          console.log('VERIFY DUPLICATION.');
+          send(PLAINTEXT, 'This user is already logged in.');
+          return;
+        }
         socket.state = VERIFIED;
         socket.username = uname;
         console.log('VERIFY SUCCESS.');
         send(LOGIN_SUCCESS, 'Hello ' + socket.username + ', you are now logged in.');
         socket.player = game.add_player(socket.username);
-        console.log(socket.player + ' - login s - ' + req.connection.remoteAddress)
+        //console.log(socket.player + ' - login s - ' + req.connection.remoteAddress)
         console.log();
       } else {
         console.log('VERIFY FAILURE.');
@@ -196,5 +201,4 @@ exports.connect = function (socket, req) {
       }
     });
   };
-  console.log('listener setup');
 };
