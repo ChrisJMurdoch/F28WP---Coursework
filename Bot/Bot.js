@@ -128,17 +128,19 @@ var player;
 function tick() {
   var x_out = 0;
   var y_out = 0;
-  if (W) {
-    y_out--;
-  }
-  if (A) {
-    x_out--;
-  }
-  if (S) {
-    y_out++;
-  }
-  if (D) {
-    x_out++;
+  switch (key) {
+    case 'w':
+      y_out--;
+      break;
+    case 'a':
+      x_out--;
+      break;
+    case 's':
+      y_out++;
+      break;
+    case 'd':
+      x_out++;
+      break;
   }
   // Constrain
   sendcoords(x_out , y_out);
@@ -166,9 +168,9 @@ function draw() {
   var canvas = document.getElementById('gamecanvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'navy';
-    ctx.fillRect(0, 0, 500, 500);
     ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, 500, 500);
+    ctx.fillStyle = 'white';
     ctx.strokeRect(0, 0, 500, 500);
     ctx.fillStyle = 'white';
     for (var i in snakes) {
@@ -208,14 +210,24 @@ var W = false;
 var A = false;
 var S = false;
 var D = false;
+var key = 'w';
 setInterval(function fps() {
-  if (Math.random() > 0.75) {
-    W = !W;
-  } else if (Math.random() > 0.5) {
-    A = !A;
-  } else if (Math.random() > 0.25) {
-    S = !S;
+  // Quarter chance
+  if (Math.random() > 0.5) {
+    return;
+  }
+  // Change direction
+  if (key == 'w' || key == 's') {
+    if (Math.random() > 0.5) {
+      key = 'a';
+    } else {
+      key = 'd';
+    }
   } else {
-    D = !D;
+    if (Math.random() > 0.5) {
+      key = 'w';
+    } else {
+      key = 's';
+    }
   }
 }, 500);

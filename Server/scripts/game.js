@@ -1,4 +1,6 @@
 
+const TICK_PERIOD = 10; // in milliseconds
+
 // INTERFACES
 // Check if player exists
 exports.has_player = function(in_name) {
@@ -32,8 +34,10 @@ exports.remove_player = function(in_player) {
 };
 
 // Main loop
+var load = [];
 exports.start = function() {
   setInterval(function run() {
+    var start_time = Date.now();
     for (var i in queue) {
       if (queue.length > 0) {
         req = queue.shift();
@@ -57,8 +61,22 @@ exports.start = function() {
         pull_update(req.soc, req.player);
       }
     }
-  }, 10);
+    var duration = Date.now() - start_time;
+    load.push(duration);
+    if (load.length > 200) {
+      load.shift();
+    }
+  }, TICK_PERIOD);
 };
+
+setInterval(function dis() {
+  var av = 0;
+  for (var i in load) {
+    av += load[i];
+  }
+  av /= load.length;
+  console.log('SERVER LOAD: ' + Math.floor(av / TICK_PERIOD * 100) + '%');
+}, 1000);
 
 // PRIVATE METHODS
 
