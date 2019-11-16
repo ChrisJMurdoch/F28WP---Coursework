@@ -143,8 +143,8 @@ exports.connect = function (socket, req) {
       case CLIENT_TO_SERVER_COORDS:
         //console.log('COORDS.');
         //console.log(socket.player.name + ' - ' + req.connection.remoteAddress);
-        game.move(socket.player, primarydata, secondarydata);
-        game.pull_update(socket, socket.player);
+        game.move(socket.player, primarydata, secondarydata, socket);
+        //game.pull_update(socket, socket.player);
         break;
       default:
         console.log('INVALID ACTION CODE.');

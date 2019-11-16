@@ -18,18 +18,8 @@ exports.add_player = function(in_name) {
 };
 
 // Create and push a request to the processing queue
-exports.move = function(player, in_x, in_y) {
-  queue.push(new UpdateReq(player, parseInt(in_x), parseInt(in_y)));
-};
-
-// Get player data
-exports.pull_update = function(in_socket, in_player) {
-  var response = '4';
-  for (var i in players) {
-    var s = ';' + players[i].name + '@' + Math.floor(players[i].x) + '@' + Math.floor(players[i].y);
-    response = response + s;
-  }
-  in_socket.send(response);
+exports.move = function(player, in_x, in_y, in_socket) {
+  queue.push(new UpdateReq(player, parseInt(in_x), parseInt(in_y), in_socket));
 };
 
 // Remove player from game
@@ -64,6 +54,7 @@ exports.start = function() {
         }
         //console.log(req.player);
         //console.log();
+        pull_update(req.soc, req.player);
       }
     }
   }, 10);
@@ -71,14 +62,25 @@ exports.start = function() {
 
 // PRIVATE METHODS
 
+// Get player data
+pull_update = function(in_socket, in_player) {
+  var response = '4';
+  for (var i in players) {
+    var s = ';' + players[i].name + '@' + Math.floor(players[i].x) + '@' + Math.floor(players[i].y);
+    response = response + s;
+  }
+  in_socket.send(response);
+};
+
 var players = [];
 var queue = [];
 
 class UpdateReq {
-  constructor (in_player, in_x, in_y) {
+  constructor (in_player, in_x, in_y, in_socket) {
     this.player = in_player;
     this.x = in_x;
     this.y = in_y;
+    this.soc = in_socket;
   };
 };
 

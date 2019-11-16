@@ -81,11 +81,7 @@ function oncoords(data) {
       if (snakes[s].name === split_data[0]) {
         snakes[s].x.push(split_data[1]);
         snakes[s].y.push(split_data[2]);
-        // console.log(snakes[i].x);
-        if (snakes[i].x.length > 200) {
-          snakes[i].x.shift();
-          snakes[i].y.shift();
-        }
+        clip(snakes[i]);
         continue outer;
       }
     }
@@ -95,6 +91,14 @@ function oncoords(data) {
   draw();
   tick();
 
+};
+
+// Clip snake
+function clip(snake) {
+  if (snakes[i].x.length > 200) {
+    snakes[i].x.shift();
+    snakes[i].y.shift();
+  }
 };
 
 // Login response
