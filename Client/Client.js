@@ -126,25 +126,15 @@ function btnPress() {
 
 function registerBtnPress() {
     
-    var s = document.getElementById("UserLogin").style;
+    var s = document.getElementById("UserLogin").style.visibility = "hidden";
     var r = document.getElementById("RegisterUser").style.visibility = "visible";
-    
-    s.opacity = 1;
-    (function fade() {
-        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
-    })();
-    
+
   }
 
 function loginBtnPress() {
     
-    var s = document.getElementById("RegisterUser").style;
+    var s = document.getElementById("RegisterUser").style = "hidden";
     var r = document.getElementById("UserLogin").style.visibility = "visible";
-    
-    s.opacity = 1;
-    (function fade() {
-        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
-    })();
     
   }
 
