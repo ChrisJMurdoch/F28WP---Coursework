@@ -162,6 +162,18 @@ function sendField() {
 }
 
 var frames = 0;
+// Sizing
+// get min size
+var w = window.innerWidth;
+var h = window.innerHeight;
+var max = w>h ? h : w;
+// Set canvas size
+document.getElementById("gamecanvas").width = max;
+document.getElementById("gamecanvas").height = max;
+// set bounds
+document.getElementById("gamecanvas").style.position = "absolute";
+document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
+document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
 // Draw
 function draw() {
   frames++;
@@ -169,9 +181,9 @@ function draw() {
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, 1820, 940);
+    ctx.fillRect(0, 0, max, max);
     ctx.fillStyle = 'white';
-    ctx.strokeRect(0, 0, 1820, 940);
+    ctx.strokeRect(0, 0, max, max);
     ctx.fillStyle = 'white';
     for (var i in snakes) {
       ctx.lineWidth = 5;
