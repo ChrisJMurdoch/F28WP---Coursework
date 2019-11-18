@@ -1,9 +1,5 @@
-
-.Window {
-  width: 500px;
-  height: 500px;
-
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
+body {
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
 }
