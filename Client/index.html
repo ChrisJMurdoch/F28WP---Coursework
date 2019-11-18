@@ -11,13 +11,13 @@
 
 <body>
     <div id="PlayMenu">
-        <h1 class="a">Snake Multiplayer</h1>
+        <h1 class="a">TRON Multiplayer</h1>
         <p class="a">
-            Eat the coloured pellets to grow longer
+            Use the W-A-S-D keys to move your player
             <br />
-            Become the biggest snake on the server
+            Cut players off with your trail and be the
             <br />
-            Use the W-A-S-D keys to move your snake
+            last player standing
         </p>
         <hr />
         <p class="a">
@@ -40,28 +40,14 @@
     <div id="UserLogin" >
         <input type="text" id="UsernameInput" placeholder="Username" />
         <input type="password" id="UsernamePassword" placeholder="Password" />
-        <button id="PlayButton" onclick="submitBtnPress()">Submit</button>
+        <button id="PlayButton" onclick="submitBtnPress()">Sign In</button>
         <button id="RegisterButton" onclick="registerBtnPress()">Register</button>
     </div>
-
-    <div class = "a" id ="Leaderboard">
-        <table>
-            <tr>
-                <caption>LEADERBOARD</caption>
-                <th>Pos</th>
-                <th>Username</th>
-                <th>Score</th>
-            </tr>
-            <tr><td>#1</td><td></td><td></td></tr>
-            <tr><td>#2</td><td></td><td></td></tr>
-            <tr><td>#3</td><td></td><td></td></tr>
-            <tr><td>#4</td><td></td><td></td></tr>
-            <tr><td>#5</td><td></td><td></td></tr>
-        </table>
-    </div>
-
-    <div class = "a" id = "YourLength">
-        <p>your length</p>
+    
+    <div id="RegisterUser" >
+        <input type="text" id="UsernameInput" placeholder="Username" />
+        <input type="password" id="UsernamePassword" placeholder="Password" />
+        <button id="PlayButton" onclick="submitBtnPress()">Create Acount</button>
     </div>
 
     <script src="Client.js"></script>
