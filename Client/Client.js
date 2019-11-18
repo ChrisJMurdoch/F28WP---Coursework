@@ -94,32 +94,6 @@ function sendField() {
     internalsend(message);
 }
 
-function test() {
-    document.getElementById("PlayMenu").style.visibility = 'hidden';
-
-    var element = document.getElementById("score");
-    element.innerHTML = "Score: ";
-
-
-
-    var para = document.createElement("p");
-    var node = document.createTextNode("Score: ");
-    para.appendChild(node);
-    var element = document.getElementById("score");
-    element.appendChild(para);
-}
-
-function btnPress() {
-    var s = document.getElementById("PlayMenu").style;
-    var r = document.getElementById("UserLogin").style.visibility = "visible";
-    var m = document.getElementById("RegisterUser").style.visibility = "visible";
-
-    s.opacity = 1;
-    (function fade() {
-        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
-    })();
-}
-
 function submitBtnPress() {
 
     var usrName = document.getElementById("UsernameInput").value;
@@ -140,24 +114,38 @@ function submitBtnPress() {
     }
 }
 
+function btnPress() {
+    var s = document.getElementById("PlayMenu").style;
+    var r = document.getElementById("UserLogin").style.visibility = "visible";
+
+    s.opacity = 1;
+    (function fade() {
+        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
+    })();
+}
+
 function registerBtnPress() {
+    
+    var s = document.getElementById("UserLogin").style;
+    var r = document.getElementById("RegisterUser").style.visibility = "visible";
+    
+    s.opacity = 1;
+    (function fade() {
+        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
+    })();
+    
+  }
 
-    var usrName = document.getElementById("UsernameInput").value;
-    var usrPsswd = document.getElementById("UsernamePassword").value;
-
-    if (usrName != "" && usrPsswd != ""){
-      register(usrName, usrPsswd);
-
-        var r = document.getElementById("UserLogin").style;
-        r.opacity = 1;
-
-        (function fade() {
-            (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
-        })();
-
-    } else{
-        alert("You must enter username and password");
-    }
+function loginBtnPress() {
+    
+    var s = document.getElementById("RegisterUser").style;
+    var r = document.getElementById("UserLogin").style.visibility = "visible";
+    
+    s.opacity = 1;
+    (function fade() {
+        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
+    })();
+    
   }
 
 function fade(element) {
