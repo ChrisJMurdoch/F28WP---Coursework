@@ -112,6 +112,7 @@ function test() {
 function btnPress() {
     var s = document.getElementById("PlayMenu").style;
     var r = document.getElementById("UserLogin").style.visibility = "visible";
+    var m = document.getElementById("RegisterUser").style.visibility = "visible";
 
     s.opacity = 1;
     (function fade() {
@@ -130,17 +131,9 @@ function submitBtnPress() {
         var r = document.getElementById("UserLogin").style;
         r.opacity = 1;
 
-        changeBg("grey");
-
         (function fade() {
             (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
         })();
-
-        var table = document.getElementById("Leaderboard").style.visibility = "visible";
-        fade(table);
-
-        var length = document.getElementById("YourLength").style.visibility = "visible";
-        fade(length);
 
     } else{
         alert("You must enter username and password");
@@ -158,30 +151,15 @@ function registerBtnPress() {
         var r = document.getElementById("UserLogin").style;
         r.opacity = 1;
 
-        changeBg("grey");
-
         (function fade() {
             (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
         })();
-
-        var table = document.getElementById("Leaderboard").style.visibility = "visible";
-        fade(table);
-
-        var length = document.getElementById("YourLength").style.visibility = "visible";
-        fade(length);
 
     } else{
         alert("You must enter username and password");
     }
   }
 
-function changeBg(color) {
-    document.body.style.background = color;
-}
-//<<<<<<< HEAD
-//=======
-
 function fade(element) {
     (element.opacity += .1) < 0 ? element.display = "none" : setTimeout(fade, 70)
         };
-//>>>>>>> 121389e2cc7602f07887cd7b81868edc6d9dda58

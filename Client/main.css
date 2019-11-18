@@ -59,7 +59,7 @@ button:focus {
 }
 
 /* CSS for the input username area */
-#UserLogin input {
+#UserLogin input, #RegisterUser input {
     font-size: 17px;
     outline: none;
     border: none;
@@ -84,20 +84,18 @@ button:focus {
     visibility: hidden;
 }
 
-#Leaderboard {
+#RegisterUser {
     position: fixed;
-    top: 8px;
-    left: 8px;
-    background-color: grey;
-    padding: 12px;
-    border-radius: 3px;
-    visibility: hidden;
-}
-
-#YourLength {
-    position: fixed;
-    bottom: 8px;
-    left: 8px;
+    top: 49%;
+    left: 10%;
+    transform: translateY(-50%) translateX(-50%);
+    padding: 21px 31px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    text-align: center;
     visibility: hidden;
 }
 
