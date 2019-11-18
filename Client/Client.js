@@ -147,6 +147,7 @@ function tick() {
 };
 
 // Set the enter key to activate send button
+/*
 var input = document.getElementById("sendbox");
 input.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
@@ -154,14 +155,28 @@ input.addEventListener("keyup", function (event) {
         input.value = '';
     }
 });
-
+*/
 // Only for debugging. Do not use internalsend
+/*
 function sendField() {
     var message = document.getElementById("sendbox").value;
     internalsend(message);
 }
+*/
 
 var frames = 0;
+// Sizing
+// get min size
+var w = window.innerWidth;
+var h = window.innerHeight;
+var max = w>h ? h : w;
+// Set canvas size
+document.getElementById("gamecanvas").width = max;
+document.getElementById("gamecanvas").height = max;
+// set bounds
+document.getElementById("gamecanvas").style.position = "absolute";
+document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
+document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
 // Draw
 function draw() {
   frames++;
@@ -169,9 +184,9 @@ function draw() {
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, 1820, 940);
+    ctx.fillRect(0, 0, max, max);
     ctx.fillStyle = 'white';
-    ctx.strokeRect(0, 0, 1820, 940);
+    ctx.strokeRect(0, 0, max, max);
     ctx.fillStyle = 'white';
     for (var i in snakes) {
       ctx.lineWidth = 5;
@@ -230,19 +245,19 @@ document.onkeydown = function (e) {
 // PAGE CODE
 
 // Set the enter key to activate send button
-var input = document.getElementById("sendmessage");
-input.addEventListener("keyup", function (event) {
-    if (event.keyCode === 13) {
-        document.getElementById("sendbutton").click();
-        input.value = '';
-    }
-});
+// var input = document.getElementById("sendmessage");
+// input.addEventListener("keyup", function (event) {
+//     if (event.keyCode === 13) {
+//         document.getElementById("sendbutton").click();
+//         input.value = '';
+//     }
+// });
 
 // Only for debugging. Do not use internalsend
-function sendField() {
-    var message = document.getElementById("sendmessage").value;
-    internalsend(message);
-}
+// function sendField() {
+//     var message = document.getElementById("sendmessage").value;
+//     internalsend(message);
+// }
 
 function test() {
     document.getElementById("PlayMenu").style.visibility = 'hidden';
@@ -286,11 +301,11 @@ function submitBtnPress() {
             (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
         })();
 
-        var table = document.getElementById("Leaderboard").style.visibility = "visible";
-        fade(table);
-
-        var length = document.getElementById("YourLength").style.visibility = "visible";
-        fade(length);
+        // var table = document.getElementById("Leaderboard").style.visibility = "visible";
+        // fade(table);
+        //
+        // var length = document.getElementById("YourLength").style.visibility = "visible";
+        // fade(length);
 
     } else{
         alert("You must enter username and password");
@@ -314,11 +329,11 @@ function registerBtnPress() {
             (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
         })();
 
-        var table = document.getElementById("Leaderboard").style.visibility = "visible";
-        fade(table);
-
-        var length = document.getElementById("YourLength").style.visibility = "visible";
-        fade(length);
+        // var table = document.getElementById("Leaderboard").style.visibility = "visible";
+        // fade(table);
+        //
+        // var length = document.getElementById("YourLength").style.visibility = "visible";
+        // fade(length);
 
     } else{
         alert("You must enter username and password");
