@@ -10,7 +10,7 @@ const LOGIN_SUCCESS = '5';
 
 // Create WebSocket
 //const socket = new WebSocket('ws://137.195.109.210:8001'); // --MSI Heriot-Watt
-const socket = new WebSocket('ws://192.168.0.11:8001'); // --MSI Home
+const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --MSI Home
 
 // PRIVATE EVENTS
 // Connection event
@@ -45,7 +45,7 @@ socket.onmessage = function (e) {
 // PRIVATE METHODS
 // Send to server // Only for interface use
 function internalsend(message) {
-    console.log('Sending: ', message);
+    // console.log('Sending: ', message);
     socket.send(message);
 };
 
@@ -81,7 +81,11 @@ function oncoords(data) {
       if (snakes[s].name === split_data[0]) {
         snakes[s].x.push(split_data[1]);
         snakes[s].y.push(split_data[2]);
-        clip(snakes[i]);
+        // console.log(snakes[i].x);
+        if (snakes[i].x.length > 200) {
+          snakes[i].x.shift();
+          snakes[i].y.shift();
+        }
         continue outer;
       }
     }
@@ -91,14 +95,6 @@ function oncoords(data) {
   draw();
   tick();
 
-};
-
-// Clip snake
-function clip(snake) {
-  if (snakes[i].x.length > 200) {
-    snakes[i].x.shift();
-    snakes[i].y.shift();
-  }
 };
 
 // Login response
@@ -132,17 +128,19 @@ var player;
 function tick() {
   var x_out = 0;
   var y_out = 0;
-  if (W) {
-    y_out--;
-  }
-  if (A) {
-    x_out--;
-  }
-  if (S) {
-    y_out++;
-  }
-  if (D) {
-    x_out++;
+  switch (key) {
+    case 'w':
+      y_out--;
+      break;
+    case 'a':
+      x_out--;
+      break;
+    case 's':
+      y_out++;
+      break;
+    case 'd':
+      x_out++;
+      break;
   }
   // Constrain
   sendcoords(x_out , y_out);
@@ -170,10 +168,10 @@ function draw() {
   var canvas = document.getElementById('gamecanvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = 'navy';
-    ctx.fillRect(0, 0, 500, 500);
     ctx.fillStyle = 'black';
-    ctx.strokeRect(0, 0, 500, 500);
+    ctx.fillRect(0, 0, 1820, 940);
+    ctx.fillStyle = 'white';
+    ctx.strokeRect(0, 0, 1820, 940);
     ctx.fillStyle = 'white';
     for (var i in snakes) {
       ctx.lineWidth = 5;
@@ -208,40 +206,21 @@ setInterval(function fps() {
 
 draw();
 
-var W = false;
-var A = false;
-var S = false;
-var D = false;
+var key = 'w';
+
 document.onkeydown = function (e) {
   switch(e.code) {
     case 'KeyW' :
-      W = true;
+      key = 'w';
       break;
     case 'KeyA' :
-      A = true;
+      key = 'a';
       break;
     case 'KeyS' :
-      S = true;
+      key = 's';
       break;
     case 'KeyD' :
-      D = true;
-      break;
-  }
-};
-
-document.onkeyup = function (e) {
-  switch(e.code) {
-    case 'KeyW' :
-      W = false;
-      break;
-    case 'KeyA' :
-      A = false;
-      break;
-    case 'KeyS' :
-      S = false;
-      break;
-    case 'KeyD' :
-      D = false;
+      key = 'd';
       break;
   }
 };
