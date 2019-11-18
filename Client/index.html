@@ -6,6 +6,7 @@
     <meta name="description" content="HTML5, CSS">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="main.css" />
+    <script type="text/javascript" src="Client.js" async></script>
 </head>
 
 
@@ -43,28 +44,14 @@
         <button id="PlayButton" onclick="submitBtnPress()">Submit</button>
         <button id="RegisterButton" onclick="registerBtnPress()">Register</button>
     </div>
+    <div class="display" id="fps">Hz: </div>
 
-    <div class = "a" id ="Leaderboard">
-        <table>
-            <tr>
-                <caption>LEADERBOARD</caption>
-                <th>Pos</th>
-                <th>Username</th>
-                <th>Score</th>
-            </tr>
-            <tr><td>#1</td><td></td><td></td></tr>
-            <tr><td>#2</td><td></td><td></td></tr>
-            <tr><td>#3</td><td></td><td></td></tr>
-            <tr><td>#4</td><td></td><td></td></tr>
-            <tr><td>#5</td><td></td><td></td></tr>
-        </table>
-    </div>
+    <canvas id="gamecanvas" width="1820" height="980"></canvas>
+
 
     <div class = "a" id = "YourLength">
         <p>your length</p>
     </div>
-
-    <script src="Client.js"></script>
 
 </body>
 
