@@ -102,8 +102,13 @@ function oncoords(data) {
         continue outer;
       }
     }
-    console.log('Deleting: ' + snakes[i].name);
-    snakes.splice(i, 1);
+    if (snakes[i].name === my_name) {
+      console.log('You died.');
+      snakes.splice(i, 1);
+    } else {
+      console.log('Deleting: ' + snakes[i].name);
+      snakes.splice(i, 1);
+    }
   }
   draw();
   tick();
@@ -196,7 +201,7 @@ function draw() {
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, max, max);
     ctx.strokeStyle = "green";
-    ctx.strokeRect(0, 0, max, max);
+    ctx.strokeRect(0, 0, 500, 500);
     //ctx.fillStyle = 'white';
     for (var i in snakes) {
       // Background
