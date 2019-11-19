@@ -75,7 +75,7 @@ setInterval(function dis() {
     av += load[i];
   }
   av /= load.length;
-  console.log('SERVER LOAD: ' + Math.floor(av / TICK_PERIOD * 100) + '%');
+  // console.log('SERVER LOAD: ' + Math.floor(av / TICK_PERIOD * 100) + '%');
 }, 1000);
 
 // PRIVATE METHODS
