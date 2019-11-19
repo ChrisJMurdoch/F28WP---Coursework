@@ -73,28 +73,37 @@ function sendcoords(x, y) {
 // PUBLIC EVENTS
 // Receive Co-ordinates
 function oncoords(data) {
-
+  // For each incoming player co-ord
   outer: for (var i in data) {
     var split_data = data[i].split('@');
-    console.log(split_data);
+    // console.log(split_data);
+    // For each existing player
     for (var s in snakes) {
       if (snakes[s].name === split_data[0]) {
         snakes[s].x.push(split_data[1]);
         snakes[s].y.push(split_data[2]);
         // console.log(snakes[i].x);
-        if (snakes[i].x.length > 200) {
-          snakes[i].x.shift();
-          snakes[i].y.shift();
+        if (snakes[s].x.length > 200) {
+          snakes[s].x.shift();
+          snakes[s].y.shift();
         }
         continue outer;
       }
     }
-    console.log('new');
+    console.log('Adding: ' + split_data[0]);
     snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
+  }
+  outer: for (var i in snakes) {
+    for (var j in data) {
+      if (snakes[i].name === data[j].split('@')[0]) {
+        continue outer;
+      }
+    }
+    console.log('Deleting: ' + snakes[i].name);
+    snakes.splice(i, 1);
   }
   draw();
   tick();
-
 };
 
 // Login response
