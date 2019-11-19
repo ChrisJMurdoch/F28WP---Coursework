@@ -1,3 +1,4 @@
+const mathjs = require('mathjs');
 
 const TICK_PERIOD = 10; // in milliseconds
 
