@@ -1,4 +1,4 @@
-const mathjs = require('mathjs');
+const math = require('mathjs');// Using math module for low-level efficiecy of time-critical calculation
 
 const TICK_PERIOD = 10; // in milliseconds
 
@@ -45,22 +45,59 @@ exports.start = function() {
         var last = req.player.time;
         req.player.time = Date.now();
         var elapsed = req.player.time - last;
-        req.player.x += req.x * elapsed / 10;
-        req.player.y += req.y * elapsed / 10;
-        if (req.player.x < 0) {
-          req.player.x = 500;
-        } else if (req.player.x > 500) {
-          req.player.x = 0;
+        //req.player.x += req.x * elapsed / 10;
+        //req.player.y += req.y * elapsed / 10;
+        req.player.x.push(req.player.x[req.player.x.length-1] + req.x * elapsed / 10);
+        req.player.y.push(req.player.y[req.player.y.length-1] + req.y * elapsed / 10);
+        if (req.player.x[req.player.x.length-1] < 0) {
+          req.player.x[req.player.x.length-1] = 500;
+        } else if (req.player.x[req.player.x.length-1] > 500) {
+          req.player.x[req.player.x.length-1] = 0;
         }
-        if (req.player.y < 0) {
-          req.player.y = 500;
-        } else if (req.player.y > 500) {
-          req.player.y = 0;
+        if (req.player.y[req.player.y.length-1] < 0) {
+          req.player.y[req.player.y.length-1] = 500;
+        } else if (req.player.y[req.player.y.length-1] > 500) {
+          req.player.y[req.player.y.length-1] = 0;
         }
-        //console.log(req.player);
+        if (req.player.x.length > 200) {
+          req.player.x.shift();
+          req.player.y.shift();
+        }
+        console.log(req.player.x.length);
         //console.log();
         pull_update(req.soc, req.player);
       }
+      // Collision detection (DX)
+      if (req.player.x.length <=1) {
+        continue;
+      }
+      for (var player in players) {
+        if (players[player].x.length <=1) {
+          continue;
+        }
+        if (players[player].name === req.player.name) {
+          continue;
+        }
+        for (var point in players[player].x) {
+          if (point >= players[player].x.length-1) {
+            continue;
+          }
+          // valid line
+          if (math.intersect(
+            [req.player.x[req.player.x.length-1],
+            req.player.y[req.player.y.length-1]],
+            [req.player.x[req.player.x.length-2],
+            req.player.y[req.player.y.length-2]],
+            [players[player].x[players[player].x.length-1],
+            players[player].y[players[player].y.length-1]],
+            [players[player].x[players[player].x.length-2],
+            players[player].y[players[player].y.length-2]]
+          )) {
+            console.log('Collision!');
+          }
+        }
+      }
+      // End collision detection
     }
     var duration = Date.now() - start_time;
     load.push(duration);
@@ -85,7 +122,7 @@ setInterval(function dis() {
 pull_update = function(in_socket, in_player) {
   var response = '4';
   for (var i in players) {
-    var s = ';' + players[i].name + '@' + Math.floor(players[i].x) + '@' + Math.floor(players[i].y);
+    var s = ';' + players[i].name + '@' + Math.floor(players[i].x[players[i].x.length-1]) + '@' + Math.floor(players[i].y[players[i].y.length-1]);
     response = response + s;
   }
   in_socket.send(response);
@@ -106,8 +143,8 @@ class UpdateReq {
 class Player {
   constructor(in_name) {
     this.name = in_name;
-    this.x = Math.floor(Math.random() * 100);
-    this.y = Math.floor(Math.random() * 100);
+    this.x = [Math.floor(Math.random() * 100)];
+    this.y = [Math.floor(Math.random() * 100)];
     this.time = Date.now();
   };
 };
