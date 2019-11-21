@@ -133,6 +133,20 @@ function submitBtnPress() {
     }
 }
 
+function createBtnPress() {
+
+    var createUsrName = document.getElementById("createUsernameInput").value;
+    var createUsrPsswd = document.getElementById("createUsernamePassword").value;
+
+    if (createUsrName != "" && createUsrPsswd != "") {
+        register(createUsrName, createUsrPsswd);
+        
+    } else{
+        alert("username and password");
+    }
+}
+
+
 function btnPress() {
     var s = document.getElementById("PlayMenu").style;
     var r = document.getElementById("UserLogin").style.visibility = "visible";
