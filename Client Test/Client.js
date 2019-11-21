@@ -273,7 +273,6 @@ var score = 0;
 var interval = setInterval(increment, 1000);
 
 function increment(){
-  console.log(score);
   score += 1;
 }
 // Only for debugging. Do not use internalsend
