@@ -113,7 +113,7 @@ function submitBtnPress() {
 
         var r = document.getElementById("UserLogin").style;
         r.opacity = 1;
-        
+
         var table = document.getElementById("Leaderboard").style.visibility = "visible";
         (function fade() {
             (table.opacity += .1) < 0 ? table.display = "none" : setTimeout(fade, 70)
@@ -221,6 +221,7 @@ class Snake {
 var snakes = [];
 var players = [];
 var player;
+var currentDirection;
 // PAGE CODE
 
 function tick() {
@@ -228,17 +229,37 @@ function tick() {
   var y_out = 0;
   switch (key) {
     case 'w':
-      y_out--;
-      break;
+      if(currentDirection !== "down"){
+        y_out--;
+        currentDirection = "up";
+        break;
+      } else{
+        y_out++;
+      }
     case 'a':
-      x_out--;
-      break;
+      if(currentDirection !== "right"){
+        x_out--;
+        currentDirection = "left";
+        break;
+      } else{
+        x_out++;
+      }
     case 's':
-      y_out++;
-      break;
+      if(currentDirection !== "up"){
+        y_out++;
+        currentDirection = "down";
+        break;
+      } else{
+        y_out--;
+      }
     case 'd':
-      x_out++;
-      break;
+      if(currentDirection !== "left"){
+        x_out++;
+        currentDirection = "right";
+        break;
+      } else{
+        x_out--;
+      }
   }
   // Constrain
   sendcoords(x_out , y_out);
@@ -353,5 +374,3 @@ document.onkeydown = function (e) {
       break;
   }
 };
-
-
