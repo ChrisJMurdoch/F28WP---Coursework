@@ -113,6 +113,11 @@ function submitBtnPress() {
 
         var r = document.getElementById("UserLogin").style;
         r.opacity = 1;
+        
+        var table = document.getElementById("Leaderboard").style.visibility = "visible";
+        (function fade() {
+            (table.opacity += .1) < 0 ? table.display = "none" : setTimeout(fade, 70)
+        })();
 
         (function fade() {
             (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)

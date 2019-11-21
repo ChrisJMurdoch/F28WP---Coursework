@@ -94,6 +94,16 @@ button:focus {
     visibility: hidden;
 }
 
+#Leaderboard {
+    position: fixed;
+    top: 75%;
+    left: 10px;
+    background-color: white;
+    padding: 12px;
+    border-radius: 3px;
+    visibility: hidden;
+}
+
 .a {
     font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 13px;
