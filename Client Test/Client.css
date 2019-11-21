@@ -3,7 +3,7 @@ html, body {
     border: 0px;
     padding: 0px;
     overflow: hidden;
-    background-image: linear-gradient(-90deg, #26829b, lightblue); 
+    background-image: linear-gradient(-90deg, #26829b, lightblue);
 }
 
 /* To allow the the line that breaks the description of the game and the creators to go across the whole screen*/
@@ -103,6 +103,18 @@ button:focus {
     padding: 12px;
     border-radius: 3px;
     visibility: hidden;
+}
+
+#score{
+  position: fixed;
+  top: 30%
+  left: 10px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 3px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 25px;
+
 }
 
 .a {
