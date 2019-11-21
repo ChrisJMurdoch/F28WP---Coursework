@@ -18,10 +18,10 @@ hr {
 }
 
 /* To allow the game to be on full screen*/
- /* #gamecanvas {
+  #gamecanvas {
     width: 100%;
     height: 100%;
-} */
+} 
 
 /* CSS for the play button   */
 button {
