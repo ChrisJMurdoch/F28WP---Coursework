@@ -268,7 +268,14 @@ function tick() {
   // Constrain
   sendcoords(x_out , y_out);
 };
+var score = 0;
 
+var interval = setInterval(increment, 1000);
+
+function increment(){
+  console.log(score);
+  score += 1;
+}
 // Only for debugging. Do not use internalsend
 function sendField() {
     var message = document.getElementById("sendbox").value;
@@ -291,6 +298,7 @@ document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
 // Draw
 function draw() {
   frames++;
+  document.getElementById("score").innerHTML = 'Score: ' + (score);
   var canvas = document.getElementById('gamecanvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
@@ -359,6 +367,8 @@ setInterval(function fps() {
 }, 1000);
 
 draw();
+increment();
+
 
 var key = 'w';
 
