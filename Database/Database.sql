@@ -90,5 +90,7 @@ CREATE TABLE Users {
     INSERT INTO Users (highScore) VALUES (score) WHERE userName = username
   }
 
-  
+  GET ALL SCORES AND USER:
+  SELECT User, highScore FROM Users
+    
 */
