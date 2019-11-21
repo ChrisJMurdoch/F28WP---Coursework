@@ -230,35 +230,39 @@ function tick() {
   switch (key) {
     case 'w':
       if(currentDirection !== "down"){
-        y_out--;
         currentDirection = "up";
+        y_out--;
         break;
-      } else{
+      } else {
         y_out++;
+        break;
       }
     case 'a':
       if(currentDirection !== "right"){
-        x_out--;
         currentDirection = "left";
+        x_out--;
         break;
-      } else{
+      } else {
         x_out++;
+        break;
       }
     case 's':
       if(currentDirection !== "up"){
-        y_out++;
         currentDirection = "down";
+        y_out++;
         break;
-      } else{
+      } else {
         y_out--;
+        break;
       }
     case 'd':
       if(currentDirection !== "left"){
-        x_out++;
         currentDirection = "right";
+        x_out++;
         break;
-      } else{
+      } else {
         x_out--;
+        break;
       }
   }
   // Constrain
