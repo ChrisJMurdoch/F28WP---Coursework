@@ -125,7 +125,7 @@ function submitBtnPress() {
         })();
 
         (function fade() {
-            (scoreTable.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
+            (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
         })();
 
     } else{
@@ -359,7 +359,7 @@ function draw() {
       // Draw name
       ctx.globalAlpha = 1;
       ctx.fillStyle = 'white';
-      ctx.font = "20px Arial";
+      ctx.font = "20px Comic Sans MS";
       ctx.fillText(snakes[i].name, parseInt(snakes[i].x[snakes[i].x.length-1]) + 5, parseInt(snakes[i].y[snakes[i].y.length-1]) - 5);
     }
   }
