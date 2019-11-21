@@ -240,6 +240,13 @@ document.onkeydown = function (e) {
   }
 };
 
+var score = 1;
+
+var interval = setInterval(increment,1000);
+
+function increment() {
+  i += 1;
+}
 
 
 // PAGE CODE
@@ -291,17 +298,17 @@ function btnPress() {
 }
 
 function registerBtnPress() {
-    
+
     var s = document.getElementById("UserLogin").style.visibility = "hidden";
     var r = document.getElementById("RegisterUser").style.visibility = "visible";
 
   }
 
 function loginBtnPress() {
-    
+
     var s = document.getElementById("RegisterUser").style = "hidden";
     var r = document.getElementById("UserLogin").style.visibility = "visible";
-    
+
   }
 
 function fade(element) {

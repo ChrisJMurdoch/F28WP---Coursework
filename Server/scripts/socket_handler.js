@@ -99,6 +99,9 @@ exports.connect = function (socket, req) {
         //console.log('PLAINTEXT BLOCKED.');
         //console.log(socket.username + ' - ' + req.connection.remoteAddress);
         send(PLAINTEXT, 'Log in to send messages.');
+        server.clients.forEach(function(client) {
+          console.log(client.player);
+        });
         break;
       case REGISTER:
         console.log('REGISTERING NOT AVAILABLE YET.');

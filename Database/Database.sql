@@ -83,5 +83,12 @@ CREATE TABLE Users {
       console.log("Number of records inserted: " + result.affectedRows);
     });
   });
+
+  CHECK IF HighScore
+  javascript:
+  if currentScore > SELECT highSocre FROM Users{
+    INSERT INTO Users (highScore) VALUES (score) WHERE userName = username
+  }
+
   
 */

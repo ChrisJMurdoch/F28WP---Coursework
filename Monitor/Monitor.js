@@ -9,8 +9,8 @@ const SERVER_TO_CLIENT_COORDS = '4';
 const LOGIN_SUCCESS = '5';
 
 // Create WebSocket
-//const socket = new WebSocket('ws://137.195.109.210:8001'); // --MSI Heriot-Watt
-const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --MSI Home
+//const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --MSI Home
+const socket = new WebSocket('ws://192.168.0.11:8001'); // --MSI Home
 
 // PRIVATE EVENTS
 // Connection event
@@ -47,6 +47,9 @@ socket.onmessage = function (e) {
 function internalsend(message) {
     // console.log('Sending: ', message);
     socket.send(message);
+    if (message.split(';')[0] == LOGIN) {
+      my_name = message.split(';')[1];
+    }
 };
 
 // PUBLIC METHODS
@@ -73,34 +76,49 @@ function sendcoords(x, y) {
 // PUBLIC EVENTS
 // Receive Co-ordinates
 function oncoords(data) {
-
+  // For each incoming player co-ord
   outer: for (var i in data) {
     var split_data = data[i].split('@');
-    console.log(split_data);
+    // console.log(split_data);
+    // For each existing player
     for (var s in snakes) {
       if (snakes[s].name === split_data[0]) {
         snakes[s].x.push(split_data[1]);
         snakes[s].y.push(split_data[2]);
         // console.log(snakes[i].x);
-        if (snakes[i].x.length > 200) {
-          snakes[i].x.shift();
-          snakes[i].y.shift();
+        if (snakes[s].x.length > 200) {
+          snakes[s].x.shift();
+          snakes[s].y.shift();
         }
         continue outer;
       }
     }
-    console.log('new');
+    console.log('Adding: ' + split_data[0]);
     snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
+  }
+  outer: for (var i in snakes) {
+    for (var j in data) {
+      if (snakes[i].name === data[j].split('@')[0]) {
+        continue outer;
+      }
+    }
+    if (snakes[i].name === my_name) {
+      console.log('You died.');
+      snakes.splice(i, 1);
+    } else {
+      console.log('Deleting: ' + snakes[i].name);
+      snakes.splice(i, 1);
+    }
   }
   draw();
   tick();
-
 };
 
 // Login response
+var my_name;
 function login_response(message) {
     console.log(message);
-    player = new Player('ME', 250, 250);
+    // player = new Player('ME', 250, 250);
     tick();
 };
 
@@ -182,11 +200,14 @@ function draw() {
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, max, max);
-    ctx.fillStyle = 'white';
-    ctx.strokeRect(0, 0, max, max);
-    ctx.fillStyle = 'white';
+    ctx.strokeStyle = "green";
+    ctx.strokeRect(0, 0, 500, 500);
+    //ctx.fillStyle = 'white';
     for (var i in snakes) {
-      ctx.lineWidth = 5;
+      // Background
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = snakes[i].name == my_name ? 'green' : 'red';
+      ctx.lineWidth = 7;
       ctx.beginPath();
       var last_x = snakes[i].x[0];
       var last_y = snakes[i].y[0];
@@ -194,10 +215,9 @@ function draw() {
       for (var j in snakes[i].x) {
         var x_dif = last_x - snakes[i].x[j];
         var y_dif = last_y - snakes[i].y[j];
-        if ( !(x_dif > 10 || x_dif < -10 || y_dif > 10 || y_dif < -10) ) {
+        if ( !(x_dif > 50 || x_dif < -50 || y_dif > 50 || y_dif < -50) ) {
           ctx.lineTo(snakes[i].x[j], snakes[i].y[j]);
         } else {
-          ctx.strokeStyle = "white";
           ctx.stroke();
           ctx.beginPath();
           ctx.moveTo(snakes[i].x[j], snakes[i].y[j]);
@@ -205,8 +225,34 @@ function draw() {
         last_x = snakes[i].x[j];
         last_y = snakes[i].y[j];
       }
-      ctx.strokeStyle = "white";
       ctx.stroke();
+      // Foreground
+      ctx.globalAlpha = 0.4;
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      var last_x = snakes[i].x[0];
+      var last_y = snakes[i].y[0];
+      ctx.moveTo(last_x, last_y);
+      for (var j in snakes[i].x) {
+        var x_dif = last_x - snakes[i].x[j];
+        var y_dif = last_y - snakes[i].y[j];
+        if ( !(x_dif > 50 || x_dif < -50 || y_dif > 50 || y_dif < -50) ) {
+          ctx.lineTo(snakes[i].x[j], snakes[i].y[j]);
+        } else {
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(snakes[i].x[j], snakes[i].y[j]);
+        }
+        last_x = snakes[i].x[j];
+        last_y = snakes[i].y[j];
+      }
+      ctx.stroke();
+      // Draw name
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = 'white';
+      ctx.font = "20px Arial";
+      ctx.fillText(snakes[i].name, parseInt(snakes[i].x[snakes[i].x.length-1]) + 5, parseInt(snakes[i].y[snakes[i].y.length-1]) - 5);
     }
   }
 };
