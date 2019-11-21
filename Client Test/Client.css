@@ -107,13 +107,14 @@ button:focus {
 
 #score{
   position: fixed;
-  top: 30%
+  top: 60%;
   left: 10px;
   background-color: white;
   padding: 10px;
   border-radius: 3px;
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-size: 25px;
+  visibility: hidden;
 
 }
 #fps{
