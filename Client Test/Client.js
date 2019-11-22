@@ -87,14 +87,6 @@ function sendcoords(x, y) {
 
 
 
-
-
-
-
-
-
-
-
 (function (){
     var canvas = document.getElementById("gamecanvas");
     canvas.width = window.innerWidth;
@@ -116,7 +108,6 @@ function submitBtnPress() {
 
         var table = document.getElementById("Leaderboard").style.visibility = "visible";
         var scoreTable = document.getElementById("score").style.visibility = "visible";
-        fade(table);
 
         (function fade() {
             (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
@@ -144,7 +135,6 @@ function createBtnPress() {
     }
 }
 
-
 function btnPress() {
     var s = document.getElementById("PlayMenu").style;
     var r = document.getElementById("UserLogin").style.visibility = "visible";
@@ -158,22 +148,15 @@ function btnPress() {
 
 function registerBtnPress() {
 
-    var s = document.getElementById("UserLogin").style.visibility = "hidden";
+    var s = document.getElementById("UserLogin").style.visibility = "hidden";    
     var r = document.getElementById("RegisterUser").style.visibility = "visible";
-
 }
 
 function loginBtnPress() {
 
-    var s = document.getElementById("RegisterUser").style = "hidden";
+    var s = document.getElementById("RegisterUser").style = "hidden";    
     var r = document.getElementById("UserLogin").style.visibility = "visible";
-
 }
-
-function fade(element) {
-    (element.opacity += .1) < 0 ? element.display = "none" : setTimeout(fade, 70)
-};
-
 
 // PUBLIC EVENTS
 // Receive Co-ordinates
