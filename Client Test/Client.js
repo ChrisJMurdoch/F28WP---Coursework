@@ -78,15 +78,6 @@ function sendcoords(x, y) {
 
 
 
-
-
-
-
-
-
-
-
-
 (function (){
     var canvas = document.getElementById("gamecanvas");
     canvas.width = window.innerWidth;
@@ -94,8 +85,15 @@ function sendcoords(x, y) {
 }());
 
 // PAGE CODE
+var score = 0;
+
+function increment(){
+  score += 1;
+}
 
 function submitBtnPress() {
+    
+    score = 0;
 
     var usrName = document.getElementById("UsernameInput").value;
     var usrPsswd = document.getElementById("UsernamePassword").value;
@@ -139,7 +137,6 @@ function btnPress() {
     var s = document.getElementById("PlayMenu").style;
     var r = document.getElementById("UserLogin").style.visibility = "visible";
 
-
     s.opacity = 1;
     (function fade() {
         (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
@@ -154,7 +151,7 @@ function registerBtnPress() {
 
 function loginBtnPress() {
 
-    var s = document.getElementById("RegisterUser").style = "hidden";    
+    var s = document.getElementById("RegisterUser").style.visibility = "hidden";    
     var r = document.getElementById("UserLogin").style.visibility = "visible";
 }
 
@@ -268,13 +265,9 @@ function tick() {
   // Constrain
   sendcoords(x_out , y_out);
 };
-var score = 0;
 
-var interval = setInterval(increment, 1000);
+var interval = setInterval(increment,1000);
 
-function increment(){
-  score += 1;
-}
 // Only for debugging. Do not use internalsend
 function sendField() {
     var message = document.getElementById("sendbox").value;
@@ -366,9 +359,6 @@ setInterval(function fps() {
 }, 1000);
 
 draw();
-increment();
-
-
 var key = 'w';
 
 document.onkeydown = function (e) {
