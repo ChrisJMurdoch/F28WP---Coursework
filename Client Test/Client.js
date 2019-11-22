@@ -406,3 +406,19 @@ document.onkeydown = function (e) {
       break;
   }
 };
+
+function mobileBtnLeft(){
+    key = 'a';
+}
+
+function mobileBtnUp(){
+    key = 'w';
+}
+
+function mobileBtnDown(){
+    key = 's';
+}
+
+function mobileBtnRight(){
+    key = 'd';
+}
