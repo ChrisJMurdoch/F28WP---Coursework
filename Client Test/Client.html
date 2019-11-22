@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Client.css">
     <link href="https://fonts.googleapis.com/css?family=Bungee&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Client.css">
     <script type="text/javascript" src="Client.js" async></script>
 </head>
 
@@ -38,18 +37,31 @@
         <button class="a" id="PlayButton" onclick="btnPress()">PLAY</button>
     </div>
 
-    <div class="a" id="UserLogin">
-        <input type="text" id="UsernameInput" placeholder="Username" required/>
-        <input type="password" id="UsernamePassword" placeholder="Password" required/>
-        <button class="a" id="PlayButton" onclick="submitBtnPress()">Sign In</button>
-        <p class ="a">Not Registered, Create a new Account<button class = "a" onclick = "registerBtnPress()">Register</button></p>
+    <div id="mobileBtns">
+        <div id="upBtn">
+            <button type="button" onclick="mobileBtnUp()">Up</button>
+        </div>
+        <div id="leftRightBtn">
+            <button type="button" onclick="mobileBtnLeft()">Left</button>
+            <button type="button" onclick="mobileBtnRight()">Right</button>
+        </div>
+        <div id="downBtn">
+            <button type="button" onclick="mobileBtnDown()">Down</button>
+        </div>
     </div>
 
-    <div class="a" id="RegisterUser">
-        <input type="text" id="createUsernameInput" placeholder="Username" required/>
-        <input type="password" id="createUsernamePassword" placeholder="Password" required/>
+    <div id="UserLogin">
+        <input type="text" id="UsernameInput" placeholder="Username" />
+        <input type="password" id="UsernamePassword" placeholder="Password" />
+        <button class ="a" id="PlayButton" onclick="submitBtnPress()">Sign In</button>
+        <p class="a">Not Registered, Create a new Account<button class="a" onclick="registerBtnPress()">Register</button></p>
+    </div>
+
+    <div id="RegisterUser">
+        <input type="text" id="createUsernameInput" placeholder="Username" />
+        <input type="password" id="createUsernamePassword" placeholder="Password" />
         <button class="a" id="PlayButton" onclick="createBtnPress()">Create Account</button>
-        <p class ="a">Already Registered?<button class = "a" onclick = "loginBtnPress()">Login</button></p>
+        <p class="a">Already Registered?<button class="a" onclick="loginBtnPress()">Login</button></p>
     </div>
 
     <div class="a" id="Leaderboard">
@@ -60,7 +72,7 @@
                 <th>USERNAME</th>
                 <th>SCORE</th>
             </tr>
-            
+
             <tr><td>1.</td><td></td><td></td></tr>
             <tr><td>2.</td><td></td><td></td></tr>
             <tr><td>3.</td><td></td><td></td></tr>
@@ -71,6 +83,7 @@
 
     <div class="a" id="fps">Hz: </div>
     <div class="a" id="score">Score: </div>
-
+        
 </body>
 </html>
+
