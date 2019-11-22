@@ -92,5 +92,8 @@ CREATE TABLE Users {
 
   GET ALL SCORES AND USER:
   SELECT User, highScore FROM Users
-    
+
+
+  GET TOP 5 SCORES IN ORDER:
+  SELECT userName, highscore FROM Users ORDER BY highscore DESC LIMIT 5   
 */
