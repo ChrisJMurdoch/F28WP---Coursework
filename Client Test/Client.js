@@ -7,10 +7,11 @@ const LOGIN = '2';
 const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 const LOGIN_SUCCESS = '5';
+const DEATH = '6';
 
 // Create WebSocket
-//const socket = new WebSocket('ws://137.195.109.210:8001'); // --MSI Heriot-Watt
-const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --MSI Home
+//const socket = new WebSocket('ws://localhost:8001'); // --Local
+const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --Heroku
 
 // PRIVATE EVENTS
 // Connection event
@@ -40,6 +41,10 @@ socket.onmessage = function (e) {
           break;
         case LOGIN_SUCCESS:
           login_response(primarydata);
+          break;
+        case DEATH:
+          death(primarydata);
+          break;
     }
 };
 
@@ -128,7 +133,7 @@ function createBtnPress() {
 
     if (createUsrName != "" && createUsrPsswd != "") {
         register(createUsrName, createUsrPsswd);
-        
+
     } else{
         alert("username and password");
     }
@@ -179,15 +184,6 @@ function oncoords(data) {
     console.log('Adding: ' + split_data[0]);
     snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
   }
-  outer: for (var i in snakes) {
-    for (var j in data) {
-      if (snakes[i].name === data[j].split('@')[0]) {
-        continue outer;
-      }
-    }
-    console.log('Deleting: ' + snakes[i].name);
-    snakes.splice(i, 1);
-  }
   draw();
   tick();
 };
@@ -199,6 +195,16 @@ function login_response(message) {
     // player = new Player('ME', 250, 250);
     tick();
 };
+
+// Death response
+function death(player_name) {
+  console.log('Kill: ' + player_name);
+  for (var i in snakes) {
+    if (snakes[i].name === player_name) {
+      snakes.splice(i,1);
+    }
+  }
+}
 
 class Player {
   constructor(in_name, in_x, in_y) {
@@ -378,3 +384,19 @@ document.onkeydown = function (e) {
       break;
   }
 };
+
+function mobileBtnLeft(){
+    key = 'a';
+}
+
+function mobileBtnUp(){
+    key = 'w';
+}
+
+function mobileBtnDown(){
+    key = 's';
+}
+
+function mobileBtnRight(){
+    key = 'd';
+}

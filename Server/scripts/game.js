@@ -1,3 +1,5 @@
+var socket_handler = require('./socket_handler');
+
 // Intersect helper
 function hasIntersection( x1, y1, x2, y2, x3, y3, x4, y4 ) {
 
@@ -109,6 +111,9 @@ exports.start = function() {
               players[player].y[point-1]
             )) {
               console.log('Collision!');
+              // Remove clientside
+              socket_handler.broadcast('6;' + req.player.name)
+              // Remove serverside
               module.exports.remove_player(req.player);
               var n = new Player(req.player.name);
               players.push(n);

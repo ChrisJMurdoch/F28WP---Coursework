@@ -11,6 +11,7 @@ const LOGIN = '2';
 const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 const LOGIN_SUCCESS = '5';
+const DEATH = '6';
 
 // Variables
 var settings;
@@ -25,6 +26,14 @@ exports.initialise = function(sett, db, serv, gm) {
   server = serv;
   game = gm;
 };
+
+// Broadcast
+exports.broadcast = function(mes) {
+  console.log('ALL < ', mes);
+  server.clients.forEach(function(client) {
+    client.send(mes);
+  });
+}
 
 // On Connection
 exports.connect = function (socket, req) {
