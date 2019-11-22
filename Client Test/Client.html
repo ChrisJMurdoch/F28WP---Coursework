@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html>
 
-
-
 <head>
     <meta charset="utf-8">
     <title>Snake?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Client.css">
+    <link href="https://fonts.googleapis.com/css?family=Bungee&display=swap" rel="stylesheet">
     <script type="text/javascript" src="Client.js" async></script>
 </head>
 
-
-
 <body>
-
-    <canvas id="gamecanvas"></canvas>
-
-    <div id="PlayMenu">
-        <h1 class="a">TRON Multiplayer</h1>
+  <canvas id="gamecanvas"></canvas>
+    <div class="a" id="PlayMenu">
+        <h1>TRON Multiplayer</h1>
         <p class="a">
             Use the W-A-S-D keys to move your player
             <br />
@@ -38,9 +34,7 @@
             Chris Murdoch
         </p>
         <hr />
-
-        <button id="PlayButton" onclick="btnPress()">PLAY</button>
-
+        <button class="a" id="PlayButton" onclick="btnPress()">PLAY</button>
     </div>
 
     <div id="mobileBtns">
@@ -59,14 +53,14 @@
     <div id="UserLogin">
         <input type="text" id="UsernameInput" placeholder="Username" />
         <input type="password" id="UsernamePassword" placeholder="Password" />
-        <button id="PlayButton" onclick="submitBtnPress()">Sign In</button>
+        <button class ="a" id="PlayButton" onclick="submitBtnPress()">Sign In</button>
         <p class="a">Not Registered, Create a new Account<button class="a" onclick="registerBtnPress()">Register</button></p>
     </div>
 
     <div id="RegisterUser">
         <input type="text" id="createUsernameInput" placeholder="Username" />
         <input type="password" id="createUsernamePassword" placeholder="Password" />
-        <button id="PlayButton" onclick="createBtnPress()">Create Account</button>
+        <button class="a" id="PlayButton" onclick="createBtnPress()">Create Account</button>
         <p class="a">Already Registered?<button class="a" onclick="loginBtnPress()">Login</button></p>
     </div>
 
@@ -78,25 +72,18 @@
                 <th>USERNAME</th>
                 <th>SCORE</th>
             </tr>
-            <tr>
-                <td>1.</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>2.</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>3.</td>
-                <td></td>
-                <td></td>
-            </tr>
+
+            <tr><td>1.</td><td></td><td></td></tr>
+            <tr><td>2.</td><td></td><td></td></tr>
+            <tr><td>3.</td><td></td><td></td></tr>
+            <tr><td>4.</td><td></td><td></td></tr>
+            <tr><td>5.</td><td></td><td></td></tr>
         </table>
     </div>
 
-    <div class="display" id="fps">Hz: </div>
-    <div class="currentscore" id="score">Score: </div>
+    <div class="a" id="fps">Hz: </div>
+    <div class="a" id="score">Score: </div>
+        
+</body>
+</html>
 
-</body></html>
