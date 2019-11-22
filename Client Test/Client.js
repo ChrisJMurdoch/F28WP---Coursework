@@ -333,13 +333,11 @@ function draw() {
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, max, max);
-    ctx.strokeStyle = "blue";
-    ctx.strokeRect(0, 0, max, max);
     //ctx.fillStyle = 'white';
     for (var i in snakes) {
       // Background
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = snakes[i].name == my_name ? 'green' : 'red';
+      ctx.strokeStyle = snakes[i].name == my_name ? 'blue' : 'red';
       ctx.lineWidth = 7;
       ctx.beginPath();
       var last_x = snakes[i].x[0] * scale;
