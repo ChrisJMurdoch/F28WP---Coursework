@@ -32,6 +32,7 @@ socket.onmessage = function (e) {
     switch (actioncode) {
         case PLAINTEXT:
           console.log('Server: ', primarydata);
+          alert(primarydata, "Incorrect Login Details");
           break;
         case SERVER_TO_CLIENT_COORDS:
           splitmessage.shift();
