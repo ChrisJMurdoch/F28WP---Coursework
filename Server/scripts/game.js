@@ -73,6 +73,7 @@ exports.start = function() {
         //req.player.y += req.y * elapsed / 10;
         req.player.x.push(req.player.x[req.player.x.length-1] + req.x * elapsed / 10);
         req.player.y.push(req.player.y[req.player.y.length-1] + req.y * elapsed / 10);
+        req.player.t.push(Date.now());
         if (req.player.x[req.player.x.length-1] < 0) {
           req.player.x[req.player.x.length-1] = 500;
         } else if (req.player.x[req.player.x.length-1] > 500) {
@@ -83,9 +84,21 @@ exports.start = function() {
         } else if (req.player.y[req.player.y.length-1] > 500) {
           req.player.y[req.player.y.length-1] = 0;
         }
-        if (req.player.x.length > 200) {
+        /*
+        if (req.player.x.length > 100) {
           req.player.x.shift();
           req.player.y.shift();
+        }
+        */
+        var time = Date.now();
+        while (true) {
+          if (time - req.player.t[0] > 2000) {
+            req.player.t.shift();
+            req.player.x.shift();
+            req.player.y.shift();
+          } else {
+            break;
+          }
         }
         //start
         // Collision detection
@@ -129,7 +142,7 @@ exports.start = function() {
     }
     var duration = Date.now() - start_time;
     load.push(duration);
-    if (load.length > 200) {
+    if (load.length > 100) {
       load.shift();
     }
   }, TICK_PERIOD);
@@ -173,6 +186,7 @@ class Player {
     this.name = in_name;
     this.x = [Math.floor(Math.random() * 500)];
     this.y = [Math.floor(Math.random() * 500)];
+    this.t = [Date.now()];
     this.time = Date.now();
   };
 };
