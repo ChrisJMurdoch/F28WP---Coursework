@@ -116,9 +116,7 @@ function submitBtnPress() {
 
         var table = document.getElementById("Leaderboard").style.visibility = "visible";
         var scoreTable = document.getElementById("score").style.visibility = "visible";
-        (function fade() {
-            (table.opacity += .1) < 0 ? table.display = "none" : setTimeout(fade, 70)
-        })();
+        fade(table);
 
         (function fade() {
             (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)

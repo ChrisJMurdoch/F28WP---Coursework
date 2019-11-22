@@ -97,7 +97,7 @@ button:focus {
 
 #Leaderboard {
     position: fixed;
-    top: 75%;
+    top: 55%;
     left: 10px;
     background-color: white;
     padding: 12px;
@@ -107,24 +107,24 @@ button:focus {
 
 #score{
   position: fixed;
-  top: 60%;
+  top: 40%;
   left: 10px;
   background-color: white;
   padding: 10px;
   border-radius: 3px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Bungee', cursive;
   font-size: 25px;
   visibility: hidden;
 
 }
 #fps{
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Bungee', cursive;
   font-size: 13px
 
 }
 
 .a {
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: 'Bungee', cursive;
     font-size: 13px;
 }
 
