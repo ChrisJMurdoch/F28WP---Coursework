@@ -10,8 +10,8 @@ const LOGIN_SUCCESS = '5';
 const DEATH = '6';
 
 // Create WebSocket
-const socket = new WebSocket('ws://localhost:8001'); // --Local
-//const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --Heroku
+//const socket = new WebSocket('ws://localhost:8001'); // --Localhost
+const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --Heroku
 
 // PRIVATE EVENTS
 // Connection event
