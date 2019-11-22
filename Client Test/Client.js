@@ -10,7 +10,7 @@ const LOGIN_SUCCESS = '5';
 const DEATH = '6';
 
 // Create WebSocket
-//const socket = new WebSocket('ws://localhost:8001'); // --Local
+//const socket = new WebSocket('ws://localhost:8001'); // --Localhost
 const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --Heroku
 
 // PRIVATE EVENTS
@@ -78,10 +78,6 @@ function login(username, password) {
 function sendcoords(x, y) {
     internalsend(CLIENT_TO_SERVER_COORDS + ';' + x + ';' + y);
 };
-
-
-
-
 
 
 (function (){
@@ -173,16 +169,41 @@ function oncoords(data) {
       if (snakes[s].name === split_data[0]) {
         snakes[s].x.push(split_data[1]);
         snakes[s].y.push(split_data[2]);
+        snakes[s].t.push(Date.now());
         // console.log(snakes[i].x);
-        if (snakes[s].x.length > 200) {
+        /*
+        if (snakes[s].x.length > 5) {
           snakes[s].x.shift();
           snakes[s].y.shift();
+        }
+        */
+        var time = Date.now();
+        while (true) {
+          if (time - snakes[s].t[0] > 2000) {
+            snakes[s].t.shift();
+            snakes[s].x.shift();
+            snakes[s].y.shift();
+          } else {
+            break;
+          }
         }
         continue outer;
       }
     }
     console.log('Adding: ' + split_data[0]);
     snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
+  }
+  outer: for (var i in snakes) {
+    for (var j in data) {
+      if (snakes[i].name === data[j].split('@')[0]) {
+        continue outer;
+      }
+    }
+    if (snakes[i].name === my_name) {
+      death(snakes[i].name);
+    } else {
+      death(snakes[i].name);
+    }
   }
   draw();
   tick();
@@ -219,6 +240,7 @@ class Snake {
     this.name = in_name;
     this.x = [in_x];
     this.y = [in_y];
+    this.t = [Date.now()];
   };
 };
 
@@ -287,6 +309,7 @@ var frames = 0;
 var w = window.innerWidth;
 var h = window.innerHeight;
 var max = w>h ? h : w;
+var scale = max / 500;
 // Set canvas size
 document.getElementById("gamecanvas").width = max;
 document.getElementById("gamecanvas").height = max;
@@ -303,7 +326,7 @@ function draw() {
     var ctx = canvas.getContext('2d');
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, max, max);
-    ctx.strokeStyle = "green";
+    ctx.strokeStyle = "blue";
     ctx.strokeRect(0, 0, max, max);
     //ctx.fillStyle = 'white';
     for (var i in snakes) {
@@ -312,21 +335,21 @@ function draw() {
       ctx.strokeStyle = snakes[i].name == my_name ? 'green' : 'red';
       ctx.lineWidth = 7;
       ctx.beginPath();
-      var last_x = snakes[i].x[0];
-      var last_y = snakes[i].y[0];
+      var last_x = snakes[i].x[0] * scale;
+      var last_y = snakes[i].y[0] * scale;
       ctx.moveTo(last_x, last_y);
       for (var j in snakes[i].x) {
-        var x_dif = last_x - snakes[i].x[j];
-        var y_dif = last_y - snakes[i].y[j];
-        if ( !(x_dif > 50 || x_dif < -50 || y_dif > 50 || y_dif < -50) ) {
-          ctx.lineTo(snakes[i].x[j], snakes[i].y[j]);
+        var x_dif = last_x - snakes[i].x[j] * scale;
+        var y_dif = last_y - snakes[i].y[j] * scale;
+        if ( !(x_dif > 50 * scale || x_dif < -50 * scale || y_dif > 50 * scale || y_dif < -50 * scale) ) {
+          ctx.lineTo(snakes[i].x[j] * scale, snakes[i].y[j] * scale);
         } else {
           ctx.stroke();
           ctx.beginPath();
-          ctx.moveTo(snakes[i].x[j], snakes[i].y[j]);
+          ctx.moveTo(snakes[i].x[j] * scale, snakes[i].y[j] * scale);
         }
-        last_x = snakes[i].x[j];
-        last_y = snakes[i].y[j];
+        last_x = snakes[i].x[j] * scale;
+        last_y = snakes[i].y[j] * scale;
       }
       ctx.stroke();
       // Foreground
@@ -334,28 +357,28 @@ function draw() {
       ctx.strokeStyle = 'white';
       ctx.lineWidth = 3;
       ctx.beginPath();
-      var last_x = snakes[i].x[0];
-      var last_y = snakes[i].y[0];
+      var last_x = snakes[i].x[0] * scale;
+      var last_y = snakes[i].y[0] * scale;
       ctx.moveTo(last_x, last_y);
       for (var j in snakes[i].x) {
-        var x_dif = last_x - snakes[i].x[j];
-        var y_dif = last_y - snakes[i].y[j];
-        if ( !(x_dif > 50 || x_dif < -50 || y_dif > 50 || y_dif < -50) ) {
-          ctx.lineTo(snakes[i].x[j], snakes[i].y[j]);
+        var x_dif = last_x - snakes[i].x[j] * scale;
+        var y_dif = last_y - snakes[i].y[j] * scale;
+        if ( !(x_dif > 50 * scale || x_dif < -50 * scale || y_dif > 50 * scale || y_dif < -50 * scale) ) {
+          ctx.lineTo(snakes[i].x[j] * scale, snakes[i].y[j] * scale);
         } else {
           ctx.stroke();
           ctx.beginPath();
-          ctx.moveTo(snakes[i].x[j], snakes[i].y[j]);
+          ctx.moveTo(snakes[i].x[j] * scale, snakes[i].y[j] * scale);
         }
-        last_x = snakes[i].x[j];
-        last_y = snakes[i].y[j];
+        last_x = snakes[i].x[j] * scale;
+        last_y = snakes[i].y[j] * scale;
       }
       ctx.stroke();
       // Draw name
       ctx.globalAlpha = 1;
       ctx.fillStyle = 'white';
       ctx.font = "20px Comic Sans MS";
-      ctx.fillText(snakes[i].name, parseInt(snakes[i].x[snakes[i].x.length-1]) + 5, parseInt(snakes[i].y[snakes[i].y.length-1]) - 5);
+      ctx.fillText(snakes[i].name, (parseInt(snakes[i].x[snakes[i].x.length-1]) + 5) * scale, (parseInt(snakes[i].y[snakes[i].y.length-1]) - 5) * scale);
     }
   }
 };
