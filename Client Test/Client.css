@@ -128,6 +128,25 @@ button:focus {
     font-size: 13px;
 }
 
-canvas {
+#mobileBtns{
+    position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
     background-color: aqua;
+}
+
+#upBtn{
+    transform: translate(28%);
+}
+
+#downBtn{
+    transform: translate(22%);
+}
+
+/* If the screen size is 600px wide or less, hide the element */
+@media only screen and (max-width: 600px) {
+  #mobileButtons {
+    display: none;
+  }
 }

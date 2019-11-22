@@ -4,19 +4,19 @@
 
 
 <head>
-  <meta charset="utf-8">
-  <title>Snake?</title>
-  <link rel="stylesheet" href="Client.css">
-  <script type="text/javascript" src="Client.js" async></script>
+    <meta charset="utf-8">
+    <title>Snake?</title>
+    <link rel="stylesheet" href="Client.css">
+    <script type="text/javascript" src="Client.js" async></script>
 </head>
 
 
 
 <body>
 
-  <canvas id="gamecanvas"></canvas>
+    <canvas id="gamecanvas"></canvas>
 
-<div id="PlayMenu">
+    <div id="PlayMenu">
         <h1 class="a">TRON Multiplayer</h1>
         <p class="a">
             Use the W-A-S-D keys to move your player
@@ -43,21 +43,34 @@
 
     </div>
 
+    <div id="mobileBtns">
+        <div id="upBtn">
+            <button type="button">Up</button>
+        </div>
+        <div id="leftRightBtn">
+            <button type="button">Left</button>
+            <button type="button">Right</button>
+        </div>
+        <div id="downBtn">
+            <button type="button">Down</button>
+        </div>
+    </div>
+
     <div id="UserLogin">
         <input type="text" id="UsernameInput" placeholder="Username" />
         <input type="password" id="UsernamePassword" placeholder="Password" />
         <button id="PlayButton" onclick="submitBtnPress()">Sign In</button>
-        <p class ="a">Not Registered, Create a new Account<button class = "a" onclick = "registerBtnPress()">Register</button></p>
+        <p class="a">Not Registered, Create a new Account<button class="a" onclick="registerBtnPress()">Register</button></p>
     </div>
 
     <div id="RegisterUser">
         <input type="text" id="createUsernameInput" placeholder="Username" />
         <input type="password" id="createUsernamePassword" placeholder="Password" />
         <button id="PlayButton" onclick="createBtnPress()">Create Account</button>
-        <p class ="a">Already Registered?<button class = "a" onclick = "loginBtnPress()">Login</button></p>
+        <p class="a">Already Registered?<button class="a" onclick="loginBtnPress()">Login</button></p>
     </div>
 
-    <div class = "a" id ="Leaderboard">
+    <div class="a" id="Leaderboard">
         <table>
             <tr>
                 <caption>LEADERBOARD</caption>
@@ -65,17 +78,25 @@
                 <th>USERNAME</th>
                 <th>SCORE</th>
             </tr>
-            <tr><td>1.</td><td></td><td></td></tr>
-            <tr><td>2.</td><td></td><td></td></tr>
-            <tr><td>3.</td><td></td><td></td></tr>
+            <tr>
+                <td>1.</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td></td>
+                <td></td>
+            </tr>
         </table>
     </div>
 
     <div class="display" id="fps">Hz: </div>
     <div class="currentscore" id="score">Score: </div>
 
-</body>
-
-
-
-</html>
+</body></html>
