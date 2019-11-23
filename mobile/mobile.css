@@ -3,8 +3,10 @@ html, body {
     border: 0px;
     padding: 0px;
     overflow: hidden;
-    background-color: cadetblue;
-
+    background-image: url("scifi.jpg");
+    background-size: auto 100%;
+    background-position: center top;
+    background-attachment: fixed;
 }
 
 /* To allow the the line that breaks the description of the game and the creators to go across the whole screen*/
