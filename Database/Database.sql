@@ -1,12 +1,8 @@
-CREATE TABLE HighScore {
-  user VARCHAR (25) PRIMARY KEY,
-  highScore INTEGER (10000),
-}ENGINE=INNODB;
 
 CREATE TABLE Users {
-  userName VARCHAR (25) PRIMARY KEY,
-  password VARCHAR (25),
-  FOREIGN KEY (userName) REFERENCES HighScore(user),
+  userName VARCHAR (255) PRIMARY KEY,
+  password VARCHAR (255),
+  highscore INT (11),
 } ENGINE=INNODB;
 
 
