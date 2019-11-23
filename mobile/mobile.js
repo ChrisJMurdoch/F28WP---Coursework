@@ -88,7 +88,6 @@ function sendcoords(x, y) {
 
 // PAGE CODE
 var score = 0;
-
 function increment(){
   score += 1;
 }
@@ -149,7 +148,21 @@ function oncoords(data) {
 var my_name;
 function login_response(message) {
     console.log(message);
-    // player = new Player('ME', 250, 250);
+    
+    var r = document.getElementById("UserLogin").style;
+    r.opacity = 1;
+
+    var table = document.getElementById("Leaderboard").style.visibility = "visible";
+    var scoreTable = document.getElementById("score").style.visibility = "visible";
+
+    (function fade() {
+        (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
+    })();
+
+    (function fade() {
+        (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
+    })();
+    
     tick();
 };
 
@@ -262,7 +275,6 @@ document.getElementById("gamecanvas").height = max;
 // set bounds
 document.getElementById("gamecanvas").style.position = "absolute";
 document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
-
 //if a mobile device is detected, move the canvas up so that there is room for buttons
 document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
 
@@ -402,22 +414,6 @@ function submitBtnPress() {
 
     if (usrName != "" && usrPsswd != "") {
         login(usrName, usrPsswd);
-
-        var r = document.getElementById("UserLogin").style;
-        r.opacity = 1;
-
-//        var table = document.getElementById("Leaderboard").style.visibility = "visible";
-        var scoreTable = document.getElementById("score").style.visibility = "visible";
-        var buttons = document.getElementById("mobileBtns").style.visibility = "visible";
-
-        (function fade() {
-            (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
-        })();
-
-        (function fade() {
-            (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
-        })();
-
     } else{
         alert("You must enter username and password");
     }

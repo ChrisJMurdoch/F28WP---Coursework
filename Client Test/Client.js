@@ -112,87 +112,8 @@ function sendcoords(x, y) {
 
 // PAGE CODE
 var score = 0;
-
 function increment(){
   score += 1;
-}
-
-function submitBtnPress() {
-
-    score = 0;
-
-    var usrName = document.getElementById("UsernameInput").value;
-    var usrPsswd = document.getElementById("UsernamePassword").value;
-
-    if (usrName != "" && usrPsswd != "") {
-        login(usrName, usrPsswd);
-    } else{
-        alert("You must enter username and password");
-    }
-}
-
-//function to validate users password input
-function checkPassword(userInput) {
-    var validation = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    return validation.test(userInput);
-  }
-
-function createBtnPress() {
-
-    var createUsrName = document.getElementById("createUsernameInput").value;
-    var createUsrPsswd = document.getElementById("createUsernamePassword").value;
-    var confirmUsrPsswd = document.getElementById("confirmUsernamePassword").value;
-
-    validationCheck = /^\w+$/;
-
-    if(createUsrName != ""){
-        if(!validationCheck.test(createUsrName)){
-            alert("Username must contain only letters, numbers and underscores");
-            createUsrName.focus();
-        }
-    }else{
-       alert("Username cannot be left blank");
-    }
-
-    if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
-        alert("Re-entered password MUST be the same as password");
-    }
-
-    if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
-        if(!checkPassword(createUsrPsswd)){
-            alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
-            createUsrPsswd.focus();
-        }
-        else{
-            register(createUsrName, createUsrPsswd);
-            alert("Username and Password are VALID");
-        }
-    }else{
-        alert("Password cannot be left blank");
-        createUsrPsswd.focus();
-    }
-}
-
-function btnPress() {
-    var s = document.getElementById("PlayMenu").style;
-    var r = document.getElementById("UserLogin").style.visibility = "visible";
-
-    s.opacity = 1;
-    (function fade() {
-        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
-    })();
-}
-
-function registerBtnPress() {
-
-    var s = document.getElementById("UserLogin").style.visibility = "hidden";
-    var r = document.getElementById("RegisterUser").style.visibility = "visible";
-}
-
-function loginBtnPress() {
-
-    var s = document.getElementById("RegisterUser").style.visibility = "hidden";
-    var r = document.getElementById("UserLogin").style.visibility = "visible";
 }
 
 // PUBLIC EVENTS
@@ -365,13 +286,25 @@ var w = window.innerWidth;
 var h = window.innerHeight;
 var max = w>h ? h : w;
 var scale = max / 500;
+
+//detect mobile deveice to set correct canvas size
+function detectmob() {
+   if(w <= 800 && h <= 600) {
+     return true;
+   } else {
+     return false;
+   }
+}
+
 // Set canvas size
 document.getElementById("gamecanvas").width = max;
 document.getElementById("gamecanvas").height = max;
 // set bounds
 document.getElementById("gamecanvas").style.position = "absolute";
 document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
-document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
+//if a mobile device is detected, move the canvas up so that there is room for buttons
+document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
+
 // Draw
 function draw() {
   frames++;
@@ -497,4 +430,82 @@ function mobileBtnDown(){
 
 function mobileBtnRight(){
     key = 'd';
+}
+
+function submitBtnPress() {
+
+    score = 0;
+
+    var usrName = document.getElementById("UsernameInput").value;
+    var usrPsswd = document.getElementById("UsernamePassword").value;
+
+    if (usrName != "" && usrPsswd != "") {
+        login(usrName, usrPsswd);
+    } else{
+        alert("You must enter username and password");
+    }
+}
+
+//function to validate users password input
+function checkPassword(userInput) {
+    var validation = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    return validation.test(userInput);
+  }
+
+function createBtnPress() {
+
+    var createUsrName = document.getElementById("createUsernameInput").value;
+    var createUsrPsswd = document.getElementById("createUsernamePassword").value;
+    var confirmUsrPsswd = document.getElementById("confirmUsernamePassword").value;
+
+    validationCheck = /^\w+$/;
+
+    if(createUsrName != ""){
+        if(!validationCheck.test(createUsrName)){
+            alert("Username must contain only letters, numbers and underscores");
+            createUsrName.focus();
+        }
+    }else{
+       alert("Username cannot be left blank");
+    }
+
+    if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
+        alert("Re-entered password MUST be the same as password");
+    }
+
+    if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
+        if(!checkPassword(createUsrPsswd)){
+            alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
+            createUsrPsswd.focus();
+        }
+        else{
+            register(createUsrName, createUsrPsswd);
+            alert("Username and Password are VALID");
+        }
+    }else{
+        alert("Password cannot be left blank");
+        createUsrPsswd.focus();
+    }
+}
+
+function btnPress() {
+    var s = document.getElementById("PlayMenu").style;
+    var r = document.getElementById("UserLogin").style.visibility = "visible";
+
+    s.opacity = 1;
+    (function fade() {
+        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
+    })();
+}
+
+function registerBtnPress() {
+
+    var s = document.getElementById("UserLogin").style.visibility = "hidden";
+    var r = document.getElementById("RegisterUser").style.visibility = "visible";
+}
+
+function loginBtnPress() {
+
+    var s = document.getElementById("RegisterUser").style.visibility = "hidden";
+    var r = document.getElementById("UserLogin").style.visibility = "visible";
 }
