@@ -102,21 +102,6 @@ function submitBtnPress() {
 
     if (usrName != "" && usrPsswd != "") {
         login(usrName, usrPsswd);
-
-        var r = document.getElementById("UserLogin").style;
-        r.opacity = 1;
-
-        var table = document.getElementById("Leaderboard").style.visibility = "visible";
-        var scoreTable = document.getElementById("score").style.visibility = "visible";
-
-        (function fade() {
-            (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
-        })();
-
-        (function fade() {
-            (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
-        })();
-
     } else{
         alert("You must enter username and password");
     }
@@ -133,22 +118,22 @@ function createBtnPress() {
     var createUsrName = document.getElementById("createUsernameInput").value;
     var createUsrPsswd = document.getElementById("createUsernamePassword").value;
     var confirmUsrPsswd = document.getElementById("confirmUsernamePassword").value;
-    
+
     validationCheck = /^\w+$/;
-    
+
     if(createUsrName != ""){
         if(!validationCheck.test(createUsrName)){
             alert("Username must contain only letters, numbers and underscores");
             createUsrName.focus();
-        }   
+        }
     }else{
-       alert("Username cannot be left blank"); 
+       alert("Username cannot be left blank");
     }
-    
+
     if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
         alert("Re-entered password MUST be the same as password");
     }
-    
+
     if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
         if(!checkPassword(createUsrPsswd)){
             alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
@@ -242,7 +227,21 @@ function oncoords(data) {
 var my_name;
 function login_response(message) {
     console.log(message);
-    // player = new Player('ME', 250, 250);
+
+    var r = document.getElementById("UserLogin").style;
+    r.opacity = 1;
+
+    var table = document.getElementById("Leaderboard").style.visibility = "visible";
+    var scoreTable = document.getElementById("score").style.visibility = "visible";
+
+    (function fade() {
+        (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
+    })();
+
+    (function fade() {
+        (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
+    })();
+
     tick();
 };
 
