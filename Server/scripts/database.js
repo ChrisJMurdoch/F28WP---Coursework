@@ -71,12 +71,23 @@ exports.check_user = function(username, callback) {
       callback(false);
     }
   });
-}
+};
 
 // Get Leaderboard
 exports.leaderboard = function(callback) {
   topscores(callback);
-}
+};
+
+// Add to leaderboard
+exports.add_score = function(username, score) {
+  highscore(username, function(result) {
+    if (result && result.highScore < score) {
+      set_score(username, score, function(result2) {
+        console.log(result2);
+      })
+    }
+  })
+};
 
 // PRIVATE METHODS
 
@@ -105,17 +116,15 @@ topscores = function(callback) {
 };
 
 // Check highscore
-is_highscore = function (username, callback) {
+highscore = function (username, callback) {
   var sql = 'SELECT highScore FROM Users WHERE userName = ?';
-  db_connection.query(sql, username, function(error, result) {
-    callback(result);
+  db_connection.query(sql, username, function(error, results) {
+    callback(results[0]);
   });
 };
 
 // Add to leaderboard
-set_score = function (username, highscore, callback) {
-  var sql = 'INSERT INTO Users (highScore) VALUES (score) WHERE userName = ?';
-  db_connection.query(sql, username, function(error, results) {
-    callback(results[0]);
-  });
+set_score = function (username, highscore) {
+  var sql = 'UPDATE Users SET highscore = ' + highscore + ' WHERE userName = ?';
+  db_connection.query(sql, username, function(results) {});
 };

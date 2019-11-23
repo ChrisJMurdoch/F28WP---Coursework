@@ -30,7 +30,7 @@ database.connect(DB_DATA, function() {
   });
 
   // Dubug
-  database.print_users();
+  //database.print_users();
 
   // Start server
   console.log('SERVER STARTING...');
