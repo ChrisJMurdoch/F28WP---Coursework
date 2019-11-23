@@ -73,6 +73,11 @@ exports.check_user = function(username, callback) {
   });
 }
 
+// Get Leaderboard
+exports.leaderboard = function(callback) {
+  topscores(callback);
+}
+
 // PRIVATE METHODS
 
 // Get user
@@ -88,5 +93,29 @@ users = function (callback) {
   var sql = 'SELECT * FROM `Users`';
   db_connection.query(sql, function(error, results) {
     callback(results);
+  });
+};
+
+// Get leaderboard top 5
+topscores = function(callback) {
+  var sql = 'SELECT userName, highscore FROM Users ORDER BY highscore DESC LIMIT 5';
+  db_connection.query(sql, function(error, results) {
+    callback(results);
+  });
+};
+
+// Check highscore
+is_highscore = function (username, callback) {
+  var sql = 'SELECT highScore FROM Users WHERE userName = ?';
+  db_connection.query(sql, username, function(error, result) {
+    callback(result);
+  });
+};
+
+// Add to leaderboard
+set_score = function (username, highscore, callback) {
+  var sql = 'INSERT INTO Users (highScore) VALUES (score) WHERE userName = ?';
+  db_connection.query(sql, username, function(error, results) {
+    callback(results[0]);
   });
 };

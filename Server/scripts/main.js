@@ -22,6 +22,13 @@ const DB_DATA = {
 // Start database connection
 database.connect(DB_DATA, function() {
 
+  database.leaderboard(function(results) {
+    console.log('LEADERBOARD:');
+    for (var i in results) {
+      console.log(' - ' + results[i].userName + ': ' + results[i].highscore);
+    }
+  });
+
   // Dubug
   database.print_users();
 

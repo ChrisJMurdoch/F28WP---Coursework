@@ -8,6 +8,7 @@ const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 const LOGIN_SUCCESS = '5';
 const DEATH = '6';
+const LEADERBOARD = '7';
 
 // Create WebSocket
 //const socket = new WebSocket('ws://localhost:8001'); // --Localhost
@@ -45,7 +46,15 @@ socket.onmessage = function (e) {
         case DEATH:
           death(primarydata);
           break;
+        case LEADERBOARD:
+          leaderboard(primarydata.split('@'));
     }
+};
+
+leaderboard(data) {
+  for (var entry in data) {
+    console.log(entry);
+  }
 };
 
 // PRIVATE METHODS
