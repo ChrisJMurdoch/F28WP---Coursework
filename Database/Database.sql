@@ -86,8 +86,8 @@ CREATE TABLE Users {
 
   CHECK IF HighScore
   javascript:
-  if currentScore > SELECT highSocre FROM Users{
-    INSERT INTO Users (highScore) VALUES (score) WHERE userName = username
+  if currentScore > "SELECT highSocre FROM Users WHERE userName = usrName"{
+    INSERT INTO Users (highScore) VALUES (score) WHERE userName = usrName
   }
 
   GET ALL SCORES AND USER:
@@ -95,5 +95,5 @@ CREATE TABLE Users {
 
 
   GET TOP 5 SCORES IN ORDER:
-  SELECT userName, highscore FROM Users ORDER BY highscore DESC LIMIT 5   
+  SELECT userName, highscore FROM Users ORDER BY highscore DESC LIMIT 5
 */
