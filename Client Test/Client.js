@@ -48,12 +48,15 @@ socket.onmessage = function (e) {
           break;
         case LEADERBOARD:
           leaderboard(primarydata.split('@'));
+          break;
     }
 };
 
-leaderboard(data) {
-  for (var entry in data) {
-    console.log(entry);
+function leaderboard(data) {
+  for (var i in data) {
+    var username = data[i].split('#')[0];
+    var score = data[i].split('#')[1];
+    console.log(username, score);
   }
 };
 
@@ -213,7 +216,7 @@ function oncoords(data) {
         continue outer;
       }
     }
-    console.log('Adding: ' + split_data[0]);
+    //console.log('Adding: ' + split_data[0]);
     snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
   }
   outer: for (var i in snakes) {
@@ -256,7 +259,7 @@ function login_response(message) {
 
 // Death response
 function death(player_name) {
-  console.log('Kill: ' + player_name);
+  //console.log('Kill: ' + player_name);
   for (var i in snakes) {
     if (snakes[i].name === player_name) {
       snakes.splice(i,1);

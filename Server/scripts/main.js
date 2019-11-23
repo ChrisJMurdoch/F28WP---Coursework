@@ -42,6 +42,6 @@ database.connect(DB_DATA, function() {
   server.on('connection', socket_handler.connect);
 
   // Run
-  game.start();
+  game.start(database);
 
 });

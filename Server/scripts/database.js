@@ -56,6 +56,7 @@ exports.add_user = function(username, password) {
       console.log('USER ADDED.');
     } else {
       console.log('USER ADD FAILED.');
+      throw error;
     }
   });
 };
@@ -79,12 +80,14 @@ exports.leaderboard = function(callback) {
 };
 
 // Add to leaderboard
-exports.add_score = function(username, score) {
+exports.add_score = function(username, score, callback) {
   highscore(username, function(result) {
     if (result && result.highScore < score) {
-      set_score(username, score, function(result2) {
-        console.log(result2);
+      set_score(username, score, function() {
+        callback(true);
       })
+    } else {
+      callback(false);
     }
   })
 };
@@ -126,5 +129,5 @@ highscore = function (username, callback) {
 // Add to leaderboard
 set_score = function (username, highscore) {
   var sql = 'UPDATE Users SET highscore = ' + highscore + ' WHERE userName = ?';
-  db_connection.query(sql, username, function(results) {});
+  db_connection.query(sql, username, function() {});
 };
