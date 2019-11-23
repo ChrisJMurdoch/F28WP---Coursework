@@ -122,16 +122,49 @@ function submitBtnPress() {
     }
 }
 
+//function to validate users password input
+function checkPassword(userInput) {
+    var validation = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    return validation.test(userInput);
+  }
+
 function createBtnPress() {
 
     var createUsrName = document.getElementById("createUsernameInput").value;
     var createUsrPsswd = document.getElementById("createUsernamePassword").value;
-
-    if (createUsrName != "" && createUsrPsswd != "") {
-        register(createUsrName, createUsrPsswd);
-
-    } else{
-        alert("username and password");
+    var confirmUsrPsswd = document.getElementById("confirmUsernamePassword").value;
+    
+    validationCheck = /^\w+$/;
+    
+    if(createUsrName != ""){
+        if(!validationCheck.test(createUsrName)){
+            alert("Username must contain only letters, numbers and underscores");
+            createUsrName.focus();
+        }   
+    }else{
+       alert("Username cannot be left blank"); 
+    }
+    
+    if(createUsrPsswd == ""){
+        
+    }
+    
+    if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
+        alert("Re-entered password MUST be the same as password");
+    }
+    
+    if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
+        if(!checkPassword(createUsrPsswd)){
+            alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
+            createUsrPsswd.focus();
+        }
+        else{
+            register(createUsrName, createUsrPsswd);
+            alert("Username and Password are VALID");
+        }
+    }else{
+        alert("Password cannot be left blank");
+        createUsrPsswd.focus();
     }
 }
 
