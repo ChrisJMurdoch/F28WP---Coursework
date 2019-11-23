@@ -8,7 +8,7 @@ const game = require('./game');
 
 // Settings
 const SERV_DATA = {
-  port: 8001,
+  port: process.env.PORT || 80,
   show_heartbeat: false,
   heartbeat_frequency: 3000
 };
