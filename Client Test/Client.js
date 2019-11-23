@@ -62,14 +62,9 @@ function leaderboard(data) {
   table.rows[2].cells[1].innerHTML = data[0].split('#')[0];
   table.rows[3].cells[1].innerHTML = data[1].split('#')[0];
   table.rows[4].cells[1].innerHTML = data[2].split('#')[0];
-  table.rows[5].cells[1].innerHTML = data[3].split('#')[0];
-  table.rows[6].cells[1].innerHTML = data[4].split('#')[0];
   table.rows[2].cells[2].innerHTML = data[0].split('#')[1];
   table.rows[3].cells[2].innerHTML = data[1].split('#')[1];
   table.rows[4].cells[2].innerHTML = data[2].split('#')[1];
-  table.rows[5].cells[2].innerHTML = data[3].split('#')[1];
-  table.rows[6].cells[2].innerHTML = data[4].split('#')[1];
-
 };
 
 // PRIVATE METHODS
@@ -319,9 +314,9 @@ function draw() {
     //ctx.fillStyle = 'white';
     for (var i in snakes) {
       // Glow
-      ctx.globalAlpha = 0.2;
+      ctx.globalAlpha = 0.1;
       ctx.strokeStyle = snakes[i].name == my_name ? '#16f34e' : '#f3bc16';
-      ctx.lineWidth = 13;
+      ctx.lineWidth = 15;
       ctx.beginPath();
       var last_x = snakes[i].x[0] * scale;
       var last_y = snakes[i].y[0] * scale;
