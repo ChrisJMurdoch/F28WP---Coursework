@@ -309,6 +309,7 @@ function draw() {
   var canvas = document.getElementById('gamecanvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, max, max);
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, max, max);
     //ctx.fillStyle = 'white';
@@ -471,13 +472,13 @@ function createBtnPress() {
     }
 
     if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
-        if(!checkPassword(createUsrPsswd)){
+        if(false){// De-activated
             alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
             createUsrPsswd.focus();
         }
         else{
             register(createUsrName, createUsrPsswd);
-            alert("Username and Password are VALID");
+            //alert("Username and Password are VALID");
         }
     }else{
         alert("Password cannot be left blank");
