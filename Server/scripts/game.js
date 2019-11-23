@@ -7,6 +7,9 @@ var socket_handler = require('./socket_handler');
 // Milliseconds between each server tick
 const TICK_PERIOD = 5;
 
+// Database connection object
+var database;
+
 // List of players in game
 var players = [];
 
@@ -32,6 +35,18 @@ exports.has_player = function(in_name) {
 exports.add_player = function(in_name) {
   var player = new Player(in_name);
   players.push(player);
+  // Leaderboard
+  database.leaderboard(function(result) {
+    var mes = '7;';
+    for (var i in result) {
+      mes = mes + result[i].userName + '#' + result[i].highscore;
+      if (i < result.length-1) {
+        mes = mes + '@';
+      }
+    }
+    socket_handler.broadcast(mes);
+  });
+  // Return
   return player;
 };
 
@@ -51,7 +66,8 @@ exports.remove_player = function(in_player) {
 };
 
 // Main loop
-exports.start = function(database) {
+exports.start = function(db) {
+  database = db;
   console.log('STARTING GAME...')
 
   // Start a repeated interval to process request queue
