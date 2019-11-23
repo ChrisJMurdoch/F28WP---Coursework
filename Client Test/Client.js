@@ -11,7 +11,7 @@ const DEATH = '6';
 const LEADERBOARD = '7';
 
 // Create WebSocket
-//const socket = new WebSocket('ws://localhost:8001'); // --Localhost
+//const socket = new WebSocket('ws://localhost:80'); // --Localhost
 const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --Heroku
 
 // PRIVATE EVENTS
@@ -98,6 +98,11 @@ function sendcoords(x, y) {
     internalsend(CLIENT_TO_SERVER_COORDS + ';' + x + ';' + y);
 };
 
+var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+if (isMobile) {
+  window.location.href = "mobile.html";
+}
 
 (function (){
     var canvas = document.getElementById("gamecanvas");
@@ -144,7 +149,7 @@ function oncoords(data) {
         continue outer;
       }
     }
-    console.log('Adding: ' + split_data[0]);
+    //console.log('Adding: ' + split_data[0]);
     snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
   }
   outer: for (var i in snakes) {
@@ -167,7 +172,7 @@ function oncoords(data) {
 var my_name;
 function login_response(message) {
     console.log(message);
-    
+
     var r = document.getElementById("UserLogin").style;
     r.opacity = 1;
 
@@ -181,14 +186,17 @@ function login_response(message) {
     (function fade() {
         (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
     })();
-    
+
     tick();
 };
 
 // Death response
 function death(player_name) {
-  console.log('Kill: ' + player_name);
+  //console.log('Kill: ' + player_name);
   for (var i in snakes) {
+    if (snakes[i].name === my_name) {
+      score = 0;
+    }
     if (snakes[i].name === player_name) {
       snakes.splice(i,1);
     }
@@ -294,8 +302,10 @@ document.getElementById("gamecanvas").height = max;
 // set bounds
 document.getElementById("gamecanvas").style.position = "absolute";
 document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
+
+document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
 //if a mobile device is detected, move the canvas up so that there is room for buttons
-document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
+//document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
 
 // Draw
 function draw() {
@@ -304,14 +314,15 @@ function draw() {
   var canvas = document.getElementById('gamecanvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, max, max);
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, max, max);
     //ctx.fillStyle = 'white';
     for (var i in snakes) {
       // Glow
-      ctx.globalAlpha = 0.2;
+      ctx.globalAlpha = 0.1;
       ctx.strokeStyle = snakes[i].name == my_name ? '#16f34e' : '#f3bc16';
-      ctx.lineWidth = 13;
+      ctx.lineWidth = 15;
       ctx.beginPath();
       var last_x = snakes[i].x[0] * scale;
       var last_y = snakes[i].y[0] * scale;
@@ -444,36 +455,35 @@ function checkPassword(userInput) {
     return validation.test(userInput);
   }
 
-//play menu interaction
 function createBtnPress() {
 
     var createUsrName = document.getElementById("createUsernameInput").value;
     var createUsrPsswd = document.getElementById("createUsernamePassword").value;
     var confirmUsrPsswd = document.getElementById("confirmUsernamePassword").value;
-    
+
     validationCheck = /^\w+$/;
-    
+
     if(createUsrName != ""){
         if(!validationCheck.test(createUsrName)){
             alert("Username must contain only letters, numbers and underscores");
             createUsrName.focus();
-        }   
+        }
     }else{
-       alert("Username cannot be left blank"); 
+       alert("Username cannot be left blank");
     }
-    
+
     if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
         alert("Re-entered password MUST be the same as password");
     }
-    
+
     if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
-        if(!checkPassword(createUsrPsswd)){
+        if(false){// De-activated
             alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
             createUsrPsswd.focus();
         }
         else{
             register(createUsrName, createUsrPsswd);
-            alert("Username and Password are VALID");
+            //alert("Username and Password are VALID");
         }
     }else{
         alert("Password cannot be left blank");
