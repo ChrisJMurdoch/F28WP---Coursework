@@ -37,18 +37,20 @@
         <button class="a" id="PlayButton" onclick="btnPress()">PLAY</button>
     </div>
 
-    <div id="mobileBtns">
-        <div id="upBtn">
-            <button type="button" onclick="mobileBtnUp()">Up</button>
+    <div class="row" id="mobileBtns">
+            <div class="topBottomBtns">
+                <button class="btn" onclick="mobileBtnUp()">Up</button>
+            </div>
+            <div class="middleBtns">
+                <button class="btn" onclick="mobileBtnLeft()">Left</button>
+            </div>
+            <div class="middleBtns">
+                <button class="btn" onclick="mobileBtnRight()">Right</button>
+            </div>
+            <div class="topBottomBtns">
+                <button class="btn" onclick="mobileBtnDown()">Down</button>
+            </div>
         </div>
-        <div id="leftRightBtn">
-            <button type="button" onclick="mobileBtnLeft()">Left</button>
-            <button type="button" onclick="mobileBtnRight()">Right</button>
-        </div>
-        <div id="downBtn">
-            <button type="button" onclick="mobileBtnDown()">Down</button>
-        </div>
-    </div>
 
     <div id="UserLogin">
         <input type="text" id="UsernameInput" placeholder="Username" />
@@ -77,8 +79,6 @@
             <tr><td>1.</td><td></td><td></td></tr>
             <tr><td>2.</td><td></td><td></td></tr>
             <tr><td>3.</td><td></td><td></td></tr>
-            <tr><td>4.</td><td></td><td></td></tr>
-            <tr><td>5.</td><td></td><td></td></tr>
         </table>
     </div>
 

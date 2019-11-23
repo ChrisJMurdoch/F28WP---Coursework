@@ -14,12 +14,6 @@ hr {
     width: 100%;
 }
 
-/* To allow the game to be on full screen*/
- /* #gamecanvas {
-    width: 100%;
-    height: 100%;
-} */
-
 /* CSS for the play button   */
 button {
     font-size: 19px;
