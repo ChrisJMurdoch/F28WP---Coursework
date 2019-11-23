@@ -51,7 +51,7 @@ exports.remove_player = function(in_player) {
 };
 
 // Main loop
-exports.start = function() {
+exports.start = function(database) {
   console.log('STARTING GAME...')
 
   // Start a repeated interval to process request queue
@@ -118,8 +118,21 @@ exports.start = function() {
             players[player].y[point-1]
           )) {
             // Die
+            // Update scores
+            database.add_score(req.player.name, (Date.now() - req.player.start)/1000, function() {
+              database.leaderboard(function(result) {
+                var mes = '7;';
+                for (var i in result) {
+                  mes = mes + result[i].userName + '#' + result[i].highscore;
+                  if (i < result.length-1) {
+                    mes = mes + '@';
+                  }
+                }
+                socket_handler.broadcast(mes);
+              });
+            });
             // Remove clientside
-            socket_handler.broadcast('6;' + req.player.name)
+            socket_handler.broadcast('6;' + req.player.name);
             // Remove serverside
             module.exports.remove_player(req.player);
             var n = new Player(req.player.name);
@@ -207,5 +220,6 @@ class Player {
     this.y = [Math.floor(Math.random() * 500)];
     this.t = [Date.now()];
     this.time = Date.now();
+    this.start = Date.now();
   };
 };

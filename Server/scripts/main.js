@@ -8,7 +8,7 @@ const game = require('./game');
 
 // Settings
 const SERV_DATA = {
-  port: 8001,
+  port: process.env.PORT || 80,
   show_heartbeat: false,
   heartbeat_frequency: 3000
 };
@@ -30,7 +30,7 @@ database.connect(DB_DATA, function() {
   });
 
   // Dubug
-  database.print_users();
+  //database.print_users();
 
   // Start server
   console.log('SERVER STARTING...');
@@ -42,6 +42,6 @@ database.connect(DB_DATA, function() {
   server.on('connection', socket_handler.connect);
 
   // Run
-  game.start();
+  game.start(database);
 
 });
