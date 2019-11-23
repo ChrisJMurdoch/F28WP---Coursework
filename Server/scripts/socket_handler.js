@@ -29,7 +29,7 @@ exports.initialise = function(sett, db, serv, gm) {
 
 // Broadcast
 exports.broadcast = function(mes) {
-  console.log('ALL < ', mes);
+  //console.log('ALL < ', mes);
   server.clients.forEach(function(client) {
     client.send(mes);
   });
@@ -179,7 +179,7 @@ exports.connect = function (socket, req) {
 
   // Send to all
   function broadcast(type, message) {
-    console.log('ALL < ', message);
+    //console.log('ALL < ', message);
     server.clients.forEach(function(client) {
       client.send(type + ';' + message);
     });
@@ -187,7 +187,7 @@ exports.connect = function (socket, req) {
 
   // Send to all but self
   function excludingbroadcast(type, message) {
-    console.log('ALL < ', message);
+    //console.log('ALL < ', message);
     server.clients.forEach(function(client) {
       if (client !== socket) {
         client.send(type + ';' + message);
