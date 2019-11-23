@@ -145,10 +145,6 @@ function createBtnPress() {
        alert("Username cannot be left blank"); 
     }
     
-    if(createUsrPsswd == ""){
-        
-    }
-    
     if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
         alert("Re-entered password MUST be the same as password");
     }
