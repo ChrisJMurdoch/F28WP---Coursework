@@ -94,7 +94,7 @@ function increment(){
 }
 
 function submitBtnPress() {
-    
+
     score = 0;
 
     var usrName = document.getElementById("UsernameInput").value;
@@ -147,13 +147,13 @@ function btnPress() {
 
 function registerBtnPress() {
 
-    var s = document.getElementById("UserLogin").style.visibility = "hidden";    
+    var s = document.getElementById("UserLogin").style.visibility = "hidden";
     var r = document.getElementById("RegisterUser").style.visibility = "visible";
 }
 
 function loginBtnPress() {
 
-    var s = document.getElementById("RegisterUser").style.visibility = "hidden";    
+    var s = document.getElementById("RegisterUser").style.visibility = "hidden";
     var r = document.getElementById("UserLogin").style.visibility = "visible";
 }
 
@@ -328,9 +328,31 @@ function draw() {
     ctx.fillRect(0, 0, max, max);
     //ctx.fillStyle = 'white';
     for (var i in snakes) {
+      // Glow
+      ctx.globalAlpha = 0.2;
+      ctx.strokeStyle = snakes[i].name == my_name ? '#16f34e' : '#f3bc16';
+      ctx.lineWidth = 13;
+      ctx.beginPath();
+      var last_x = snakes[i].x[0] * scale;
+      var last_y = snakes[i].y[0] * scale;
+      ctx.moveTo(last_x, last_y);
+      for (var j in snakes[i].x) {
+        var x_dif = last_x - snakes[i].x[j] * scale;
+        var y_dif = last_y - snakes[i].y[j] * scale;
+        if ( !(x_dif > 50 * scale || x_dif < -50 * scale || y_dif > 50 * scale || y_dif < -50 * scale) ) {
+          ctx.lineTo(snakes[i].x[j] * scale, snakes[i].y[j] * scale);
+        } else {
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(snakes[i].x[j] * scale, snakes[i].y[j] * scale);
+        }
+        last_x = snakes[i].x[j] * scale;
+        last_y = snakes[i].y[j] * scale;
+      }
+      ctx.stroke();
       // Background
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = snakes[i].name == my_name ? 'blue' : 'red';
+      ctx.strokeStyle = snakes[i].name == my_name ? '#16f34e' : '#f3bc16';
       ctx.lineWidth = 7;
       ctx.beginPath();
       var last_x = snakes[i].x[0] * scale;
@@ -351,7 +373,7 @@ function draw() {
       }
       ctx.stroke();
       // Foreground
-      ctx.globalAlpha = 0.4;
+      ctx.globalAlpha = 0.5;
       ctx.strokeStyle = 'white';
       ctx.lineWidth = 3;
       ctx.beginPath();

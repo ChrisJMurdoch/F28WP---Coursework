@@ -24,7 +24,7 @@ function hasIntersection( x1, y1, x2, y2, x3, y3, x4, y4 ) {
     return ( xs ) && ( ys );
   }
 }
-const TICK_PERIOD = 10; // in milliseconds
+const TICK_PERIOD = 5; // in milliseconds
 
 // INTERFACES
 // Check if player exists
