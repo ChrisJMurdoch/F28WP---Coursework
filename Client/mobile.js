@@ -310,7 +310,7 @@ function draw() {
     for (var i in snakes) {
       // Glow
       ctx.globalAlpha = 0.2;
-      ctx.strokeStyle = snakes[i].name == my_name ? '#16f34e' : '#f3bc16';
+      ctx.strokeStyle = snakes[i].name == my_name ? '#2cfffb' : '#f3bc16';
       ctx.lineWidth = 13;
       ctx.beginPath();
       var last_x = snakes[i].x[0] * scale;
@@ -332,7 +332,7 @@ function draw() {
       ctx.stroke();
       // Background
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = snakes[i].name == my_name ? '#16f34e' : '#f3bc16';
+      ctx.strokeStyle = snakes[i].name == my_name ? '#2cfffb' : '#f3bc16';
       ctx.lineWidth = 7;
       ctx.beginPath();
       var last_x = snakes[i].x[0] * scale;
