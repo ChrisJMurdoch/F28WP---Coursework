@@ -433,6 +433,7 @@ function submitBtnPress() {
 
     if (usrName != "" && usrPsswd != "") {
         login(usrName, usrPsswd);
+        var buttons = document.getElementById("mobileBtns").style.visibility = "visible";
     } else{
         alert("You must enter username and password");
     }
