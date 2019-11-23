@@ -8,6 +8,7 @@ const CLIENT_TO_SERVER_COORDS = '3';
 const SERVER_TO_CLIENT_COORDS = '4';
 const LOGIN_SUCCESS = '5';
 const DEATH = '6';
+const LEADERBOARD = '7';
 
 // Create WebSocket
 //const socket = new WebSocket('ws://localhost:8001'); // --Localhost
@@ -45,7 +46,25 @@ socket.onmessage = function (e) {
         case DEATH:
           death(primarydata);
           break;
+        case LEADERBOARD:
+          leaderboard(primarydata.split('@'));
+          break;
     }
+};
+
+function leaderboard(data) {
+  for (var i in data) {
+    var username = data[i].split('#')[0];
+    var score = data[i].split('#')[1];
+    console.log(username, score);
+  }
+  table = document.getElementById('leaderboard');
+  table.rows[2].cells[1].innerHTML = data[0].split('#')[0];
+  table.rows[3].cells[1].innerHTML = data[1].split('#')[0];
+  table.rows[4].cells[1].innerHTML = data[2].split('#')[0];
+  table.rows[2].cells[2].innerHTML = data[0].split('#')[1];
+  table.rows[3].cells[2].innerHTML = data[1].split('#')[1];
+  table.rows[4].cells[2].innerHTML = data[2].split('#')[1];
 };
 
 // PRIVATE METHODS

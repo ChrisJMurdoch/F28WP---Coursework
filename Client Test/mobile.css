@@ -120,7 +120,9 @@ h1 {
 }
 
 #fps{
-
+    font-family: 'Bungee', cursive;
+    font-size: 13px;
+    bottom: 2%;
 }
 
 /*css for mobile buttons*/

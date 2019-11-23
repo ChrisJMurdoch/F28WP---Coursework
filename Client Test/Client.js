@@ -98,6 +98,11 @@ function sendcoords(x, y) {
     internalsend(CLIENT_TO_SERVER_COORDS + ';' + x + ';' + y);
 };
 
+var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+if (isMobile) {
+  window.location.href = "mobile.html";
+}
 
 (function (){
     var canvas = document.getElementById("gamecanvas");
@@ -299,12 +304,6 @@ document.getElementById("gamecanvas").style.position = "absolute";
 document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
 
 document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
-
-var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-if (isMobile) {
-  window.location.href = "mobile.html";
-}
 //if a mobile device is detected, move the canvas up so that there is room for buttons
 //document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
 
