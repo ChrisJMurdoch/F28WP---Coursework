@@ -127,7 +127,9 @@ highscore = function (username, callback) {
 };
 
 // Add to leaderboard
-set_score = function (username, highscore) {
+set_score = function (username, highscore, callback) {
   var sql = 'UPDATE Users SET highscore = ' + highscore + ' WHERE userName = ?';
-  db_connection.query(sql, username, function() {});
+  db_connection.query(sql, username, function() {
+    callback();
+  });
 };

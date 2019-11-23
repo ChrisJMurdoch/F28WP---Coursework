@@ -11,8 +11,8 @@ const DEATH = '6';
 const LEADERBOARD = '7';
 
 // Create WebSocket
-//const socket = new WebSocket('ws://localhost:8001'); // --Localhost
-const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --Heroku
+const socket = new WebSocket('ws://localhost:80'); // --Localhost
+//const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --Heroku
 
 // PRIVATE EVENTS
 // Connection event
@@ -58,6 +58,18 @@ function leaderboard(data) {
     var score = data[i].split('#')[1];
     console.log(username, score);
   }
+  table = document.getElementById('leaderboard');
+  table.rows[2].cells[1].innerHTML = data[0].split('#')[0];
+  table.rows[3].cells[1].innerHTML = data[1].split('#')[0];
+  table.rows[4].cells[1].innerHTML = data[2].split('#')[0];
+  table.rows[5].cells[1].innerHTML = data[3].split('#')[0];
+  table.rows[6].cells[1].innerHTML = data[4].split('#')[0];
+  table.rows[2].cells[2].innerHTML = data[0].split('#')[1];
+  table.rows[3].cells[2].innerHTML = data[1].split('#')[1];
+  table.rows[4].cells[2].innerHTML = data[2].split('#')[1];
+  table.rows[5].cells[2].innerHTML = data[3].split('#')[1];
+  table.rows[6].cells[2].innerHTML = data[4].split('#')[1];
+
 };
 
 // PRIVATE METHODS
@@ -182,6 +194,9 @@ function login_response(message) {
 function death(player_name) {
   //console.log('Kill: ' + player_name);
   for (var i in snakes) {
+    if (snakes[i].name === my_name) {
+      score = 0;
+    }
     if (snakes[i].name === player_name) {
       snakes.splice(i,1);
     }
