@@ -302,8 +302,10 @@ document.getElementById("gamecanvas").height = max;
 // set bounds
 document.getElementById("gamecanvas").style.position = "absolute";
 document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
+
+document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
 //if a mobile device is detected, move the canvas up so that there is room for buttons
-document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
+//document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
 
 // Draw
 function draw() {
