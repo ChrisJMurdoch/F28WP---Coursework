@@ -18,6 +18,8 @@ exports.connect = function(DB_DATA, callback) {
       console.log('ERR START - GDB');
       console.log(err.code);
       console.log('ERR END');
+      console.log('RESTARTING...');
+      module.exports.connect(DB_DATA, function() {})
     });
     console.log("CONNECTION TO GAME DATABASE ESTABLISHED.\n");
     callback();
@@ -34,6 +36,7 @@ exports.verify = function(username, password, callback) {
 // Display database users
 exports.print_users = function() {
   users(function(result) {
+    console.log('USER-PASSWORD PAIRS:');
     for (var i in result) {
       console.log(result[i].userName + ' ' + result[i].password);
     }
@@ -46,10 +49,24 @@ exports.add_user = function(username, password) {
   var sql = "INSERT INTO Users (userName, password) VALUES ?";
   var user = [[username, password]];
   db_connection.query(sql, [user], function (error, results) {
-    if (error) throw error;
-    console.log("Number of records inserted: " + results.affectedRows + "\n");
+    if (!error) {
+      console.log('USER ADDED.');
+    }
   });
 };
+
+// Check user
+exports.check_user = function(username, callback) {
+  user(username, function(user) {
+    if(user) {
+      console.log('FOUND');
+      callback(true);
+    } else {
+      console.log('NOTFOUND');
+      callback(false);
+    }
+  });
+}
 
 // Get user
 user = function (username, callback) {

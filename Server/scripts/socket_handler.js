@@ -113,12 +113,18 @@ exports.connect = function (socket, req) {
         });
         break;
       case REGISTER:
-        console.log('REGISTERING NOT AVAILABLE YET.');
-        send(PLAINTEXT, 'Not available yet.');
+        console.log('REGISTERING.');
+        database.check_user(primarydata, function(exists) {
+          if (exists) {
+            send(PLAINTEXT, 'Username already exists.');
+          } else {
+            database.add_user(primarydata, secondarydata);
+            send(PLAINTEXT, 'Success!');
+          }
+        });
         break;
       case LOGIN:
         console.log('VERIFY PENDING...');
-        //console.log(socket.player + ' - login un - ' + req.connection.remoteAddress)
         validate(primarydata, secondarydata);
         break;
       case CLIENT_TO_SERVER_COORDS:

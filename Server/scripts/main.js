@@ -1,6 +1,5 @@
 
 // Modules
-const pointerdb = require('./pointerdb.js')
 const database = require('./database');
 //const database = require('./offlinedb');
 const ws = require('ws');
@@ -13,12 +12,6 @@ const SERV_DATA = {
   show_heartbeat: false,
   heartbeat_frequency: 3000
 };
-const PTR_DATA = {
-  host: "remotemysql.com",
-  user: "O9d2rw2TGv",
-  password: "zJxaDPVl7p",
-  database: "O9d2rw2TGv"
-};
 const DB_DATA = {
   host: "remotemysql.com",
   user: "c1uDVliS0M",
@@ -26,13 +19,11 @@ const DB_DATA = {
   database: "c1uDVliS0M"
 };
 
-// Set server pointer
-pointerdb.connect(PTR_DATA, function() {
-  pointerdb.set_pointer();
-});
-
-// Start database connection // Can safely be done before pointerdb.connect() callback
+// Start database connection
 database.connect(DB_DATA, function() {
+
+  // Dubug
+  database.print_users();
 
   // Start server
   console.log('SERVER STARTING...');
