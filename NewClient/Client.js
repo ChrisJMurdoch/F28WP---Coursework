@@ -157,6 +157,12 @@ function oncoords(data) {
   tick();
 };
 
+// function to fade div elements
+function fade(element){
+    element.opacity = 1;
+    (element.opacity -= .1 < 0) ? element.display = "none" : setTimeout(fade, 40);
+}
+
 // Login response
 var my_name;
 function login_response(message) {
@@ -167,15 +173,10 @@ function login_response(message) {
 
     var table = document.getElementById("Leaderboard").style.visibility = "visible";
     var scoreTable = document.getElementById("score").style.visibility = "visible";
-
-    (function fade() {
-        (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
-    })();
-
-    (function fade() {
-        (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
-    })();
-
+    
+    fade(r);
+    fade(table);
+    fade(scoreTable);
     tick();
 };
 
@@ -396,7 +397,7 @@ function draw() {
 };
 
 setInterval(function fps() {
-  document.getElementById("fps").innerHTML = 'Hz: ' + (frames);
+  //document.getElementById("fps").innerHTML = 'Hz: ' + (frames);
   frames = 0;
 }, 1000);
 
@@ -463,32 +464,29 @@ function createBtnPress() {
     var confirmUsrPsswd = document.getElementById("confirmUsernamePassword").value;
 
     validationCheck = /^\w+$/;
-
+    
     if(createUsrName != ""){
         if(!validationCheck.test(createUsrName)){
             alert("Username must contain only letters, numbers and underscores");
-            createUsrName.focus();
-        }
+        }   
     }else{
-       alert("Username cannot be left blank");
+       alert("Username cannot be left blank"); 
     }
-
+    
     if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
         alert("Re-entered password MUST be the same as password");
     }
-
+    
     if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
-        if(false){// De-activated
-            alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
-            createUsrPsswd.focus();
+        if(!checkPassword(createUsrPsswd)){
+            alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");;
         }
         else{
             register(createUsrName, createUsrPsswd);
-            //alert("Username and Password are VALID");
+            alert("Username and Password are VALID");
         }
     }else{
         alert("Password cannot be left blank");
-        createUsrPsswd.focus();
     }
 }
 
@@ -496,10 +494,7 @@ function btnPress() {
     var s = document.getElementById("StartMenu").style;
     var r = document.getElementById("LoginMenu").style.visibility = "visible";
 
-    s.opacity = 1;
-    (function fade() {
-        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
-    })();
+    fade(s);
 }
 
 function registerBtnPress() {
