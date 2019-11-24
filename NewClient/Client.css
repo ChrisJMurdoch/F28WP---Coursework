@@ -4,7 +4,7 @@ body {
   padding: 0px;
 
   background-image: url("scifi.jpg");
-  background-size: auto 100vh;
+  background-size: calc( 100vh / 1235 * 1920 ) 100vh;
   background-position: center top;
 
   font-family: 'Bungee';
