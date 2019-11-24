@@ -99,12 +99,6 @@ function sendcoords(x, y) {
 };
 
 
-(function (){
-    var canvas = document.getElementById("gamecanvas");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}());
-
 // PAGE CODE
 var score = 0;
 function increment(){
