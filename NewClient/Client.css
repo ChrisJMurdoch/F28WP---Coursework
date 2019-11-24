@@ -178,4 +178,13 @@ table {
     height: calc( (100vh - 100vw) / 2 - 24px);
     font-size: calc(((100vh - 100vw) / 2 - 24px) / 20);
   }
+    
+    #StartMenu {
+        top: 35%;
+    }
+
+    #LoginMenu {
+        top: 45%;
+        visibility: hidden;
+    }
 }
