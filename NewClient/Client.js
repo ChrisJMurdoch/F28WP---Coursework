@@ -473,11 +473,15 @@ function createBtnPress() {
             alert("Username MUST contain only letters, numbers and underscores. Username CANNOT contain spaces");
         }
     }else{
-       alert("Username cannot be left blank"); 
+       alert("Username CANNOT be left blank"); 
     }
     
     if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
         alert("Re-entered password MUST be the same as password");
+    }
+    
+    if(createUsrPsswd == "" || confirmUsrPsswd == ""){
+        alert("Password CANNOT be left blank")
     }
     
     if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
@@ -493,8 +497,6 @@ function createBtnPress() {
                 register(createUsrName, createUsrPsswd);
             }
         }
-    }else{
-        alert("Password cannot be left blank");
     }
 }
 
