@@ -6,7 +6,6 @@ body {
   background-image: url("scifi.jpg");
   background-size: auto 100vh;
   background-position: center top;
-  background-attachment: fixed;
 
   font-family: 'Bungee';
   font-size: 0.7vw;
