@@ -316,7 +316,7 @@ function draw() {
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, min, min);
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
     ctx.fillRect(0, 0, min, min);
     //ctx.fillStyle = 'white';
     for (var i in snakes) {
