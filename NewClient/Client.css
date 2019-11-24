@@ -52,11 +52,10 @@ table {
 
 .Menu {
   position: fixed;
-  left: 38%;
-  min-width: 20vh;
+  left: calc(40vw - 10px);
   width: 20vw;
 
-  padding: 2% 2%;
+  padding: 10px 10px;
 
   background-color: white;
   border-radius: 10px;
@@ -116,36 +115,51 @@ table {
 #up {
   position: fixed;
   width: 50vw;
-  height: 40px;
+  height: calc( (100vh - 100vw) / 6);
   left: 25vw;
-  bottom: 80px;
+  bottom: calc( (100vh - 100vw) / 3);
 }
 
 #left {
   position: fixed;
   width: 25vw;
-  height: 40px;
+  height: calc( (100vh - 100vw) / 6);
   left: 25vw;
-  bottom: 40px;
+  bottom: calc( (100vh - 100vw) / 6);
 }
 
 #right {
   position: fixed;
   width: 25vw;
-  height: 40px;
+  height: calc( (100vh - 100vw) / 6);
   left: 50vw;
-  bottom: 40px;
+  bottom: calc( (100vh - 100vw) / 6);
 }
 
 #down {
   position: fixed;
   width: 50vw;
-  height: 40px;
+  height: calc( (100vh - 100vw) / 6);
   left: 25vw;
   bottom: 0px;
 }
 
 @media (orientation: portrait) {
+  .Menu {
+    position: fixed;
+    left: calc( (100vw - 20vh) / 2);
+    width: 20vh;
+
+    padding: 10px 10px;
+
+    background-color: white;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
   body {
     font-size: 0.7vh;
   }
