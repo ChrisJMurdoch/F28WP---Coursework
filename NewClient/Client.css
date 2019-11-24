@@ -167,6 +167,7 @@ table {
   }
   body {
     font-size: 0.9vh;
+      touch-action: manipulation;
   }
   .buttons{
       visibility: visible;
