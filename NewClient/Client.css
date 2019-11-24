@@ -151,6 +151,10 @@ table {
     border-radius: 20px;
 }
 
+/*
+This is for the mobile device, if the device is portrait i.e. a mobile device, 
+then buttons, score and leaderboard are moved accordingly
+*/
 @media (orientation: portrait) {
   .Menu {
     position: fixed;
@@ -190,7 +194,7 @@ table {
     font-size: calc(((100vh - 100vw) / 2 - 24px) / 20);
       background-image: none;
   }
-    
+
     #StartMenu {
         top: 35%;
     }
@@ -199,7 +203,7 @@ table {
         top: 45%;
         visibility: hidden;
     }
-    
+
     #RegistrationMenu {
         top: 43%;
         visibility: hidden;
