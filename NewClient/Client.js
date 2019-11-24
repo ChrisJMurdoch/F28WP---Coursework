@@ -276,20 +276,6 @@ function sendField() {
 
 var frames = 0;
 
-//detect mobile deveice to set correct canvas size
-function detectmob() {
-   if(w <= 800 && h <= 600) {
-     return true;
-   } else {
-     return false;
-   }
-}
-
-var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-if (isMobile) {
-  window.location.href = "mobile.html";
-}
 //if a mobile device is detected, move the canvas up so that there is room for buttons
 //document.getElementById("gamecanvas").style.top = (((h - min) / 2)-50) + 'px';
 
