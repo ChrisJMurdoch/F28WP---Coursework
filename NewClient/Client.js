@@ -462,12 +462,16 @@ function createBtnPress() {
     var createUsrPsswd = document.getElementById("createUsernamePassword").value;
     var confirmUsrPsswd = document.getElementById("confirmUsernamePassword").value;
 
-    validationCheck = /^\w+$/;
+    validationCheck = /^\w+$/; 
+    
     
     if(createUsrName != ""){
+        
+        createUsrName.trim();
+        
         if(!validationCheck.test(createUsrName)){
             alert("Username MUST contain only letters, numbers and underscores. Username CANNOT contain spaces");
-        }   
+        }
     }else{
        alert("Username cannot be left blank"); 
     }
@@ -477,11 +481,17 @@ function createBtnPress() {
     }
     
     if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
+        
+        createUsrPsswd.trim();
+        confirmUsrPsswd.trim();
+        
         if(!checkPassword(createUsrPsswd)){
             alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");;
         }
         else{
-            register(createUsrName, createUsrPsswd);
+            if(checkPassword(createUsrPsswd) && validationCheck.test(createUsrName)){
+                register(createUsrName, createUsrPsswd);
+            }
         }
     }else{
         alert("Password cannot be left blank");
