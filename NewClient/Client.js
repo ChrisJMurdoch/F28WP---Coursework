@@ -466,7 +466,7 @@ function createBtnPress() {
     
     if(createUsrName != ""){
         if(!validationCheck.test(createUsrName)){
-            alert("Username must contain only letters, numbers and underscores");
+            alert("Username MUST contain only letters, numbers and underscores. Username CANNOT contain spaces");
         }   
     }else{
        alert("Username cannot be left blank"); 
@@ -482,7 +482,6 @@ function createBtnPress() {
         }
         else{
             register(createUsrName, createUsrPsswd);
-            alert("Username and Password are VALID");
         }
     }else{
         alert("Password cannot be left blank");
