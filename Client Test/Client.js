@@ -173,8 +173,6 @@ function login_response(message) {
     console.log(message);
 
     var r = document.getElementById("UserLogin").style;
-    r.opacity = 1;
-
     var table = document.getElementById("Leaderboard").style.visibility = "visible";
     var scoreTable = document.getElementById("score").style.visibility = "visible";
     
