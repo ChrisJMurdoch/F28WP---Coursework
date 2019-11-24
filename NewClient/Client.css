@@ -20,6 +20,7 @@ button {
 
   border: none;
   color: black;
+    background-color: rgb(153, 153, 153, 0.8);
 
   border-radius: 4px;
 
@@ -36,7 +37,8 @@ button:focus {
 input {
   margin-bottom: 1%;
   padding: 0.5%;
-
+    border-radius: 10px;
+    background-color: rgb(153, 153, 153, 0.8);
   outline: none;
   border: none;
   border-bottom: 1px solid green;
@@ -56,7 +58,7 @@ table {
 
   padding: 10px 10px;
 
-  background-color: white;
+  background-image: linear-gradient(to top left, rgb(16, 199, 175), rgb(99, 99, 99));
   border-radius: 10px;
 
   display: flex;
@@ -116,33 +118,37 @@ table {
 #up {
   position: fixed;
   width: 50vw;
-  height: calc( (100vh - 100vw) / 6);
+  height: calc(( (100vh - 100vw) / 6) - 1vh);
   left: 25vw;
   bottom: calc( (100vh - 100vw) / 3);
+    border-radius: 20px;
 }
 
 #left {
   position: fixed;
-  width: 25vw;
-  height: calc( (100vh - 100vw) / 6);
+  width: 24vw;
+  height: calc(( (100vh - 100vw) / 6) - 1vh);
   left: 25vw;
   bottom: calc( (100vh - 100vw) / 6);
+    border-radius: 20px;
 }
 
 #right {
   position: fixed;
-  width: 25vw;
-  height: calc( (100vh - 100vw) / 6);
-  left: 50vw;
+  width: 24vw;
+  height: calc(( (100vh - 100vw) / 6) - 1vh);
+  left: 51vw;
   bottom: calc( (100vh - 100vw) / 6);
+    border-radius: 20px;
 }
 
 #down {
   position: fixed;
   width: 50vw;
-  height: calc( (100vh - 100vw) / 6);
+  height: calc(( (100vh - 100vw) / 6) - 1vh);
   left: 25vw;
   bottom: 0px;
+    border-radius: 20px;
 }
 
 @media (orientation: portrait) {
@@ -162,23 +168,27 @@ table {
     text-align: center;
   }
   body {
-    font-size: 0.7vh;
+    font-size: 0.9vh;
+      touch-action: manipulation;
   }
   .buttons{
       visibility: visible;
       width: 50vw;
   }
   #Leaderboard {
-    width: auto;
-    height: calc( (100vh - 100vw) / 2 - 24px);
+    width: 100%;
+    height: calc( ((100vh - 100vw) / 2) - 24px);
     font-size: calc(((100vh - 100vw) / 2 - 24px) / 20);
+      background-image: linear-gradient(to top left, rgb(16, 199, 175, 0.6), rgb(99, 99, 99, 0.7));
   }
+
   #score{
     left: calc(90vw - 24px);
     top: 0%;
     width: 10vw;
     height: calc( (100vh - 100vw) / 2 - 24px);
     font-size: calc(((100vh - 100vw) / 2 - 24px) / 20);
+      background-image: none;
   }
     
     #StartMenu {
