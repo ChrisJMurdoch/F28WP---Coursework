@@ -110,8 +110,7 @@ if (isMobile) {
     canvas.height = window.innerHeight;
 }());
 
-// PAGE CODE
-var score = 0;
+
 function increment(){
   score += 1;
 }
@@ -467,7 +466,6 @@ function createBtnPress() {
     if(createUsrName != ""){
         if(!validationCheck.test(createUsrName)){
             alert("Username must contain only letters, numbers and underscores");
-            createUsrName.focus();
         }
     }else{
        alert("Username cannot be left blank");
@@ -478,17 +476,14 @@ function createBtnPress() {
     }
 
     if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
-        if(false){// De-activated
+        if(!checkPassword(createUsrPsswd)){
             alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
-            createUsrPsswd.focus();
         }
         else{
             register(createUsrName, createUsrPsswd);
-            //alert("Username and Password are VALID");
         }
     }else{
         alert("Password cannot be left blank");
-        createUsrPsswd.focus();
     }
 }
 
