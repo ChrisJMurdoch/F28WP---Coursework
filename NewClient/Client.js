@@ -168,7 +168,7 @@ var my_name;
 function login_response(message) {
     console.log(message);
 
-    var r = document.getElementById("UserLogin").style;
+    var r = document.getElementById("LoginMenu").style;
     r.opacity = 1;
 
     var table = document.getElementById("Leaderboard").style.visibility = "visible";
@@ -275,38 +275,44 @@ function sendField() {
 }
 
 var frames = 0;
-// Sizing
-// get min size
+
+//if a mobile device is detected, move the canvas up so that there is room for buttons
+//document.getElementById("gamecanvas").style.top = (((h - min) / 2)-50) + 'px';
+
+// Resize
 var w = window.innerWidth;
 var h = window.innerHeight;
-var max = w>h ? h : w;
-var scale = max / 500;
-
-//detect mobile deveice to set correct canvas size
-function detectmob() {
-   if(w <= 800 && h <= 600) {
-     return true;
-   } else {
-     return false;
-   }
-}
-
+var min = w > h ? h : w;
+var scale = min / 500;
 // Set canvas size
-document.getElementById("gamecanvas").width = max;
-document.getElementById("gamecanvas").height = max;
+document.getElementById("gamecanvas").width = min;
+document.getElementById("gamecanvas").height = min;
 // set bounds
 document.getElementById("gamecanvas").style.position = "absolute";
-document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
+document.getElementById("gamecanvas").style.left = ((w - min)/2) + 'px';
+document.getElementById("gamecanvas").style.top = ((h - min)/2) + 'px';
 
-document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
-
-var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-if (isMobile) {
-  window.location.href = "mobile.html";
-}
-//if a mobile device is detected, move the canvas up so that there is room for buttons
-//document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
+window.addEventListener('resize', function() {
+  // Sizing
+  w = window.innerWidth;
+  h = window.innerHeight;
+  min = w > h ? h : w;
+  scale = min / 500;
+  // Set canvas size
+  document.getElementById("gamecanvas").width = min;
+  document.getElementById("gamecanvas").height = min;
+  // set bounds
+  document.getElementById("gamecanvas").style.position = "absolute";
+  document.getElementById("gamecanvas").style.left = ((w - min)/2) + 'px';
+  document.getElementById("gamecanvas").style.top = ((h - min)/2) + 'px';
+  // Draw
+  var canvas = document.getElementById('gamecanvas');
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, min, min);
+  }
+});
 
 // Draw
 function draw() {
@@ -315,9 +321,9 @@ function draw() {
   var canvas = document.getElementById('gamecanvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, max, max);
+    ctx.clearRect(0, 0, min, min);
     ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, max, max);
+    ctx.fillRect(0, 0, min, min);
     //ctx.fillStyle = 'white';
     for (var i in snakes) {
       // Glow
@@ -493,8 +499,8 @@ function createBtnPress() {
 }
 
 function btnPress() {
-    var s = document.getElementById("PlayMenu").style;
-    var r = document.getElementById("UserLogin").style.visibility = "visible";
+    var s = document.getElementById("StartMenu").style;
+    var r = document.getElementById("LoginMenu").style.visibility = "visible";
 
     s.opacity = 1;
     (function fade() {
@@ -504,12 +510,12 @@ function btnPress() {
 
 function registerBtnPress() {
 
-    var s = document.getElementById("UserLogin").style.visibility = "hidden";
-    var r = document.getElementById("RegisterUser").style.visibility = "visible";
+    var s = document.getElementById("LoginMenu").style.visibility = "hidden";
+    var r = document.getElementById("RegistrationMenu").style.visibility = "visible";
 }
 
 function loginBtnPress() {
 
-    var s = document.getElementById("RegisterUser").style.visibility = "hidden";
-    var r = document.getElementById("UserLogin").style.visibility = "visible";
+    var s = document.getElementById("RegistrationMenu").style.visibility = "hidden";
+    var r = document.getElementById("LoginMenu").style.visibility = "visible";
 }
