@@ -88,8 +88,7 @@ table {
   height: auto;
   border-radius: 3px;
   font-size: calc(((100vw - 100vh) / 2 - 24px) / 20);
-
-  background-color: white;
+  background-image: linear-gradient(to top left, rgb(16, 199, 175, 0.7), rgb(99, 99, 99, 0.9));
   align-items: center;
 }
 
@@ -102,15 +101,18 @@ table {
   height: auto;
   border-radius: 3px;
   font-size: calc(((100vw - 100vh) / 2 - 24px) / 20);
-
-  background-color: white;
+  background-image: linear-gradient(to top left, rgb(16, 199, 175, 0.7), rgb(99, 99, 99, 0.9));
   text-align: center;
 }
 
 .buttons {
   visibility: hidden;
+    background-image: linear-gradient(to top left, rgb(16, 199, 175), rgb(99, 99, 99));
 }
 
+.buttons:active{
+    background-image: linear-gradient(to top left, rgb(243, 188, 22), rgb(99, 99, 99));
+}
 #up {
   position: fixed;
   width: 50vw;
@@ -185,6 +187,11 @@ table {
 
     #LoginMenu {
         top: 45%;
+        visibility: hidden;
+    }
+    
+    #RegistrationMenu {
+        top: 43%;
         visibility: hidden;
     }
 }
