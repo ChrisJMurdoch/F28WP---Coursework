@@ -4,7 +4,7 @@ body {
   padding: 0px;
 
   background-image: url("scifi.jpg");
-  background-size: auto 100%;
+  background-size: auto 100vh;
   background-position: center top;
   background-attachment: fixed;
 
