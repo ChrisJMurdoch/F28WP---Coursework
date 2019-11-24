@@ -109,29 +109,49 @@ table {
   text-align: center;
 }
 
-#mobileBtns{
-    position: fixed;
-    top: 80%;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
-    background-color: aqua;
-    visibility: hidden;
+.buttons {
+  visibility: hidden;
 }
 
-#upBtn{
-    transform: translate(28%);
+#up {
+  position: fixed;
+  width: 50vw;
+  height: 40px;
+  left: 25vw;
+  bottom: 80px;
 }
 
-#downBtn{
-    transform: translate(22%);
+#left {
+  position: fixed;
+  width: 25vw;
+  height: 40px;
+  left: 25vw;
+  bottom: 40px;
+}
+
+#right {
+  position: fixed;
+  width: 25vw;
+  height: 40px;
+  left: 50vw;
+  bottom: 40px;
+}
+
+#down {
+  position: fixed;
+  width: 50vw;
+  height: 40px;
+  left: 25vw;
+  bottom: 0px;
 }
 
 @media (orientation: portrait) {
   body {
     font-size: 0.7vh;
   }
-  #mobileBtns{
+  .buttons{
       visibility: visible;
+      width: 50vw;
   }
   #Leaderboard {
     width: auto;
