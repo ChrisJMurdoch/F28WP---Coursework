@@ -178,17 +178,18 @@ function login_response(message) {
 
     var table = document.getElementById("Leaderboard").style.visibility = "visible";
     var scoreTable = document.getElementById("score").style.visibility = "visible";
-
-    (function fade() {
-        (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
-    })();
-
-    (function fade() {
-        (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
-    })();
-
+    
+    fade(r);
+    fade(table);
+    fade(scoreTable);
     tick();
 };
+
+// function to fade div elements
+function fade(element){
+    element.opacity = 1;
+    (element.opacity -= .1 < 0) ? element.display = "none" : setTimeout(fade, 40);
+}
 
 // Death response
 function death(player_name) {
@@ -495,10 +496,7 @@ function btnPress() {
     var s = document.getElementById("PlayMenu").style;
     var r = document.getElementById("UserLogin").style.visibility = "visible";
 
-    s.opacity = 1;
-    (function fade() {
-        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
-    })();
+    fade(s);
 }
 
 function registerBtnPress() {
