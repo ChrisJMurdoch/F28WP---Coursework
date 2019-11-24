@@ -182,11 +182,10 @@ function login_response(message) {
 
 // Death response
 function death(player_name) {
-  //console.log('Kill: ' + player_name);
+  if (player_name === my_name) {
+    score = 0;
+  }
   for (var i in snakes) {
-    if (snakes[i].name === my_name) {
-      score = 0;
-    }
     if (snakes[i].name === player_name) {
       snakes.splice(i,1);
     }
