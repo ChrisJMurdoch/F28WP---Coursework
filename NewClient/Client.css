@@ -20,7 +20,7 @@ button {
 
   border: none;
   color: black;
-    background-color: rgb(153, 153, 153, 0.8);
+  background-color: rgb(153, 153, 153, 0.8);
 
   border-radius: 4px;
 
@@ -37,8 +37,8 @@ button:focus {
 input {
   margin-bottom: 1%;
   padding: 0.5%;
-    border-radius: 10px;
-    background-color: rgb(153, 153, 153, 0.8);
+  border-radius: 10px;
+  background-color: rgb(153, 153, 153, 0.8);
   outline: none;
   border: none;
   border-bottom: 1px solid green;
@@ -65,6 +65,14 @@ table {
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+
+.buttons {
+  visibility: hidden;
+    background-image: linear-gradient(to top left, rgb(16, 199, 175), rgb(99, 99, 99));
+}
+.buttons:active{
+    background-image: linear-gradient(to top left, rgb(243, 188, 22), rgb(99, 99, 99));
 }
 
 #StartMenu {
@@ -107,14 +115,6 @@ table {
   text-align: center;
 }
 
-.buttons {
-  visibility: hidden;
-    background-image: linear-gradient(to top left, rgb(16, 199, 175), rgb(99, 99, 99));
-}
-
-.buttons:active{
-    background-image: linear-gradient(to top left, rgb(243, 188, 22), rgb(99, 99, 99));
-}
 #up {
   position: fixed;
   width: 50vw;
@@ -152,10 +152,14 @@ table {
 }
 
 /*
-This is for the mobile device, if the device is portrait i.e. a mobile device, 
+This is for the mobile device, if the device is portrait i.e. a mobile device,
 then buttons, score and leaderboard are moved accordingly
 */
 @media (orientation: portrait) {
+  body {
+    font-size: 0.9vh;
+      touch-action: manipulation;
+  }
   .Menu {
     position: fixed;
     left: calc( (100vw - 20vh) / 2);
@@ -170,10 +174,6 @@ then buttons, score and leaderboard are moved accordingly
     flex-direction: column;
     align-items: center;
     text-align: center;
-  }
-  body {
-    font-size: 0.9vh;
-      touch-action: manipulation;
   }
   .buttons{
       visibility: visible;
