@@ -18,10 +18,14 @@ Coding styles are consistent and accurate. Consistent use of correct indentation
 Most of the variables and functions have meaningful names which aid the understanding of their functionality. Most of the variables are local instead of global. Variables are only global when they need to be.
 
 Code validation/testing plan (automated vs user) –
+N/A
 
 Manage code changes/versions (different file types/bugs/tasks) –
+different versions of the game are accessible from the GIT repository. Older verions of the game can be pulled.
+Code changes are also managed through the GIT repository
 
 Open source practices (real-world) –
+Since it is on a public GIT repository the game code is open source which allows anyone to view and study the code
 
 Plans/Objectives –
 Week 1 – All members present at meeting at James Watt. Meeting used to brainstorm ideas about what our game should be. Ideas discussed Snake Multiplayer and Tron Multiplayer
@@ -43,13 +47,17 @@ Week 10 – All members present
 
 Mechanics for the Game:
 Gameplay details –
+Each user has a 2D line that represents thier sprite for thier player. The user is supposed to use their sprite to make other users collide with them
+User used W-A-S-D keys to move thier sprite around the game canvas.
 
 Scoring/point system –
 As each player is moving along the canvas their points are going up by 1 with the time, i.e. 1-point equals 1 second.
-For players to get more points they must get other players to collide with their trail. If another player collides with your trail, you get 20 points.
-If you are the winner (the last player left) you get an additional 50 points to your score.
+The longer you last the more your total score will be.
+Users scores get reset to zero if they collide with another user
 
 Animation/required graphics/code –
+Since the game is 2D, animation wise there isn't a great aspect of that. Buttons for the controls on the mobile version of the game are animated though.
+Once pressed (active), they push in. Code for that is written in CSS
 
 User input/Controls –
 User must input their login credentials (username and password) before they start playing the game. If the user is new, they will create a new account by inputting their desired username and password.
@@ -63,6 +71,9 @@ using our optimized algorithm for line segment intersection and a  kill notifica
 
 Testing:
 Usability –
+For mobile version, users will be given LEFT-RIGHT-UP-DOWN div created buttons which when pressed will be used to alter the direction of thier sprite in game. This aids usabilty as buttons are simplistic
+in functionality and are positioned for easy use and understaning.
+Gameplay even though straight forward enough contains a short sentence which explains how to play the game, further aiding usabilty.
 
 Working client implementation (standalone) (offline sandpit version?) –
 If you want to run a standalone version (offline version) of the game, connect the client to the local host:80 and run the offline server.
@@ -71,6 +82,7 @@ Could the game run standalone with no other players? (e.g., early testing) –
 Yes, the game can run standalone.
 
 JavaScript/DOM/CSS/html (validation/sanity checks) –
+N/A
 
 Data Management:
 Separating data (temporary data, data for client and server/structured/managed) e.g., which information needs to be sent/received from the server, which is created/managed locally –
@@ -83,32 +95,47 @@ Login/temp visitor –
 There is a login and a register feature where if the user is new, they must create an account before they can access the game. If the user is existing, they must login to access the game. This does not allow for temp visitor accounts as could complicate the database for users and their login credentials.
 
 Restarting/joining existing game –
+If a user restarts whilst in a current game, they are removed from the current game. If the user wants to join an existing game, they just have to log back in.
 
 Managing resources/partitioning (groups/levels/regions) –
+Code for the game is split into seperate functionality folders and functionality sheets. CSS, HTML and Javascript that is directly for client side is put in a client side folder.
+Queries for the database are put in a database folder
+Node.js and Javascript that is directly for the server side is put in a server side folder
 
 Server-client management:
 Passing data to-from the server in real time –
 Data can be passed to-from the server in real time
 
 Suitable language/data transmission format e.g., time information, other user status information –
+Status information has been used in the console for debugging
+time information has been used in the client side Javascript for game code 
 
 Server data storage (sql/mysql/litesql/..) –
 The server data storage we are using to hold game related data is SQL and the DBMS is MySQL. The portal used to create queries for the database was done in PHPmyAdmin.
 
 Deployment plan:
 How will it be deployment testing be done –
+N/A
 
 Is the GitHub project easy to deploy and test (outside user/community/guidance information/ rules/settings/robust)? –
+N/A
 
 Deployment criteria clear (libraries, server permissions, defined) –
+N/A
 
 Is there a list of active tests, success, Q&A for the deployment of the project? –
+N/A
 
 Security:
 Validate data/user information –
 JavaScript is used to validate the user’s login credentials. Validating if the user enters the wrong login credentials, no login credentials, no create account credentials or non-valid create account credentials.
 
 Security/safety/backups –
+N/A
+
+Compression (file/data formats, jpg vs png vs bmp, zlib, ..) - 
+Our game uses a .png file. it is used as our game's background which has lossless compression
+
 
 Optimization:
 Slow connections, crashes, different browsers –
@@ -143,3 +170,18 @@ So far there is one external asset. It is a .png file that is used as our game�
 
 What are the game limitations? –
 Currently the game cannot be operated on mobile once it is in landscape. This is because the buttons don’t display
+
+
+Ongoing Maintenance (week by week):
+
+Each team member is contributing (commits, updates, testing) - 
+Each team member is/has contributing/contributed to the game. All members have pushed and pulled commits from the GIT repository
+
+Bugs, features, releases are reguarly updated - 
+If a bug is found, members of the GIT repository are made aware of it quickly.
+features in the gameplay are/have been pushed to the GIT repository
+Game is updapted
+
+Does the team work synergistically? - 
+Team worked well together (synergistically). Work was shared and good communication between members aided the games development.
+ 
