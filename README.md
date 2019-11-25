@@ -42,8 +42,10 @@ Week 3 – All members present at meeting at GRID. Joe and Eniolubi made basic H
 Week 4 – All members present at meeting at GRID. Joe has made JS script that sends clients login details to the server. Eniolubi has written CSS, Javascript and HTML for a leaderboard and the script to let if fade in. Chris 
 cleaned up syntax errors and connected the server to Camerons external database.
 Week 5 – All members present at meeting at James Watt. Meeting to go over what we have done so far (like the implementation of the server (main goal)) and what we still have to do (features that need to be implemented like collision of characters etc.)
-Week 6 – All members present at meeting at James Watt. Continuing to go over what needs to be done still for this game. Ideas brought up by Joseph was
-Week 7 – All members present at meeting at GRID
+Week 6 – All members present at meeting at James Watt. Continuing to go over what needs to be done still for this game. Ideas brought up by Joseph was register div so users can create new accounts before they play the game.
+Chris reminded members that mobile version of game has to be implemented (although futher down the line of progress) along with optimizing resizing of the game . Eniolubi suggested to Cameron that queries for the
+leaderbaord have to be created.
+Week 7 – All members present at meeting at GRID. Catch up of what each member has done so far. members noticed that no commitd have been pushed to the GIT repository in a while.
 Week 8 – All members present
 Week 9 – All members present
 Week 10 – All members present
