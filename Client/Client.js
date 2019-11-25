@@ -1,4 +1,5 @@
-// SOCKET INTERFACE
+
+// SOCKET INTERFACE METHODS
 
 // Action codes // Keep synced with server codes
 const PLAINTEXT = '0';
@@ -10,20 +11,28 @@ const LOGIN_SUCCESS = '5';
 const DEATH = '6';
 const LEADERBOARD = '7';
 
-// Create WebSocket
-//const socket = new WebSocket('ws://localhost:80'); // --Localhost
-const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // --Heroku
+// Player name
+var my_name;
+// Player score
+var score = 0;
+// All drawable players
+var snakes = [];
+// Last key pressed
+var key = 'w';
 
-// PRIVATE EVENTS
+// Create WebSocket
+const socket = new WebSocket('ws://f28wp.herokuapp.com/:80'); // Heroku
+
 // Connection event
 socket.onopen = function () {
     console.log('Server connection established.');
-    // login('a', 'a');
 };
+
 // Error event
 socket.onerror = function (error) {
     console.log('Error: ', error);
 };
+
 // Message event
 socket.onmessage = function (e) {
     var splitmessage = e.data.split(';');
@@ -33,8 +42,7 @@ socket.onmessage = function (e) {
     var tertiarydata = splitmessage[3];
     switch (actioncode) {
         case PLAINTEXT:
-          console.log('Server: ', primarydata);
-          alert(primarydata, "Incorrect Login Details");
+          alert(primarydata);
           break;
         case SERVER_TO_CLIENT_COORDS:
           splitmessage.shift();
@@ -52,12 +60,82 @@ socket.onmessage = function (e) {
     }
 };
 
-function leaderboard(data) {
-  for (var i in data) {
-    var username = data[i].split('#')[0];
-    var score = data[i].split('#')[1];
-    console.log(username, score);
+
+
+// SERVER RESPONSES
+
+// Receive Co-ordinates
+function oncoords(data) {
+  // For each incoming player co-ord
+  outer: for (var i in data) {
+    var split_data = data[i].split('@');
+    // Find player
+    for (var s in snakes) {
+      if (snakes[s].name === split_data[0]) {
+        // Push new timestamped body part
+        snakes[s].x.push(split_data[1]);
+        snakes[s].y.push(split_data[2]);
+        snakes[s].t.push(Date.now());
+        // Remove body parts older than 2 seconds
+        var time = Date.now();
+        while (true) {
+          if (time - snakes[s].t[0] > 2000) {
+            snakes[s].t.shift();
+            snakes[s].x.shift();
+            snakes[s].y.shift();
+          } else {
+            break;
+          }
+        }
+        continue outer;
+      }
+    }
+    // Create new player record if not found
+    snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
   }
+  // Remove players excluded from broadcast (logged out)
+  outer: for (var i in snakes) {
+    for (var j in data) {
+      if (snakes[i].name === data[j].split('@')[0]) {
+        continue outer;
+      }
+    }
+    if (snakes[i].name === my_name) {
+      death(snakes[i].name);
+    } else {
+      death(snakes[i].name);
+    }
+  }
+  draw();
+  tick();
+};
+
+// Login response
+function login_response(message) {
+    console.log(message);
+    // Swap login menu for leaderboard and score
+    document.getElementById("Leaderboard").style.visibility = "visible";
+    document.getElementById("score").style.visibility = "visible";
+    fade(document.getElementById("LoginMenu").style);
+    tick();
+};
+
+// Death response
+function death(player_name) {
+  // Reset score if this player
+  if (player_name === my_name) {
+    score = 0;
+  }
+  // Remove player
+  for (var i in snakes) {
+    if (snakes[i].name === player_name) {
+      snakes.splice(i,1);
+    }
+  }
+}
+
+// Update leaderboard
+function leaderboard(data) {
   table = document.getElementById('leaderboard');
   table.rows[2].cells[1].innerHTML = data[0].split('#')[0];
   table.rows[3].cells[1].innerHTML = data[1].split('#')[0];
@@ -67,18 +145,20 @@ function leaderboard(data) {
   table.rows[4].cells[2].innerHTML = data[2].split('#')[1];
 };
 
-// PRIVATE METHODS
-// Send to server // Only for interface use
+
+
+// CLIENT TO SERVER METHODS
+
+// Send raw data
 function internalsend(message) {
-    // console.log('Sending: ', message);
     socket.send(message);
+    // Save username
     if (message.split(';')[0] == LOGIN) {
       my_name = message.split(';')[1];
     }
 };
 
-// PUBLIC METHODS
-// Send message to all
+// Send text message to all
 function sendmessage(message) {
     internalsend(PLAINTEXT + ';' + message);
 };
@@ -99,230 +179,92 @@ function sendcoords(x, y) {
 };
 
 
-(function (){
-    var canvas = document.getElementById("gamecanvas");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}());
 
 // PAGE CODE
-var score = 0;
-function increment(){
-  score += 1;
+
+// Function to fade div elements
+function fade(element){
+    element.opacity = 1;
+    (element.opacity -= .1 < 0) ? element.display = "none" : setTimeout(fade, 40);
 }
 
-// PUBLIC EVENTS
-// Receive Co-ordinates
-function oncoords(data) {
-  // For each incoming player co-ord
-  outer: for (var i in data) {
-    var split_data = data[i].split('@');
-    // console.log(split_data);
-    // For each existing player
-    for (var s in snakes) {
-      if (snakes[s].name === split_data[0]) {
-        snakes[s].x.push(split_data[1]);
-        snakes[s].y.push(split_data[2]);
-        snakes[s].t.push(Date.now());
-        // console.log(snakes[i].x);
-        /*
-        if (snakes[s].x.length > 5) {
-          snakes[s].x.shift();
-          snakes[s].y.shift();
-        }
-        */
-        var time = Date.now();
-        while (true) {
-          if (time - snakes[s].t[0] > 2000) {
-            snakes[s].t.shift();
-            snakes[s].x.shift();
-            snakes[s].y.shift();
-          } else {
-            break;
-          }
-        }
-        continue outer;
-      }
-    }
-    //console.log('Adding: ' + split_data[0]);
-    snakes.push(new Snake(split_data[0], split_data[1], split_data[2]));
-  }
-  outer: for (var i in snakes) {
-    for (var j in data) {
-      if (snakes[i].name === data[j].split('@')[0]) {
-        continue outer;
-      }
-    }
-    if (snakes[i].name === my_name) {
-      death(snakes[i].name);
-    } else {
-      death(snakes[i].name);
-    }
-  }
-  draw();
-  tick();
-};
-
-// Login response
-var my_name;
-function login_response(message) {
-    console.log(message);
-
-    var r = document.getElementById("UserLogin").style;
-    r.opacity = 1;
-
-    var table = document.getElementById("Leaderboard").style.visibility = "visible";
-    var scoreTable = document.getElementById("score").style.visibility = "visible";
-
-    (function fade() {
-        (r.opacity -= .1) < 0 ? r.display = "none" : setTimeout(fade, 40)
-    })();
-
-    (function fade() {
-        (scoreTable.opacity -= .1) < 0 ? scoreTable.display = "none" : setTimeout(fade, 40)
-    })();
-
-    tick();
-};
-
-// Death response
-function death(player_name) {
-  //console.log('Kill: ' + player_name);
-  for (var i in snakes) {
-    if (snakes[i].name === my_name) {
-      score = 0;
-    }
-    if (snakes[i].name === player_name) {
-      snakes.splice(i,1);
-    }
-  }
-}
-
-class Player {
-  constructor(in_name, in_x, in_y) {
-    this.name = in_name;
-    this.x = in_x;
-    this.y = in_y;
-  };
-};
-
-class Snake {
-  constructor(in_name, in_x, in_y) {
-    this.name = in_name;
-    this.x = [in_x];
-    this.y = [in_y];
-    this.t = [Date.now()];
-  };
-};
-
-var snakes = [];
-var players = [];
-var player;
-var currentDirection;
-// PAGE CODE
-
+// Create movement vector and send to server
 function tick() {
   var x_out = 0;
   var y_out = 0;
   switch (key) {
     case 'w':
-      if(currentDirection !== "down"){
-        currentDirection = "up";
-        y_out--;
-        break;
-      } else {
-        y_out++;
-        break;
-      }
+      y_out--;
+      break;
     case 'a':
-      if(currentDirection !== "right"){
-        currentDirection = "left";
-        x_out--;
-        break;
-      } else {
-        x_out++;
-        break;
-      }
+      x_out--;
+      break;
     case 's':
-      if(currentDirection !== "up"){
-        currentDirection = "down";
-        y_out++;
-        break;
-      } else {
-        y_out--;
-        break;
-      }
+      y_out++;
+      break;
     case 'd':
-      if(currentDirection !== "left"){
-        currentDirection = "right";
-        x_out++;
-        break;
-      } else {
-        x_out--;
-        break;
-      }
+      x_out++;
+      break;
   }
-  // Constrain
   sendcoords(x_out , y_out);
 };
 
-var interval = setInterval(increment,1000);
+// Increment score each second
+var interval = setInterval(function() {
+  score += 1;
+  document.getElementById("score").innerHTML = 'Score: ' + (score);
+},1000);
 
-// Only for debugging. Do not use internalsend
-function sendField() {
-    var message = document.getElementById("sendbox").value;
-    internalsend(message);
-}
-
-var frames = 0;
-// Sizing
-// get min size
+// Resize canvas
 var w = window.innerWidth;
 var h = window.innerHeight;
-var max = w>h ? h : w;
-var scale = max / 500;
-
-//detect mobile deveice to set correct canvas size
-function detectmob() {
-   if(w <= 800 && h <= 600) {
-     return true;
-   } else {
-     return false;
-   }
-}
-
+var min = w > h ? h : w;
+var scale = min / 500;
 // Set canvas size
-document.getElementById("gamecanvas").width = max;
-document.getElementById("gamecanvas").height = max;
-// set bounds
+document.getElementById("gamecanvas").width = min;
+document.getElementById("gamecanvas").height = min;
+// Set bounds
 document.getElementById("gamecanvas").style.position = "absolute";
-document.getElementById("gamecanvas").style.left = ((w - max)/2) + 'px';
+document.getElementById("gamecanvas").style.left = ((w - min)/2) + 'px';
+document.getElementById("gamecanvas").style.top = ((h - min)/2) + 'px';
 
-document.getElementById("gamecanvas").style.top = ((h - max)/2) + 'px';
-
-var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-if (isMobile) {
-  window.location.href = "mobile.html";
-}
-//if a mobile device is detected, move the canvas up so that there is room for buttons
-//document.getElementById("gamecanvas").style.top = (((h - max) / 2)-50) + 'px';
-
-// Draw
-function draw() {
-  frames++;
-  document.getElementById("score").innerHTML = 'Score: ' + (score);
+// Resize canvas on window resize
+window.addEventListener('resize', function() {
+  // Sizing
+  w = window.innerWidth;
+  h = window.innerHeight;
+  min = w > h ? h : w;
+  scale = min / 500;
+  // Set canvas size
+  document.getElementById("gamecanvas").width = min;
+  document.getElementById("gamecanvas").height = min;
+  // Set bounds
+  document.getElementById("gamecanvas").style.position = "absolute";
+  document.getElementById("gamecanvas").style.left = ((w - min)/2) + 'px';
+  document.getElementById("gamecanvas").style.top = ((h - min)/2) + 'px';
+  // Redraw background
   var canvas = document.getElementById('gamecanvas');
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, max, max);
     ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, max, max);
-    //ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, min, min);
+  }
+});
+
+// Render game
+function draw() {
+  var canvas = document.getElementById('gamecanvas');
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, min, min);
+    ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+    ctx.fillRect(0, 0, min, min);
+    // Draw each snake
     for (var i in snakes) {
+      // Draw in parts
       // Glow
       ctx.globalAlpha = 0.1;
-      ctx.strokeStyle = snakes[i].name == my_name ? '#16f34e' : '#f3bc16';
+      ctx.strokeStyle = snakes[i].name == my_name ? '#2cfffb' : '#f3bc16';
       ctx.lineWidth = 15;
       ctx.beginPath();
       var last_x = snakes[i].x[0] * scale;
@@ -344,7 +286,7 @@ function draw() {
       ctx.stroke();
       // Background
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = snakes[i].name == my_name ? '#16f34e' : '#f3bc16';
+      ctx.strokeStyle = snakes[i].name == my_name ? '#2cfffb' : '#f3bc16';
       ctx.lineWidth = 7;
       ctx.beginPath();
       var last_x = snakes[i].x[0] * scale;
@@ -364,7 +306,7 @@ function draw() {
         last_y = snakes[i].y[j] * scale;
       }
       ctx.stroke();
-      // Foreground
+      // Highlight
       ctx.globalAlpha = 0.5;
       ctx.strokeStyle = 'white';
       ctx.lineWidth = 3;
@@ -389,60 +331,55 @@ function draw() {
       // Draw name
       ctx.globalAlpha = 1;
       ctx.fillStyle = 'white';
-      ctx.font = "20px Comic Sans MS";
+      ctx.font = "20px Bungee";
       ctx.fillText(snakes[i].name, (parseInt(snakes[i].x[snakes[i].x.length-1]) + 5) * scale, (parseInt(snakes[i].y[snakes[i].y.length-1]) - 5) * scale);
     }
   }
 };
-
-setInterval(function fps() {
-  document.getElementById("fps").innerHTML = 'Hz: ' + (frames);
-  frames = 0;
-}, 1000);
-
+// Draw when loaded
 draw();
-var key = 'w';
 
+// Key listener
 document.onkeydown = function (e) {
   switch(e.code) {
     case 'KeyW' :
-      key = 'w';
+      if (key != 's')
+        key = 'w';
       break;
     case 'KeyA' :
-      key = 'a';
+      if (key != 'd')
+        key = 'a';
       break;
     case 'KeyS' :
-      key = 's';
+      if (key != 'w')
+        key = 's';
       break;
     case 'KeyD' :
-      key = 'd';
+      if (key != 'a')
+        key = 'd';
       break;
   }
 };
 
+// Button listeners
 function mobileBtnLeft(){
     key = 'a';
 }
-
 function mobileBtnUp(){
     key = 'w';
 }
-
 function mobileBtnDown(){
     key = 's';
 }
-
 function mobileBtnRight(){
     key = 'd';
 }
 
+// Login
 function submitBtnPress() {
-
     score = 0;
-
     var usrName = document.getElementById("UsernameInput").value;
     var usrPsswd = document.getElementById("UsernamePassword").value;
-
     if (usrName != "" && usrPsswd != "") {
         login(usrName, usrPsswd);
     } else{
@@ -450,66 +387,73 @@ function submitBtnPress() {
     }
 }
 
-//function to validate users password input
+// Function to validate users password input
 function checkPassword(userInput) {
-    var validation = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    return validation.test(userInput);
-  }
+  var validation = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+  return validation.test(userInput);
+}
 
+// Register
 function createBtnPress() {
-
     var createUsrName = document.getElementById("createUsernameInput").value;
     var createUsrPsswd = document.getElementById("createUsernamePassword").value;
     var confirmUsrPsswd = document.getElementById("confirmUsernamePassword").value;
-
     validationCheck = /^\w+$/;
-
-    if(createUsrName != ""){
-        if(!validationCheck.test(createUsrName)){
-            alert("Username must contain only letters, numbers and underscores");
-            createUsrName.focus();
+    if(createUsrName != "") {
+        createUsrName.trim();
+        if(!validationCheck.test(createUsrName)) {
+            alert("Username MUST contain only letters, numbers and underscores. Username CANNOT contain spaces");
         }
-    }else{
-       alert("Username cannot be left blank");
+    } else {
+       alert("Username CANNOT be left blank");
     }
-
-    if(createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == ""){
+    if (createUsrPsswd != confirmUsrPsswd || confirmUsrPsswd == "") {
         alert("Re-entered password MUST be the same as password");
     }
-
+    if (createUsrPsswd == "" || confirmUsrPsswd == "") {
+        alert("Password CANNOT be left blank")
+    }
     if (createUsrPsswd != "" && confirmUsrPsswd == createUsrPsswd) {
-        if(false){// De-activated
-            alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");
-            createUsrPsswd.focus();
+        createUsrPsswd.trim();
+        confirmUsrPsswd.trim();
+        if (!checkPassword(createUsrPsswd)) {
+            alert("Password MUST contain at least one number/lowercase/uppercase letter and be at least 6 characaters in length");;
         }
         else{
-            register(createUsrName, createUsrPsswd);
-            //alert("Username and Password are VALID");
+            if(checkPassword(createUsrPsswd) && validationCheck.test(createUsrName)){
+                register(createUsrName, createUsrPsswd);
+            }
         }
-    }else{
-        alert("Password cannot be left blank");
-        createUsrPsswd.focus();
     }
 }
 
+// Go to login menu
 function btnPress() {
-    var s = document.getElementById("PlayMenu").style;
-    var r = document.getElementById("UserLogin").style.visibility = "visible";
-
-    s.opacity = 1;
-    (function fade() {
-        (s.opacity -= .1) < 0 ? s.display = "none" : setTimeout(fade, 40)
-    })();
+    document.getElementById("LoginMenu").style.visibility = "visible";
+    fade(document.getElementById("StartMenu").style);
 }
 
+// Go to register menu
 function registerBtnPress() {
-
-    var s = document.getElementById("UserLogin").style.visibility = "hidden";
-    var r = document.getElementById("RegisterUser").style.visibility = "visible";
+    document.getElementById("LoginMenu").style.visibility = "hidden";
+    document.getElementById("RegistrationMenu").style.visibility = "visible";
 }
 
+// Hide login menu
 function loginBtnPress() {
-
-    var s = document.getElementById("RegisterUser").style.visibility = "hidden";
-    var r = document.getElementById("UserLogin").style.visibility = "visible";
+    document.getElementById("RegistrationMenu").style.visibility = "hidden";
+    document.getElementById("LoginMenu").style.visibility = "visible";
 }
+
+
+
+// CLASSES
+
+class Snake {
+  constructor(in_name, in_x, in_y) {
+    this.name = in_name;
+    this.x = [in_x];
+    this.y = [in_y];
+    this.t = [Date.now()];
+  };
+};
