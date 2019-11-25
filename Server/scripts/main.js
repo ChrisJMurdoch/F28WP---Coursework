@@ -37,7 +37,7 @@ database.connect(DB_DATA, function() {
   // Start server
   console.log('SERVER STARTING...');
   const server = new ws.Server({ port: SERV_DATA.port });
-  console.log('SERVER INITIALISED ON PORT ' + SERV_DATA.port;
+  console.log('SERVER INITIALISED ON PORT ' + SERV_DATA.port);
 
   // Setup socket handler
   socket_handler.initialise(SERV_DATA, database, server, game);
