@@ -45,7 +45,6 @@ exports.print_users = function() {
     for (var i in result) {
       console.log(' - ' + result[i].userName + ' - ' + result[i].password);
     }
-    console.log();
   });
 };
 
