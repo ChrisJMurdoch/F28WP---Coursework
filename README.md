@@ -1,6 +1,8 @@
 # F28WP---Coursework
 
 Type of Game:
+2D MMO game
+
 Team members –
 -	Eniolubi Faleye             git username (eniolubifaleye) & (ef27)
 -	Chris Murdoch               git username (ChrisJMurdoch)
@@ -18,7 +20,7 @@ Coding styles are consistent and accurate. Consistent use of correct indentation
 Most of the variables and functions have meaningful names which aid the understanding of their functionality. Most of the variables are local instead of global. Variables are only global when they need to be.
 
 Code validation/testing plan (automated vs user) –
-N/A
+No Unit testing code plan available but bugs and features were agile tested along the development of the game
 
 Manage code changes/versions (different file types/bugs/tasks) –
 different versions of the game are accessible from the GIT repository. Older verions of the game can be pulled.
