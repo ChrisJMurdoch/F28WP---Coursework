@@ -1,4 +1,6 @@
 
+// VARIABLES
+
 // Client connection states
 const OFFLINE = 0;
 const ONLINE = 1;
@@ -13,7 +15,7 @@ const SERVER_TO_CLIENT_COORDS = '4';
 const LOGIN_SUCCESS = '5';
 const DEATH = '6';
 
-// Variables
+// References
 var settings;
 var database;
 var server;
@@ -29,7 +31,6 @@ exports.initialise = function(sett, db, serv, gm) {
 
 // Broadcast
 exports.broadcast = function(mes) {
-  //console.log('ALL < ', mes);
   server.clients.forEach(function(client) {
     client.send(mes);
   });
@@ -38,9 +39,6 @@ exports.broadcast = function(mes) {
 // On Connection
 exports.connect = function (socket, req) {
 
-  // Log connection
-  console.log(req.connection.remoteAddress, ' ~ CONNECTED.\n');
-
   // Create connection state
   socket.responding = true;
   socket.state = ONLINE;
@@ -48,10 +46,8 @@ exports.connect = function (socket, req) {
   socket.player;
 
   // Keep connection
-  console.log('STARTING HEARTBEAT...');
   var hb_monitor = setInterval(function monitor() {
     if (!socket.responding) {
-      console.log(socket._socket.remoteAddress, ' >< TERMINATED.\n');
       if (socket.state === VERIFIED) {
         game.remove_player(socket.player);
       }
@@ -59,26 +55,22 @@ exports.connect = function (socket, req) {
       socket.terminate();
       return;
     } else {
-      if (settings.show_heartbeat) console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.\n');
+      if (settings.show_heartbeat)
+        console.log(socket._socket.remoteAddress, ' <> HEARTBEAT.');
     }
     socket.responding = false;
     socket.ping();
   }, settings.heartbeat_frequency);
-  console.log('HEARTBEAT STARTED.\n');
 
   // On message recieved
   socket.on('message', function incoming(message) {
-    // Log message
-    //console.log(req.connection.remoteAddress,' > ', message);
     // Process
     switch (socket.state) {
       case ONLINE:
         unverifiedDetermine(message, socket);
-        //console.log();
         break;
       case VERIFIED:
         verifiedDetermine(message, socket);
-        //console.log();
         break;
     }
   });
@@ -90,7 +82,6 @@ exports.connect = function (socket, req) {
 
   // On close
   socket.on('close', function close() {
-    console.log(socket._socket.remoteAddress, ' >< TERMINATED C.\n');
     if (socket.state === VERIFIED) {
       game.remove_player(socket.player);
     }
@@ -105,12 +96,7 @@ exports.connect = function (socket, req) {
     var secondarydata = splitmessage[2];
     switch (actioncode) {
       case PLAINTEXT:
-        //console.log('PLAINTEXT BLOCKED.');
-        //console.log(socket.username + ' - ' + req.connection.remoteAddress);
         send(PLAINTEXT, 'Log in to send messages.');
-        server.clients.forEach(function(client) {
-          console.log(client.player);
-        });
         break;
       case REGISTER:
         console.log('REGISTERING.');
@@ -146,9 +132,6 @@ exports.connect = function (socket, req) {
     var secondarydata = splitmessage[2];
     switch (actioncode) {
       case PLAINTEXT:
-        //console.log('PLAINTEXT BROADCAST.');
-        //console.log(socket.username + ' - ' + req.connection.remoteAddress);
-        //broadcast(PLAINTEXT, socket.username + ': ' + primarydata);
         break;
       case REGISTER:
         console.log('CANT REGISTER WHILE LOGGED IN.');
@@ -159,10 +142,7 @@ exports.connect = function (socket, req) {
         send(PLAINTEXT, 'You are already logged in.');
         break;
       case CLIENT_TO_SERVER_COORDS:
-        //console.log('COORDS.');
-        //console.log(socket.player.name + ' - ' + req.connection.remoteAddress);
         game.move(socket.player, primarydata, secondarydata, socket);
-        //game.pull_update(socket, socket.player);
         break;
       default:
         console.log('INVALID ACTION CODE.');
@@ -173,13 +153,11 @@ exports.connect = function (socket, req) {
 
   // Send message
   function send(type, message) {
-    //console.log(req.connection.remoteAddress, ' < ', message);
     socket.send(type + ';' + message);
   };
 
   // Send to all
   function broadcast(type, message) {
-    //console.log('ALL < ', message);
     server.clients.forEach(function(client) {
       client.send(type + ';' + message);
     });
@@ -187,7 +165,6 @@ exports.connect = function (socket, req) {
 
   // Send to all but self
   function excludingbroadcast(type, message) {
-    //console.log('ALL < ', message);
     server.clients.forEach(function(client) {
       if (client !== socket) {
         client.send(type + ';' + message);
@@ -197,7 +174,6 @@ exports.connect = function (socket, req) {
 
   // Validate using database
   var validate = function(uname, password) {
-    //console.log(socket.player + ' - login t - ' + req.connection.remoteAddress)
     database.verify(uname, password, function(result) {
       if (result) {
         if (game.has_player(uname)) {
@@ -210,12 +186,9 @@ exports.connect = function (socket, req) {
         console.log('VERIFY SUCCESS.');
         send(LOGIN_SUCCESS, 'Hello ' + socket.username + ', you are now logged in.');
         socket.player = game.add_player(socket.username);
-        //console.log(socket.player + ' - login s - ' + req.connection.remoteAddress)
-        console.log();
       } else {
         console.log('VERIFY FAILURE.');
         send(PLAINTEXT, 'Log in failed.');
-        console.log();
       }
     });
   };
