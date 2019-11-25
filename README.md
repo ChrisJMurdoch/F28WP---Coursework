@@ -40,7 +40,7 @@ Week 2 – All members present at meeting at James Watt. Finalized that game ide
 
 Week 3 – All members present at meeting at GRID. Joe and Eniolubi made basic HTML, CSS and JavaScript for the client side of the game. They implemented a basic index page and linked it to a JS script. Index page includes user play button and login card. CSS page styles the index page. JS script sends users login information to the server and animates buttons Chris had made hardcoded server IP. Cameron has started the basic Database with queries.
 
-Week 4 – All members present at meeting at GRID. Joe has made JS script that sends clients login details to the server. Eniolubi has written CSS, Javascript and HTML for a leaderboard and the script to let if fade in. Chris 
+Week 4 – All members present at meeting at GRID. Joe has made JS script that sends clients login details to the server. Eniolubi has written CSS, Javascript and HTML for a leaderboard and the script to let if fade in. Chris
 cleaned up syntax errors and connected the server to Camerons external database.
 
 Week 5 – All members present at meeting at James Watt. Meeting to go over what we have done so far (like the implementation of the server (main goal)) and what we still have to do (features that need to be implemented like collision of characters etc.)
@@ -51,9 +51,13 @@ leaderbaord have to be created.
 
 Week 7 – All members present at meeting at GRID. Catch up of what each member has done so far. members noticed that no commitd have been pushed to the GIT repository in a while.
 
-Week 8 – All members present
-Week 9 – All members present
-Week 10 – All members present
+Week 8 – All members present at meeting in EM2.50. Discussed progress so far and what work needed to be completed, we also decided to change the game mechanics slightly from Snake to Tron, we decided that we could make this a more polished game as snake was proving harder than expected.
+
+Week 9 – All members present at meeting in James Watt Centre. Looked over work done by Chris on the server monitor and handed out jobs for the week. Meeting 2 in GRID, all members present, started working on merging the server monitor with the client, adding some functionality both serverside and clientside.
+Joe and Cameron discussed ways to implement the mobile version and started to plan out how the mobile game would look. Chris notified us about issues with the server and planned how to correct them and Eniolubi made good progress on the aesthetic design of the client 
+
+Week 10 – All members present at meetings throughout the week. This week was spent finalising the client aesthetics, merging different versions of the client into one and implementing mobile compatability which was done by Joe, Eniolubi and Cameron, while Chris worked on serverside improvements and optimisation, and helping to fix bugs both serverside and clientside.  
+
 
 Mechanics for the Game:
 Gameplay details –
@@ -118,7 +122,7 @@ Data can be passed to-from the server in real time
 
 Suitable language/data transmission format e.g., time information, other user status information –
 Status information has been used in the console for debugging
-time information has been used in the client side Javascript for game code 
+time information has been used in the client side Javascript for game code
 
 Server data storage (sql/mysql/litesql/..) –
 The server data storage we are using to hold game related data is SQL and the DBMS is MySQL. The portal used to create queries for the database was done in PHPmyAdmin.
@@ -143,7 +147,7 @@ JavaScript is used to validate the user’s login credentials. Validating if the
 Security/safety/backups –
 N/A
 
-Compression (file/data formats, jpg vs png vs bmp, zlib, ..) - 
+Compression (file/data formats, jpg vs png vs bmp, zlib, ..) -
 Our game uses a .png file. it is used as our game's background which has lossless compression
 
 
@@ -184,14 +188,13 @@ Currently the game cannot be operated on mobile once it is in landscape. This is
 
 Ongoing Maintenance (week by week):
 
-Each team member is contributing (commits, updates, testing) - 
+Each team member is contributing (commits, updates, testing) -
 Each team member is/has contributing/contributed to the game. All members have pushed and pulled commits from the GIT repository
 
-Bugs, features, releases are reguarly updated - 
+Bugs, features, releases are reguarly updated -
 If a bug is found, members of the GIT repository are made aware of it quickly.
 features in the gameplay are/have been pushed to the GIT repository
 Game is updapted
 
-Does the team work synergistically? - 
+Does the team work synergistically? -
 Team worked well together (synergistically). Work was shared and good communication between members aided the games development.
- 
