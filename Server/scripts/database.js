@@ -7,6 +7,8 @@ const mysql = require("mysql");
 // Declare global connection object
 var db_connection;
 
+
+
 // EXPORTS
 
 // Connect to database
@@ -43,7 +45,6 @@ exports.print_users = function() {
     for (var i in result) {
       console.log(' - ' + result[i].userName + ' - ' + result[i].password);
     }
-    console.log();
   });
 };
 
@@ -92,6 +93,8 @@ exports.add_score = function(username, score, callback) {
   })
 };
 
+
+
 // PRIVATE METHODS
 
 // Get user
@@ -118,7 +121,7 @@ topscores = function(callback) {
   });
 };
 
-// Check highscore
+// Get highscore
 highscore = function (username, callback) {
   var sql = 'SELECT highScore FROM Users WHERE userName = ?';
   db_connection.query(sql, username, function(error, results) {
@@ -126,7 +129,7 @@ highscore = function (username, callback) {
   });
 };
 
-// Add to leaderboard
+// Set highscore
 set_score = function (username, highscore, callback) {
   var sql = 'UPDATE Users SET highscore = ' + highscore + ' WHERE userName = ?';
   db_connection.query(sql, username, function() {

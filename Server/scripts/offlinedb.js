@@ -1,9 +1,8 @@
 
-// Modules
-const mysql = require("mysql");
+// This module is a backup to continue testing the server when our database is acting up serverside
 
-// Connection
-var db_connection;
+// Dummy users
+var user_array = ['Chris', 'Cameron', 'Olubi', 'Joe', 'Admin', 'a', 'b', 'c', 'd', 'e'];
 
 // Connect to database
 exports.connect = function(DB_DATA, callback) {
@@ -13,7 +12,6 @@ exports.connect = function(DB_DATA, callback) {
 };
 
 // Database validation
-var user_array = ['Chris', 'Cameron', 'Olubi', 'Joe', 'Admin', 'a', 'b', 'c', 'd', 'e'];
 exports.verify = function(username, password, callback) {
   for (var i in user_array) {
     if (user_array[i] === username && password === 'abc') {
@@ -27,11 +25,11 @@ exports.verify = function(username, password, callback) {
 // Display database users
 exports.print_users = function() {
   for (var i in user_array) {
-    console,log(user_array[i]);
+    console.log(user_array[i]);
   }
 };
 
 // Add users
 exports.add_user = function(username, password) {
-  console.log("DUMMY ADD.")
+  // DUMMY ADD
 };
