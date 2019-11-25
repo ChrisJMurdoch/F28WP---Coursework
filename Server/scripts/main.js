@@ -1,10 +1,14 @@
 
-// Modules
-const database = require('./database');
-//const database = require('./offlinedb');
+// VARIABLES
+
+// Use ws module for handling websockets
 const ws = require('ws');
-const socket_handler = require('./socket_handler');
+
+// Custom modules
 const game = require('./game');
+const socket_handler = require('./socket_handler');
+const database = require('./database');
+// const database = require('./offlinedb'); // For use when database is down
 
 // Settings
 const SERV_DATA = {
@@ -22,6 +26,7 @@ const DB_DATA = {
 // Start database connection
 database.connect(DB_DATA, function() {
 
+  // Print leaderboard
   database.leaderboard(function(results) {
     console.log('LEADERBOARD:');
     for (var i in results) {
@@ -29,16 +34,13 @@ database.connect(DB_DATA, function() {
     }
   });
 
-  // Dubug
-  //database.print_users();
-
   // Start server
   console.log('SERVER STARTING...');
   const server = new ws.Server({ port: SERV_DATA.port });
-  console.log('SERVER INITIALISED ON PORT ' + SERV_DATA.port + '\n');
+  console.log('SERVER INITIALISED ON PORT ' + SERV_DATA.port;
 
   // Setup socket handler
-  socket_handler.initialise(SERV_DATA, database, server, game)
+  socket_handler.initialise(SERV_DATA, database, server, game);
   server.on('connection', socket_handler.connect);
 
   // Run
