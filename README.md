@@ -39,10 +39,11 @@ Week 2 – All members present at meeting at James Watt. Finalized that game ide
 -	Joe (Back End JavaScript and NodeJS/ Front End HTML and CSS)
 
 Week 3 – All members present at meeting at GRID. Joe and Eniolubi made basic HTML, CSS and JavaScript for the client side of the game. They implemented a basic index page and linked it to a JS script. Index page includes user play button and login card. CSS page styles the index page. JS script sends users login information to the server and animates buttons Chris had made hardcoded server IP. Cameron has started the basic Database with queries.
-Week 4 – All members present at meeting at GRID. Joe has made JS script that sends clients login details to the server. Cameron has written
-Week 5 – All members present
-Week 6 – All members present
-Week 7 – All members present
+Week 4 – All members present at meeting at GRID. Joe has made JS script that sends clients login details to the server. Eniolubi has written CSS, Javascript and HTML for a leaderboard and the script to let if fade in. Chris 
+cleaned up syntax errors and connected the server to Camerons external database.
+Week 5 – All members present at meeting at James Watt. Meeting to go over what we have done so far (like the implementation of the server (main goal)) and what we still have to do (features that need to be implemented like collision of characters etc.)
+Week 6 – All members present at meeting at James Watt. Continuing to go over what needs to be done still for this game. Ideas brought up by Joseph was
+Week 7 – All members present at meeting at GRID
 Week 8 – All members present
 Week 9 – All members present
 Week 10 – All members present
