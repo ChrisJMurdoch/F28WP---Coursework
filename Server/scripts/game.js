@@ -16,8 +16,10 @@ var players = [];
 // Queue to store requests from socket interrupts
 var queue = [];
 
-// List to store last tick durations, for debugging.
+// List to store last tick durations, for debugging
 var load = [];
+
+
 
 // EXPORTS
 
@@ -35,7 +37,7 @@ exports.has_player = function(in_name) {
 exports.add_player = function(in_name) {
   var player = new Player(in_name);
   players.push(player);
-  // Leaderboard
+  // Send leaderboard data
   database.leaderboard(function(result) {
     var mes = '7;';
     for (var i in result) {
@@ -46,7 +48,7 @@ exports.add_player = function(in_name) {
     }
     socket_handler.broadcast(mes);
   });
-  // Return
+  // Return reference
   return player;
 };
 
@@ -173,6 +175,8 @@ exports.start = function(db) {
   console.log('GAME STARTED.')
 };
 
+
+
 // PRIVATE METHODS
 
 // Send game data to client
@@ -215,6 +219,8 @@ function hasIntersection( x1, y1, x2, y2, x3, y3, x4, y4 ) {
     return ( xs ) && ( ys );
   }
 }
+
+
 
 // CLASSES
 
