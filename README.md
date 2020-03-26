@@ -1,7 +1,9 @@
 
-# F28WP---Coursework
+# Tron
 
-Team members –
+2nd Year Web Development coursework submission.
+
+## Team members –
 -	**Eniolubi Faleye**, git username: **eniolubifaleye**
 -	**Chris Murdoch**, git username: **ChrisJMurdoch**
 -	**Cameron Douglas**, git username: **cd94**
